@@ -1,21 +1,22 @@
 <template>
   <div>
+    <h1>안녕</h1>
     <nav>
-      <RouterLnk :to="{ name: 'home' }">Home</RouterLnk>
-      <RouterLnk :to="{ name: 'signup' }">signup</RouterLnk>
-      <RouterLnk :to="{ name: 'login' }">login</RouterLnk>
-      <RouterLnk :to="{ name: 'profile' }">profile</RouterLnk>
-      <RouterLnk :to="{ name: 'productList' }">productList</RouterLnk>
-      <RouterLnk :to="{ name: 'exchangeRate' }">exchangeRate</RouterLnk>
-      <RouterLnk :to="{ name: 'bankMap' }">bankMap</RouterLnk>
-      <RouterLnk :to="{ name: 'articleList' }">articleList</RouterLnk>
+      <RouterLink :to="{ name: 'Home' }">Home</RouterLink> |
+      <RouterLink :to="{ name: 'SignUp' }">SignUp</RouterLink> |
+      <RouterLink :to="{ name: 'LogIn' }">LogIn</RouterLink> |
+      <RouterLink :to="{ name: 'Profile' }">Profile</RouterLink> |
+      <RouterLink :to="{ name: 'ProductList' }">Products</RouterLink> |
+      <RouterLink :to="{ name: 'ExchangeRate' }">ExchangeRate</RouterLink> |
+      <RouterLink :to="{ name: 'BankMap' }">Map</RouterLink> |
+      <RouterLink :to="{ name: 'ArticleList' }">Articles</RouterLink> |
     </nav>
     <RouterView />
   </div>
 </template>
 
 <script setup>
-import { RouterLnk, RouterView } from 'vue-router'
+import { RouterLink, RouterView } from 'vue-router'
 </script>
 
 <style scoped>

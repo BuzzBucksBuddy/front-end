@@ -3,7 +3,8 @@ import HomeView from '@/views/HomeView.vue'
 import SignUpView from '@/views/SignUpView.vue'
 import ProfileView from '@/views/ProfileView.vue'
 import ProductDetailView from '@/views/ProductDetailView.vue'
-import LoginView from '@/views/LoginView.vue'
+import ProductListView from '@/views/ProductListView.vue'
+import LogInView from '@/views/LogInView.vue'
 import ExchangeRateView from '@/views/ExchangeRateView.vue'
 import BankMapView from '@/views/BankMapView.vue'
 import ArticleUpdateView from '@/views/ArticleUpdateView.vue'
@@ -16,62 +17,62 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      name: 'home',
+      name: 'Home',
       component: HomeView
     },
     {
-      path: '/signUp',
-      name: 'signUp',
+      path: '/signup',
+      name: 'SignUp',
       component: SignUpView
     },
     {
       path: '/profile',
-      name: 'profile',
+      name: 'Profile',
       component: ProfileView
     },
     {
-      path: '/productList',
-      name: 'productList',
+      path: '/products',
+      name: 'ProductList',
       component: ProductListView
     },
     {
-      path: '/productDetail',
-      name: 'productDetail',
+      path: '/product/:productId',
+      name: 'ProductDetail',
       component: ProductDetailView
     },
     {
       path: '/login',
-      name: 'login',
-      component: LoginView
+      name: 'LogIn',
+      component: LogInView
     },
     {
-      path: '/exchangeRate',
-      name: 'exchangeRate',
+      path: '/exchange',
+      name: 'ExchangeRate',
       component: ExchangeRateView
     },
     {
-      path: '/bankMap',
-      name: 'bankMap',
+      path: '/map',
+      name: 'BankMap',
       component: BankMapView
     },
     {
-      path: '/articleUpdate',
-      name: 'articleUpdate',
-      component: ArticleUpdateView
-    },
-    {
-      path: '/articleList',
-      name: 'articleList',
+      path: '/articles',
+      name: 'ArticleList',
       component: ArticleListView
     },
     {
-      path: '/articleDetail',
-      name: 'articleDetail',
+      path: '/article/:articleId/update',
+      name: 'ArticleUpdate',
+      component: ArticleUpdateView
+    },
+    {
+      path: '/article/:articleId',
+      name: 'ArticleDetail',
       component: ArticleDetailView
     },
     {
-      path: '/articleCreate',
-      name: 'articleCreate',
+      path: '/article/:articleId/create',
+      name: 'ArticleCreate',
       component: ArticleCreateView
     },
   ]
