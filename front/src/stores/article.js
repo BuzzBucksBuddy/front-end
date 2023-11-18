@@ -10,7 +10,9 @@ export const useArticleStore = defineStore('article', () => {
   const productCategories = ref([])
   const API_URL = 'http://127.0.0.1:8000/api/v1/articles/'
 
-  // const token = ref(null)
+  const isExist = computed(() => {
+    return (array) => array.length > 0
+  })
 
   // DRF에 article 조회 요청을 보내는 action
   const getArticles = function () {
@@ -56,5 +58,29 @@ export const useArticleStore = defineStore('article', () => {
       })
   }
 
-  return { articles, API_URL, getArticles, getBankCategories, getProductCategories, bankCategories, productCategories }
+  const setBankCategories = function () {
+    axios({
+      method: 'post',
+      url: `${API_URL}category/banks/`
+    })
+      .then((res) => {
+        console.log(res)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
+
+
+  return {
+    articles,
+    API_URL,
+    bankCategories,
+    productCategories,
+    isExist,
+    getArticles,
+    getBankCategories,
+    getProductCategories,
+    setBankCategories
+  }
 }, { persist: true })
