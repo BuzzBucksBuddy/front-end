@@ -14,13 +14,9 @@ const props = defineProps({
   selectBank: String
 })
 
-console.log('11', props.selectGu)
-console.log('11', props.selectBank)
-
 const markers = ref([])
 
 const loadScript = () => {
-  console.log('??????????')
   const key = '6e11f641595abffec43b82a5c9cbc391'
   const script = document.createElement('script')
 
@@ -34,12 +30,10 @@ const loadScript = () => {
 const container = ref(null)
 
 const initMap = () => {
-  console.log('뭔데ㅔㅔㅔㅔㅔㅔ')
   const options = {
     center: new window.kakao.maps.LatLng(37.5013068, 127.0396597),
     level: 3
   }
-  console.log('모야모야모야모')
   map.value = new window.kakao.maps.Map(container.value, options)
 
   const geocoder = new window.kakao.maps.services.Geocoder()
@@ -74,10 +68,8 @@ const initMap = () => {
 
       // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
       // LatLngBounds 객체에 좌표를 추가합니다
-      console.log('어디에서 문제가 발생한것일까용ㅇㅇ??????')
       const bounds = new window.kakao.maps.LatLngBounds()
 
-      console.log('너냐??????')
       for (let i=0; i<data.length; i++) {
         displayMarker(data[i])
         const extender = new window.kakao.maps.LatLng(data[i].y, data[i].x)
@@ -85,7 +77,6 @@ const initMap = () => {
       }
       // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
       map.value.setBounds(bounds)
-      console.log(markers.value)
     } 
   }
   ps.keywordSearch('서울특별시 강남구' + props.selectBank, placesSearchCB)
@@ -94,7 +85,6 @@ const initMap = () => {
     markers.value.forEach(element => {
       element.setMap(null)
     });
-    console.log(props.selectGu + newValue)
     if (props.selectGu === null) {
       ps.keywordSearch('서울특별시 강남구' + newValue, placesSearchCB)
     } else {
@@ -103,7 +93,6 @@ const initMap = () => {
   })
 
   const search = watch(() => props.selectGu, (newValue, old) => {
-    console.log(newValue)
     if (newValue !== null) {
       geocoder.addressSearch(newValue, function(result, status) {
         if (status === window.kakao.maps.services.Status.OK) {
@@ -113,7 +102,6 @@ const initMap = () => {
             center: new window.kakao.maps.LatLng(result[0].y, result[0].x),
             level: 3
           }
-          console.log('아라라라라ㅏ랄')
           map.value = new window.kakao.maps.Map(container.value, options)
           ps.keywordSearch(newValue + props.selectBank, placesSearchCB)
         }
@@ -123,12 +111,11 @@ const initMap = () => {
 }
 
 onMounted(() => {
-  console.log('!!!!!!!!!')
   if (window.kakao?.maps) {
-    console.log(`KakaoMapComp.vue - 이미 map 있음`, window.kakao.maps)
+    // console.log(`KakaoMapComp.vue - 이미 map 있음`, window.kakao.maps)
     initMap()
   } else {
-    console.log(`KakaoMapComp.vue - map script loading 필요`)
+    // console.log(`KakaoMapComp.vue - map script loading 필요`)
     loadScript()
   }
 })
