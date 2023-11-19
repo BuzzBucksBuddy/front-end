@@ -1,10 +1,11 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 import axios from 'axios'
 
 export const useLoginStore = defineStore('login', () => {
   const router = useRouter()
+  const route = useRoute()
 
   const API_URL = 'http://127.0.0.1:8000'
   const token = ref(null)
@@ -72,5 +73,22 @@ export const useLoginStore = defineStore('login', () => {
   //     })
   // }
 
-  return { API_URL, logIn, token, isLogin }
+  const myProfile = ref([])
+  const getProfile = function () {
+    const nickName = route.params
+    console.log(nickName)
+    axios({
+      method: 'get',
+      url: `${API_URL}/api/v1/accounts/지수/`     // 잘모르겟..
+    })
+      .then((res) => {
+        console.log(res)
+        myProfile.value = res.data
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
+
+  return { API_URL, logIn, token, isLogin, myProfile, getProfile }
 }, { persist: true })
