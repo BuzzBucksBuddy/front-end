@@ -66,12 +66,14 @@
       
       <input type="submit">
     </form>
+    {{ comm }}
+    {{ comm2 }}
 
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { useSignupStore } from '@/stores/signup'
 
 const store = useSignupStore()
@@ -82,11 +84,11 @@ const nickname = ref(null)
 const profileImg = ref(null)
 const profileImgInput = ref(null)
 const age = ref(null)
-const email = ref(null)
-const money = ref(null)
-const salary = ref(null)
+const email = ref('')
+const money = ref(0)
+const salary = ref(0)
+// const financialProducts = ref([])
 const financialProducts = ref([])
-// const financialProducts = ref(null)
 const favorite = ref([])
 const mbti = ref(null)
 
@@ -98,6 +100,19 @@ const handleProfileImageChange = function () {
   }
 }
 
+const favorite2 = ref('')
+const comm = computed(() => {
+  favorite2.value = favorite.value.join(', ')
+  console.log(favorite2)
+  return favorite.value.length
+})
+
+const finan = ref('')
+const comm2 = computed(() => {
+  finan.value = financialProducts.value.join(', ')
+  console.log(finan.value)
+  return financialProducts.value.length
+})
 
 const signUp = function () {
   const formData = new FormData()
@@ -113,18 +128,26 @@ const signUp = function () {
   // formData.append('financial_products', JSON.stringify(financialProductsInt))
   // const favoriteInt = favorite.value.map(value => parseInt(value))
   // formData.append('favorite', JSON.stringify(favoriteInt))
-  // formData.append('financial_products', financialProducts.value.join(','))
+  // if (financialProducts.value !== null) {
+  //   formData.append('financial_products', financialProducts.value.join(','))
+  // }
+  if (financialProducts.value.length > 0) {
+    formData.append('financial_products', finan.value)
+  }
   // formData.append('financial_products', financialProducts.value)
   // financialProducts.value.forEach((value, index) => {
   //   formData.append(`financial_products[${index}]`, value)
   // })
+  if (favorite.value.length > 0) {
+    formData.append('favorite', favorite2.value)
+  }
   // formData.append('favorite', favorite.value.join(','))
-  financialProducts.value.forEach((item, index) => {
-    formData.append(`financial_products[${index}]`, item);
-  })
-  favorite.value.forEach((item, index) => {
-    formData.append(`favorite[${index}]`, item);
-  });
+  // financialProducts.value.forEach((item, index) => {
+  //   formData.append(`financial_products[${index}]`, item);
+  // })
+  // favorite.value.forEach((item, index) => {
+  //   formData.append(`favorite[${index}]`, item);
+  // });
   
   formData.append('mbti', mbti.value)
 
