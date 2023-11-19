@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="app">
     <h1>안녕</h1>
     <h3 v-if="loginStore.isLogin">로그인되어있음</h3>
     <nav>
@@ -19,8 +19,10 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
 import { useLoginStore } from '@/stores/login'
+import { ref, onMounted } from 'vue'
 
 const loginStore = useLoginStore()
+
 
 </script>
 
