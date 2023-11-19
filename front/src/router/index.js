@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { useLoginStore } from '@/stores/login'
 import HomeView from '@/views/HomeView.vue'
 import SignUpView from '@/views/SignUpView.vue'
 import ProfileView from '@/views/ProfileView.vue'
@@ -77,5 +78,19 @@ const router = createRouter({
     },
   ]
 })
+
+
+router.beforeEach((to, from) => {
+  const store = useLoginStore()
+  // if (to.name === 'ArticleView' && !store.isLogin) {
+  //   window.alert('로그인이 필요합니다.')
+  //   return {name: 'LogIn'}
+  // }
+  if ((to.name === 'SignUp' || to.name === 'LogIn') && (store.isLogin)) {
+    window.alert('이미 로그인 했습니다.')
+    return {name: 'Home'}
+  }
+})
+
 
 export default router

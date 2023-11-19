@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Exchange Rate Graph</h1>
+    <h1>Exchange Rate News</h1>
   </div>
 </template>
 
