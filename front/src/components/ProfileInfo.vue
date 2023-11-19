@@ -1,6 +1,7 @@
 <template>
   <div>
-    <h1>Profile Info</h1>
+    <h3>Profile Info</h3>
+    <img src="" alt="">
   </div>
 </template>
 
