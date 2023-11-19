@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h3>댓글 목록</h3>
     <form @submit.prevent="createComment">
       <input type="text" v-model="content">
       <span>숨기기:<input type="checkbox" v-model="isLocked"></span>
@@ -42,6 +41,7 @@ const createComment = function () {
     .then((res) => {
       console.log(res)
       emit('goComment', res.data)
+      content.value = ''
       // router.push({ name: 'ArticleList' })
     })
     .catch((err) => {

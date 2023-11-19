@@ -7,11 +7,11 @@ import axios from 'axios'
 export const useMapStore = defineStore('map', () => {
   const doList = ref([])
   const guList = ref([])
-  const bankList = ref([
-    '국민은행',
-    '신한은행',
-    '농협'
-  ])
+
+  const depList = ref([])
+  const savList = ref([])
+
+  const API_URL = 'http://127.0.0.1:8000/api/v1/maps/'
 
   const doLoader = function () {
     axios({
@@ -19,7 +19,6 @@ export const useMapStore = defineStore('map', () => {
       url: 'https://grpc-proxy-server-mkvo6j4wsq-du.a.run.app/v1/regcodes?regcode_pattern=*00000000'
     })
       .then((res) => {
-        console.log(res.data)
         doList.value = res.data.regcodes
       })
       .catch((err) => {
@@ -35,7 +34,6 @@ export const useMapStore = defineStore('map', () => {
       url: `https://grpc-proxy-server-mkvo6j4wsq-du.a.run.app/v1/regcodes?regcode_pattern=${doCode}*00000&is_ignore_zero=true`
     })
       .then((res) => {
-        console.log(res.data)
         guList.value = res.data.regcodes
       })
       .catch((err) => {
@@ -43,5 +41,68 @@ export const useMapStore = defineStore('map', () => {
       })
   }
 
-  return { doLoader, doList, guLoader, guList, bankList }
+  const getAllDepositProducts = function () {
+    axios({
+      method: 'get',
+      url: `${API_URL}deposits/`
+    })
+      .then((res) => {
+        depList.value = res.data
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
+
+  const getAllSavingProducts = function () {
+    axios({
+      method: 'get',
+      url: `${API_URL}savings/`
+    })
+      .then((res) => {
+        savList.value = res.data
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
+
+  const getDepositProducts = function (name) {
+    axios({
+      method: 'get',
+      url: `${API_URL}deposits/${name}/`
+    })
+      .then((res) => {
+        depList.value = res.data
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
+
+  const getSavingProducts = function (name) {
+    axios({
+      method: 'get',
+      url: `${API_URL}savings/${name}/`
+    })
+      .then((res) => {
+        savList.value = res.data
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
+
+  return {
+    doLoader,
+    doList,
+    guLoader,
+    guList,
+    getAllDepositProducts,
+    getAllSavingProducts,
+    depList,
+    savList,
+    getDepositProducts,
+    getSavingProducts
+  }
 }, { persist: false })
