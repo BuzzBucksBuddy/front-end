@@ -16,11 +16,11 @@
     <section class="map-container">
       <BankMap :select-gu="selectGu" :select-bank="selectBank"/>
     </section>
-    <h2>{{ selectBank }}</h2>
-    <h3 :class="{ selected: switcher}" @click="switcher=true">
-      예금
-    </h3>
-    <h3 :class="{ selected: !switcher}" @click="switcher=false">적금</h3>
+    <div class="selector">
+      <h2>{{ selectBank }}</h2>
+      <h3 :class="{ selected: switcher}" @click="switcher=true">예금</h3>
+      <h3 :class="{ selected: !switcher}" @click="switcher=false">적금</h3>
+    </div>
     <section v-show="switcher">
       <div v-if="depLen">
         <BankDepositProductList
@@ -102,10 +102,26 @@ const bankWatcher = watch(() => selectBank.value, (newValue, old) => {
 <style scoped>
 .map-container {
   width: 100%;
-  height: 70%;
+  height: 400px;
   margin-top: 20px;
 }
 .selected {
-  color: orange;
+  color: rgb(242, 185, 60);
+}
+.selector {
+  display: flex;
+  align-items: baseline;
+  margin: 10px 0
+}
+.selector h3 {
+  margin-left: 10px;
+  transition: all 0.3s;
+  cursor: pointer;
+}
+.selector h3:hover {
+  color: rgb(242, 185, 60);
+}
+h2 {
+  margin: 0;
 }
 </style>

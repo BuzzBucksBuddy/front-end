@@ -1,7 +1,9 @@
 <template>
   <div>
-    <h1>Article List View</h1>
-    <RouterLink :to="{ name: 'ArticleCreate' }">[게시글 만들기]</RouterLink>
+    <div class="title">
+      <h1>게시판 목록</h1>
+      <RouterLink :to="{ name: 'ArticleCreate' }">게시글 작성</RouterLink>
+    </div>
     <hr>
     <section v-if="isExist">
       <ArticleList
@@ -31,5 +33,19 @@ const isExist = computed(() =>{
 </script>
 
 <style scoped>
-
+.title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+hr {
+  margin: 0;
+}
+.title a {
+  text-decoration: none;
+  color: black;
+}
+.title a:hover {
+  color: rgb(242, 185, 60);
+}
 </style>

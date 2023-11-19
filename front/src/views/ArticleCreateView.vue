@@ -19,7 +19,12 @@
         <label for="content">내용:</label>
         <textarea v-model.trim="content" id="content"></textarea>
       </div>
-      <p>게시물 잠그기 : <input type="checkbox" v-model="isLocked"></p>
+      <div>
+        <p>게시물 잠그기 : <input type="checkbox" v-model="isLocked"></p>
+        <p v-show="isLocked">암호 : 
+          <input type="password" v-model="password">
+        </p>
+      </div>
       <input type="submit">
     </form>
   </div>
@@ -37,6 +42,7 @@ const content = ref(null)
 const isLocked = ref(false)
 const articleBankCategory = ref(null)
 const articleProductCategory = ref(null)
+const password = ref(null)
 
 const store = useArticleStore()
 const loginStore = useLoginStore()
@@ -55,6 +61,7 @@ const createArticle = function () {
       is_locked: isLocked.value,
       article_bank_category: articleBankCategory.value,
       article_product_category: articleProductCategory.value,
+      password: password.value
     },
     headers: {
       Authorization: `Token ${loginStore.token}`

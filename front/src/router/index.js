@@ -92,5 +92,17 @@ router.beforeEach((to, from) => {
   }
 })
 
+router.beforeEach((to, from) => {
+  const store = useLoginStore()
+  if (store.isLogin === false
+    && (
+      to.name === 'ArticleCreate' ||
+      to.name === 'ArticleUpdate'
+      )) {
+    window.alert('로그인이 필요합니다.')
+    return { name: 'LogIn' }
+  }
+})
+
 
 export default router

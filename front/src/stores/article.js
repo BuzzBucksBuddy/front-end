@@ -18,13 +18,9 @@ export const useArticleStore = defineStore('article', () => {
   const getArticles = function () {
     axios({
       method: 'get',
-      url: `${API_URL}`,
-      // headers: {
-      //   Authorization: `Token ${token.value}`
-      // }
+      url: `${API_URL}list/`
     })
       .then((res) => {
-        // console.log(res)
         articles.value = res.data
       })
       .catch((err) => {

@@ -50,7 +50,7 @@ store.getProductCategories()
 const loadArticle = function () {
   axios({
     method: 'get',
-    url: `${store.API_URL}${route.params.articleId}/`
+    url: `${store.API_URL}${route.params.articleId}/detail/`
   })
     .then((res) => {
       // console.log(res.data)
@@ -72,7 +72,7 @@ const loadArticle = function () {
 const updateArticle = function () {
   axios({
     method: 'put',
-    url: `${store.API_URL}${route.params.articleId}/`,
+    url: `${store.API_URL}${route.params.articleId}/control/`,
     data: {
       title: title.value,
       content: content.value,
