@@ -34,7 +34,7 @@ export const useSignupStore = defineStore('signup', () => {
       },
     })
       .then((res) => {
-        console.log(res)
+        // console.log(formData)
         store.logIn(payload)
         router.push({name: 'Home'})
       })
