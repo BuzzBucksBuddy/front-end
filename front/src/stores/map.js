@@ -105,4 +105,4 @@ export const useMapStore = defineStore('map', () => {
     getDepositProducts,
     getSavingProducts
   }
-}, { persist: false })
+}, { persist: true })
