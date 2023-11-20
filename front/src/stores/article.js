@@ -44,6 +44,20 @@ export const useArticleStore = defineStore('article', () => {
       })
   }
 
+  const searchArticles = function (field, input) {
+    axios({
+      method: 'get',
+      url: `${API_URL}list/search/${field}/${input}/`
+    })
+      .then((res) => {
+        console.log(res.data)
+        articles.value = res.data
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
+
   const getBankCategories = function () {
     axios({
       method: 'get',
@@ -92,6 +106,7 @@ export const useArticleStore = defineStore('article', () => {
     isExist,
     getArticles,
     getFilteredArticles,
+    searchArticles,
     getBankCategories,
     getProductCategories,
     setBankCategories

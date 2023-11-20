@@ -10,7 +10,7 @@
       <option v-for="gus in store.guList" :key="gus.code" :value="gus.name">{{ gus.name }}</option>
     </select>
     <select name="bank" id="bank" v-model="selectBank">
-      <option value="모든 은행" selected="selected">모든 은행</option>
+      <option value="은행" selected="selected">모든 은행</option>
       <option v-for="bank in articleStore.bankCategories" :key="bank" :value="bank.name">{{ bank.name }}</option>
     </select>
     <section class="map-container">
@@ -54,7 +54,7 @@ import { ref, computed, watch, onMounted } from 'vue'
 
 const selectDo = ref(null)
 const selectGu = ref(null)
-const selectBank = ref('모든 은행')
+const selectBank = ref('은행')
 const bankList = ref(null)
 
 const switcher = ref(true)
@@ -88,7 +88,7 @@ onMounted(() => {
 })
 
 const bankWatcher = watch(() => selectBank.value, (newValue, old) => {
-  if (newValue === '모든 은행') {
+  if (newValue === '은행') {
     store.getAllDepositProducts()
     store.getAllSavingProducts()
   } else {
