@@ -1,4 +1,4 @@
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { defineStore } from 'pinia'
 import { useRouter, useRoute } from 'vue-router'
 import axios from 'axios'
@@ -9,6 +9,8 @@ export const useLoginStore = defineStore('login', () => {
 
   const API_URL = 'http://127.0.0.1:8000'
   const token = ref(null)
+  const myName = ref(null)
+  const myId = ref(null)
 
   const isLogin = computed(() => {
     if (token.value === null) {
@@ -17,27 +19,6 @@ export const useLoginStore = defineStore('login', () => {
       return true
     }
   })
-
-
-  // const signUp = function (payload) {
-  //   const { username, password1, password2 } = payload
-
-  //   axios({
-  //     method: 'post',
-  //     url: `${API_URL}/accounts/signup/`,
-  //     data: {
-  //       username, password1, password2
-  //     }
-  //   })
-  //     .then((res) => {
-  //       console.log(res)
-  //       const password = password1
-  //       logIn({ username, password })
-  //     })
-  //     .catch((err) => {
-  //       console.log(err)
-  //     })
-  // }
 
   const logIn = function (payload) {
     const { username, password } = payload
@@ -52,6 +33,7 @@ export const useLoginStore = defineStore('login', () => {
       .then((res) => {
         console.log(res.data)
         token.value = res.data.key
+        userInfo()
         router.push({ name: 'Home' })
       })
       .catch((err) => {
@@ -59,19 +41,21 @@ export const useLoginStore = defineStore('login', () => {
       })
   }
 
-  // const logOut = function () {
-  //   axios({
-  //     method: 'post',
-  //     url: `${API_URL}/accounts/logout/`,
-  //   })
-  //     .then((res) => {
-  //       token.value = null
-  //       router.push({ name: 'ArticleView' })
-  //     })
-  //     .catch((err) => {
-  //       console.log(err)
-  //     })
-  // }
+  const logOut = function () {
+    axios({
+      method: 'post',
+      url: `${API_URL}/dj-rest-auth/logout/`,
+    })
+      .then((res) => {
+        token.value = null
+        myName.value = null
+        myId.value = null
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
+
 
   const myProfile = ref([])
   const getProfile = function (userId) {
@@ -90,5 +74,27 @@ export const useLoginStore = defineStore('login', () => {
       })
   }
 
-  return { API_URL, logIn, token, isLogin, myProfile, getProfile }
+
+  const userInfo = function () {
+    if (isLogin.value === true) {
+      axios({
+        method: 'get',
+        url: `${API_URL}/dj-rest-auth/user/`,
+        headers: {
+          Authorization: `Token ${token.value}`
+        }
+      })
+        .then((res) => {
+          // console.log(res.data)
+          myName.value = res.data.username
+          myId.value = res.data.pk
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    }
+  }
+
+
+  return { API_URL, logIn, token, isLogin, userInfo, myName, myId, logOut, myProfile, getProfile }
 }, { persist: true })
