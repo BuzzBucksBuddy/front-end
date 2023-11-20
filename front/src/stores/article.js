@@ -21,6 +21,22 @@ export const useArticleStore = defineStore('article', () => {
       url: `${API_URL}list/`
     })
       .then((res) => {
+        console.log(res.data)
+        articles.value = res.data
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
+
+
+  const getFilteredArticles = function (pd, bk) {
+    axios({
+      method: 'get',
+      url: `${API_URL}list/${pd}/${bk}/`
+    })
+      .then((res) => {
+        console.log(res.data)
         articles.value = res.data
       })
       .catch((err) => {
@@ -75,6 +91,7 @@ export const useArticleStore = defineStore('article', () => {
     productCategories,
     isExist,
     getArticles,
+    getFilteredArticles,
     getBankCategories,
     getProductCategories,
     setBankCategories
