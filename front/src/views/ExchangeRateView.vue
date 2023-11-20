@@ -15,7 +15,6 @@ const currentCountry = ref('')
 
 const handleCountryChange = (newCountry) => {
   console.log('Selected country:', newCountry)
-  // 원하는 작업 수행...
   currentCountry.value = newCountry
 }
 </script>

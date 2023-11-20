@@ -7,7 +7,7 @@ import axios from 'axios'
 export const useSignupStore = defineStore('signup', () => {
   const router = useRouter()
   const API_URL = 'http://127.0.0.1:8000'
-  const store = useLoginStore()
+  const loginStore = useLoginStore()
 
   const signUp = function (payload, formData) {
     const { username, password } = payload
@@ -35,8 +35,8 @@ export const useSignupStore = defineStore('signup', () => {
     })
       .then((res) => {
         // console.log(formData)
-        store.logIn(payload)
-        router.push({name: 'Home'})
+        loginStore.logIn(payload)
+        router.push({name: 'FavoriteSelect'})
       })
       .catch((err) => {
         console.log(err)
