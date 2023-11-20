@@ -98,5 +98,55 @@ export const useLoginStore = defineStore('login', () => {
   }
 
 
-  return { API_URL, logIn, token, isLogin, userInfo, myName, myId, logOut, myProfile, getProfile }
+  
+  const favoriteCategory = ref([])
+  const getFavoriteCategory = function () {
+    axios({
+      method: 'get',
+      url: `${API_URL}/api/v1/accounts/favorites/`,
+    })
+      .then((res) => {
+        console.log(res.data)
+        favoriteCategory.value = res.data
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
+
+
+  const favoriteSelect = function (payload) {
+    const { favorite } = payload
+    axios({
+      method: 'post',
+      url: `${API_URL}/api/v1/accounts/favorites/`,
+      data: {
+        favorite,
+      }
+    })
+      .then ((res) => {
+        console.log(res.data)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
+
+
+
+  return { 
+    API_URL, 
+    logIn, 
+    token, 
+    isLogin, 
+    userInfo, 
+    myName, 
+    myId, 
+    logOut, 
+    myProfile, 
+    getProfile,
+    favoriteCategory, 
+    getFavoriteCategory,
+    favoriteSelect,
+   }
 }, { persist: true })

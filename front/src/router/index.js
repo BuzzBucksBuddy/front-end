@@ -12,6 +12,8 @@ import ArticleUpdateView from '@/views/ArticleUpdateView.vue'
 import ArticleListView from '@/views/ArticleListView.vue'
 import ArticleDetailView from '@/views/ArticleDetailView.vue'
 import ArticleCreateView from '@/views/ArticleCreateView.vue'
+import FavoriteSelectView from '@/views/FavoriteSelectView.vue'
+
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -75,6 +77,11 @@ const router = createRouter({
       path: '/article/create',
       name: 'ArticleCreate',
       component: ArticleCreateView
+    },
+    {
+      path: '/favorite-select',
+      name: 'FavoriteSelect',
+      component: FavoriteSelectView
     },
   ]
 })

@@ -34,16 +34,17 @@
         <input type="checkbox" id="적금" value="적금" v-model="financialProducts"> <label for="적금">적금</label>
       </div> -->
       <!-- <input type="text" id="financial-products" v-model.trim="financialProducts"> -->
-      <label for="favorite">favorite: {{ favorite }} </label>
-      <div>
-        <input type="checkbox" id="전자기기" value="전자기기" v-model="favorite"> <label for="전자기기">전자기기</label>
+      <!-- <label for="favorite">favorite: </label>
+      <div v-for="favorite in favoriteCategory">
+        <input type="checkbox" :id="favorite.id" :value="favorite.id" v-model="myfavorite"> <label :for="favorite.id">{{ favorite.favorite }}</label>
       </div>
-      <div>
+      {{ myfavorite }} -->
+      <!-- <div>
         <input type="checkbox" id="영화" value="영화" v-model="favorite"> <label for="영화">영화</label>
       </div>
       <div>
         <input type="checkbox" id="패션" value="패션" v-model="favorite"> <label for="패션">패션</label>
-      </div>
+      </div> -->
       <label for="mbti">mbti: </label>
       <select id="mbti" v-model="mbti">
         <option value="ISTJ">ISTJ</option>
@@ -66,14 +67,14 @@
       
       <input type="submit">
     </form>
-    {{ comm }}
+    <!-- {{ comm }} -->
     <!-- {{ comm2 }} -->
 
   </div>
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useSignupStore } from '@/stores/signup'
 
 const store = useSignupStore()
@@ -89,7 +90,7 @@ const money = ref(0)
 const salary = ref(0)
 // const financialProducts = ref([])
 // const financialProducts = ref([])
-const favorite = ref([])
+
 const mbti = ref(null)
 
 const handleProfileImageChange = function () {
@@ -100,12 +101,14 @@ const handleProfileImageChange = function () {
   }
 }
 
-const favorite2 = ref('')
-const comm = computed(() => {
-  favorite2.value = favorite.value.join(', ')
-  console.log(favorite2)
-  return favorite.value.length
-})
+// const favorite2 = ref('')
+// const comm = computed(() => {
+//   favorite2.value = favorite.value.join(', ')
+//   console.log(favorite2)
+//   return favorite.value.length
+// })
+
+
 
 // const finan = ref('')
 // const comm2 = computed(() => {
@@ -115,6 +118,7 @@ const comm = computed(() => {
 // })
 
 const signUp = function () {
+  // console.log(myfavorite.value.length)
   const payload = {
     username: username.value,
     password: password1.value,
@@ -133,9 +137,10 @@ const signUp = function () {
   //   formData.append('financial_products', finan.value)
   // }
 
-  if (favorite.value.length > 0) {
-    formData.append('favorite', favorite2.value)
-  }
+  // if (myfavorite.value.length > 0) {
+  //   console.log(myfavorite.value)
+  //   formData.append('favorite', myfavorite.value)
+  // }
 
   formData.append('mbti', mbti.value)
 
