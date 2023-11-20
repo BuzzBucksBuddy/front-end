@@ -31,6 +31,7 @@ export const useSignupStore = defineStore('signup', () => {
     })
       .then((res) => {
         console.log(res)
+        // router.push({name: 'Home'})
       })
       .catch((err) => {
         console.log(err)

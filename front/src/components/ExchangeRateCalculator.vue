@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h3>Exchange Rate Calculator</h3>
+    <h2>Exchange Rate Calculator</h2>
     <form>
       <select id="select-exchange-rate-category" v-model="category">
         <option
@@ -12,7 +12,7 @@
         </option>
       </select>
       <div>
-        <select id="select-country-category" v-model="country">
+        <select id="select-country-category" v-model="country" @change="handleCountryChange">
         <option
           v-for="countryCategory in store.countryCategoryList"
           :key="countryCategory.id"
@@ -23,10 +23,9 @@
       </select>
       <input type="text" v-model="money">
       <span>{{ store.exchangeUnit }}</span>
-      <button>조회</button>
       </div>
+      <p>{{ exchangeResult }} 원</p>
     </form>
-    <p>{{ exchangeResult }} 원</p>
   </div>
 </template>
   
@@ -50,6 +49,14 @@ watch(
     }  
   }
 )
+
+const emit = defineEmits('countryChanged')
+
+const handleCountryChange = () => {
+  if (country.value) {
+    emit('countryChanged', country.value)
+  }
+}
 
 
 

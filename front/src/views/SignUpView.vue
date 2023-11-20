@@ -26,13 +26,13 @@
       <input type="text" id="money" v-model.trim="money">
       <label for="salary">salary: </label>
       <input type="text" id="salary" v-model.trim="salary">
-      <label for="financial-products">financial products: {{ financialProducts }} </label>
+      <!-- <label for="financial-products">financial products: {{ financialProducts }} </label>
       <div>
         <input type="checkbox" id="예금" value="예금" v-model="financialProducts"> <label for="예금">예금</label>
       </div>
       <div>
         <input type="checkbox" id="적금" value="적금" v-model="financialProducts"> <label for="적금">적금</label>
-      </div>
+      </div> -->
       <!-- <input type="text" id="financial-products" v-model.trim="financialProducts"> -->
       <label for="favorite">favorite: {{ favorite }} </label>
       <div>
@@ -67,7 +67,7 @@
       <input type="submit">
     </form>
     {{ comm }}
-    {{ comm2 }}
+    <!-- {{ comm2 }} -->
 
   </div>
 </template>
@@ -88,7 +88,7 @@ const email = ref('')
 const money = ref(0)
 const salary = ref(0)
 // const financialProducts = ref([])
-const financialProducts = ref([])
+// const financialProducts = ref([])
 const favorite = ref([])
 const mbti = ref(null)
 
@@ -107,12 +107,12 @@ const comm = computed(() => {
   return favorite.value.length
 })
 
-const finan = ref('')
-const comm2 = computed(() => {
-  finan.value = financialProducts.value.join(', ')
-  console.log(finan.value)
-  return financialProducts.value.length
-})
+// const finan = ref('')
+// const comm2 = computed(() => {
+//   finan.value = financialProducts.value.join(', ')
+//   console.log(finan.value)
+//   return financialProducts.value.length
+// })
 
 const signUp = function () {
   const formData = new FormData()
@@ -124,31 +124,15 @@ const signUp = function () {
   formData.append('email', email.value)
   formData.append('money', money.value)
   formData.append('salary', salary.value)
-  // const financialProductsInt = financialProducts.value.map(value => parseInt(value))
-  // formData.append('financial_products', JSON.stringify(financialProductsInt))
-  // const favoriteInt = favorite.value.map(value => parseInt(value))
-  // formData.append('favorite', JSON.stringify(favoriteInt))
-  // if (financialProducts.value !== null) {
-  //   formData.append('financial_products', financialProducts.value.join(','))
+  
+  // if (financialProducts.value.length > 0) {
+  //   formData.append('financial_products', finan.value)
   // }
-  if (financialProducts.value.length > 0) {
-    formData.append('financial_products', finan.value)
-  }
-  // formData.append('financial_products', financialProducts.value)
-  // financialProducts.value.forEach((value, index) => {
-  //   formData.append(`financial_products[${index}]`, value)
-  // })
+
   if (favorite.value.length > 0) {
     formData.append('favorite', favorite2.value)
   }
-  // formData.append('favorite', favorite.value.join(','))
-  // financialProducts.value.forEach((item, index) => {
-  //   formData.append(`financial_products[${index}]`, item);
-  // })
-  // favorite.value.forEach((item, index) => {
-  //   formData.append(`favorite[${index}]`, item);
-  // });
-  
+
   formData.append('mbti', mbti.value)
 
   
