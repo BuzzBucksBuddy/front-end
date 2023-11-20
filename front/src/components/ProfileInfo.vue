@@ -3,7 +3,7 @@
     <h2>Profile Info</h2>
     <p>{{ myProfile }}</p>
     <div class="profile">
-      <img :src="myProfile.profile_thumbnail" alt="Profile_image">
+      <!-- <img :src="myProfile.profile_thumbnail" alt="Profile_image"> -->
       <p>UserName: {{ myProfile.username }}</p>
       <p>NickName: {{ myProfile.nickname }}</p>
       <p>Email: {{ myProfile.email }}</p>
@@ -25,9 +25,10 @@ import { useRoute } from 'vue-router'
 const store = useLoginStore()
 const route = useRoute()
 
-onMounted(() => {
-  // console.log()
-  store.getProfile()
+
+onMounted((userId) => {
+  
+  store.getProfile(userId)
 })
 
 const myProfile = computed(()=>{
