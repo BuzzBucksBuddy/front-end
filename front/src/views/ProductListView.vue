@@ -4,35 +4,41 @@
     <button @click="isDeposit = !isDeposit">{{ isDeposit ? '적금 상품 보기' : '예금 상품 보기' }}</button>
     <hr>
 
-    <h2>예금 상품</h2>
     <section v-show="isDeposit">
-      <select v-model="bankSelect">
-        <option disabled value="">은행을 선택하세요</option>
-        <option v-for="bank in depBankList">{{ bank }}</option>
-      </select>
-      <select v-model="termSelect">
-        <option disabled value="">기간을 선택하세요</option>
-        <option v-for="term in depTermList">{{ term }}</option>
-      </select>
+      <h2>예금 상품</h2>
+        <select name="depBank" id="depBank" v-model="selectDepBank">
+          <option disabled value="">은행을 선택하세요</option>
+          <option v-for="depBank in articleStore.bankCategories" :key="depBank" :value="depBank.id">{{ depBank.name }}</option>
+        </select>
+        <select name="depTerm" id="depTerm" v-model="selectDepTerm">
+          <option disabled value="">기간을 선택하세요</option>
+          <option>6개월</option>
+          <option>12개월</option>
+          <option>24개월</option>
+          <option>36개월</option>
+        </select>
       <DepositProductList
-        v-for="product in store.dep_products"
+        v-for="product in productStore.dep_products"
         :key="product.id"
         :product="product"
       />
     </section>
 
-    <h2>적금 상품</h2>
     <section v-show="!isDeposit">
-      <select v-model="bankSelect">
-        <option disabled value="">은행을 선택하세요</option>
-        <option v-for="bank in savBankList">{{ bank }}</option>
-      </select>
-      <select v-model="termSelect">
-        <option disabled value="">기간을 선택하세요</option>
-        <option v-for="term in savTermList">{{ term }}</option>
-      </select>
+      <h2>적금 상품</h2>
+      <select name="savBank" id="savBank" v-model="selectSavBank">
+          <option disabled value="">은행을 선택하세요</option>
+          <option v-for="savBank in articleStore.bankCategories" :key="savBank" :value="savBank.id">{{ savBank.name }}</option>
+        </select>
+        <select name="savTerm" id="savTerm" v-model="selectSavTerm">
+          <option disabled value="">기간을 선택하세요</option>
+          <option>6개월</option>
+          <option>12개월</option>
+          <option>24개월</option>
+          <option>36개월</option>
+        </select>
       <SavingProductList
-        v-for="product in store.sav_products"
+        v-for="product in productStore.sav_products"
         :key="product.id"
         :product="product"
       />
@@ -44,80 +50,24 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useProductStore } from '@/stores/product'
+import { useArticleStore } from '@/stores/article'
 import DepositProductList from '@/components/DepositProductList.vue'
 import SavingProductList from '@/components/SavingProductList.vue'
+import axios from 'axios'
 
-const store = useProductStore()
+const productStore = useProductStore()
+const articleStore = useArticleStore()
 const isDeposit = ref(true)
-const bankSelect = ref('')
-const termSelect = ref('')
-const depBankList = ref(null)
-const savBankList = ref(null)
-const depTermList = ref(null)
-const savTermList = ref(null)
-
-const getDepbankList = function() {
-  axios({
-    method: 'get',
-    url: `${store.API_URL}/deposit-list/`
-  })
-    .then(res => {
-      depBankList.value = res.data.kor_co_nm
-    })
-    .catch((err) => {
-      console.log(err)
-    })
-}
-
-const getDepTermList = function() {
-  axios({
-    method: 'get',
-    url: `${store.API_URL}/deposit-list/`
-  })
-    .then(res => {
-      depTermList.value = res.data.save_trm
-    })
-    .catch((err) => {
-      console.log(err)
-    })
-}
-
-const getSavbankList = function() {
-  axios({
-    method: 'get',
-    url: `${store.API_URL}/saving-list/`
-  })
-    .then(res => {
-      savBankList.value = res.data.kor_co_nm
-    })
-    .catch((err) => {
-      console.log(err)
-    })
-}
-
-const getSavTermList = function() {
-  axios({
-    method: 'get',
-    url: `${store.API_URL}/saving-list/`
-  })
-    .then(res => {
-      savTermList.value = res.data.save_trm
-    })
-    .catch((err) => {
-      console.log(err)
-    })
-}
+const selectDepBank = ref(0)
+const selectDepTerm = ref(0)
+const selectSavBank = ref(0)
+const selectSavTerm = ref(0)
 
 onMounted(() => {
-  store.getDepProducts()
-  getDepbankList
-  getDepTermList
-})
-
-onMounted(() => {
-  store.getSavProducts()
-  getSavbankList
-  getSavTermList
+  productStore.getDepProducts()
+  productStore.getSavProducts()
+  articleStore.setBankCategories
+  articleStore.getBankCategories
 })
 
 </script>

@@ -1,8 +1,8 @@
 <template>
-  <div @click="goDetail">
+  <div>
     <p>공시 제출월 : {{ product.dcls_month }}</p>
     <p>금융회사명 : {{ product.kor_co_nm }}</p>
-    <p>상품명 : {{ product.fin_prdt_nm }}</p>
+    <p @click="goDetail">상품명 : {{ product.fin_prdt_nm }}</p>
     <p v-for="option in options">
       {{ option.save_trm }}개월: {{ option.intr_rate }}
     </p>
