@@ -1,13 +1,17 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 import { useRouter } from 'vue-router'
+import { useLoginStore } from '@/stores/login'
 import axios from 'axios'
 
 export const useSignupStore = defineStore('signup', () => {
   const router = useRouter()
   const API_URL = 'http://127.0.0.1:8000'
+  const store = useLoginStore()
 
-  const signUp = function (formData) {
+  const signUp = function (payload, formData) {
+    const { username, password } = payload
+    console.log(formData)
     axios({
       method: 'post',
       url: `${API_URL}/dj-rest-auth/registration/`,
@@ -31,7 +35,8 @@ export const useSignupStore = defineStore('signup', () => {
     })
       .then((res) => {
         console.log(res)
-        // router.push({name: 'Home'})
+        store.logIn(payload)
+        router.push({name: 'Home'})
       })
       .catch((err) => {
         console.log(err)

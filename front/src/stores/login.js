@@ -58,12 +58,13 @@ export const useLoginStore = defineStore('login', () => {
 
 
   const myProfile = ref([])
-  const getProfile = function (userId) {
-    // const userId = route.params
-    // console.log(userId)
+  const getProfile = function () {
     axios({
       method: 'get',
-      url: `${API_URL}/api/v1/accounts/${userId}/`     // 잘모르겟..
+      url: `${API_URL}/api/v1/accounts/profile/`,     // 잘모르겟..
+      headers: {
+        Authorization: `Token ${token.value}`
+      }
     })
       .then((res) => {
         console.log(res)
@@ -85,7 +86,8 @@ export const useLoginStore = defineStore('login', () => {
         }
       })
         .then((res) => {
-          // console.log(res.data)
+          console.log(res.data)
+
           myName.value = res.data.username
           myId.value = res.data.pk
         })

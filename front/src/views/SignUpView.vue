@@ -115,6 +115,10 @@ const comm = computed(() => {
 // })
 
 const signUp = function () {
+  const payload = {
+    username: username.value,
+    password: password1.value,
+  }
   const formData = new FormData()
   formData.append('username', username.value)
   formData.append('password1', password1.value)
@@ -141,7 +145,7 @@ const signUp = function () {
   }
 
 
-  store.signUp(formData)
+  store.signUp(payload, formData)
 }
 
 // const signUp = function () {

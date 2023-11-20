@@ -8,7 +8,7 @@
       <ul>
         <li v-for="(title, index) in titleList" :key="index">
           <h4>{{ title }}</h4>
-          <a :href="linkList[index]" target="_blank">Read more</a>
+          <a :href="`https://news.google.com/${linkList[index]}`" target="_blank">Read more</a>
         </li>
       </ul>
     </div>
