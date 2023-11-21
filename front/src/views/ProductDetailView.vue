@@ -12,8 +12,7 @@
       <p>기타 유의사항 : {{ product.etc_note }}</p>
       <p>가입 방법 : {{ product.join_way }}</p>
     </div>
-    <button @click="joinProduct(product.fin_prdt_cd)">가입하기</button>
-    {{ product }}
+    <button @click="joinProduct(product.fin_prdt_cd)">{{ joinSelector }}</button>
   </div>
 </template>
 
@@ -30,23 +29,7 @@ const store = useProductStore()
 const loginStore = useLoginStore()
 const product = ref(null)
 
-// const joinProduct = function (product) {
-//   const existingJoin = JSON.parse(localStorage.getItem('join')) || []
-
-//   const isDuplicate = existingJoin.length > 0 && existingJoin.find((item) => item.id === product.id)
-
-//   if(!isDuplicate) {
-//     alert('가입 성공!')
-//     existingJoin.push(product)
-//   } else {
-//     alert('이미 가입한 상품입니다. 가입 상품 목록 페이지로 이동합니다.')
-//   }
-
-//   localStorage.setItem('join', JSON.stringify(existingJoin))
-
-//   router.push({ name: 'JoinList' })
-// }
-
+const userList = ref([])
 
 // 가입하기
 const joinProduct = function (fin_prdt_cd) {
@@ -62,6 +45,8 @@ const joinProduct = function (fin_prdt_cd) {
         .then((res) => {
           console.log(res)
           getDepProduct(route.params.productId)
+          joiners(route.params.productId)
+          console.log(isJoined.value)
         })
         .catch((err) => {
           console.log(err)
@@ -77,6 +62,7 @@ const joinProduct = function (fin_prdt_cd) {
         .then((res) => {
           console.log(res)
           getSavProduct(route.params.productId)
+          joiners(route.params.productId)
         })
         .catch((err) => {
           console.log(err)
@@ -91,17 +77,49 @@ const joinProduct = function (fin_prdt_cd) {
   }
 }
 
+const joiners = function (fin_prdt_cd) {
+  if (route.params.type === 'dep') {
+    axios({
+      method: 'get',
+      url: `http://127.0.0.1:8000/api/v1/accounts/dep_users/${fin_prdt_cd}/`
+    })
+      .then((res) => {
+        console.log(res)
+        userList.value = res.data
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  } else {
+    axios({
+      method: 'get',
+      url: `http://127.0.0.1:8000/api/v1/accounts/sav_users/${fin_prdt_cd}/`
+    })
+      .then((res) => {
+        console.log(res)
+        userList.value = res.data
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
+}
+
 // 가입한 상품인지 확인
 const isJoined = computed(() => {
-  if (product.value === null) {
+  if (userList.value.length == 0) {
     return false
   } else {
-    if (product.value.like_users.includes(loginStore.myId)) {
+    if (userList.value.users.includes(loginStore.myId)) {
       return true
     } else {
       return false
     }
   }
+})
+
+const joinSelector = computed(() => {
+  return isJoined.value ? '가입취소' : '가입하기'
 })
 
 const getDepProduct = function(dep_cd) {
@@ -133,8 +151,10 @@ const getSavProduct = function(sav_cd) {
 onMounted(() => {
   if (route.params.type === 'dep') {
     getDepProduct(route.params.productId)
+    joiners(route.params.productId)
   } else if (route.params.type === 'sav') {
     getSavProduct(route.params.productId)
+    joiners(route.params.productId)
   }
 })
 
