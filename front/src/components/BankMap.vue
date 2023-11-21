@@ -1,7 +1,7 @@
 <template>
   <div>
     <div ref="container">
-      <div id="map" style="width:100%;height:400px;"></div>
+      <div id="map" style="width:100%; height:760px;"></div>
     </div>
   </div>
 </template>
