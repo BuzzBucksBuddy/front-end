@@ -41,6 +41,26 @@ export const useLoginStore = defineStore('login', () => {
       })
   }
 
+  const toSignupfromLogIn = function (payload) {
+    const { username, password } = payload
+
+    axios({
+      method: 'post',
+      url: `${API_URL}/dj-rest-auth/login/`,
+      data: {
+        username, password
+      }
+    })
+      .then((res) => {
+        console.log(res.data)
+        token.value = res.data.key
+        userInfo()
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
+
   const logOut = function () {
     axios({
       method: 'post',
@@ -136,16 +156,6 @@ export const useLoginStore = defineStore('login', () => {
 
 
   const editProfile = function(fieldName, newValue) {
-    // const { 
-    //   nickname, 
-    //   money, 
-    //   financial_products_dep, 
-    //   financial_products_sav, 
-    //   salary, 
-    //   favorite, 
-    //   mbti, 
-    //   main_bank 
-    // } = newValue
     console.log(newValue)
     axios({
       method: 'put',
@@ -168,7 +178,8 @@ export const useLoginStore = defineStore('login', () => {
 
   return { 
     API_URL, 
-    logIn, 
+    logIn,
+    toSignupfromLogIn, 
     token, 
     isLogin, 
     userInfo, 
