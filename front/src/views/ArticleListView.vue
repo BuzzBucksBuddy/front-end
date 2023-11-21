@@ -26,10 +26,10 @@
       </form>
     </div>
     <hr>
-    <section v-if="isExist">
+    <section class="article-container" v-if="isExist">
       <ArticleList v-for="(article, idx) in list" :key="`article.id`" :article="article"/>
     </section>
-    <section v-else>
+    <section class="article-container" v-else>
       <p>게시글이 존재하지 않습니다</p>
     </section>
     <ul class="pagination" v-show="isExist">
@@ -58,6 +58,8 @@ const selectProduct = ref(0)
 
 const selectField = ref('title')
 const searchInput = ref('')
+
+const inSearch = ref(false)
 
 const getArticles = watch(() => [selectProduct.value, selectBank.value], ([newProduct, newBank]) => {
   getFilteredArticles(newProduct, newBank)
@@ -215,10 +217,16 @@ const pageArrow = (e) => {
   } else if(e == 'last'){    //마지막
     movePage = totalPage.value
   } else if(e == 'prev'){    //이전  
-    movePage = currentPageListStart() - 1    
+    // movePage = currentPageListStart() - 1
+    // console.log('math', Math.floor(currentPage.value / pageNum) * pageNum)
+    // console.log(movePage)
+    movePage--
     movePage < 0 ? movePage = 0 : ''
   } else{//다음
-    movePage = currentPageListStart() + 10
+    // movePage = currentPageListStart() + 1
+    // console.log('math', Math.floor(currentPage.value / pageNum) * pageNum)
+    // console.log(movePage)
+    movePage++
     movePage >= totalPage.value ? movePage = totalPage.value : ''
   }
   page(movePage)
@@ -265,5 +273,8 @@ hr {
 .pagination a {
   text-decoration: none;
   color: black;
+}
+.article-container {
+  height: 720px;
 }
 </style>
