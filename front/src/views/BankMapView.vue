@@ -33,7 +33,7 @@
           </div>
           <div v-else>해당 은행의 예금 상품이 없습니다</div>
         </section>
-        <section v-show="!switcher">
+        <section class="bank-items" v-show="!switcher">
           <div v-if="savLen">
             <BankSavingProductList
               v-for="product in store.savList"
