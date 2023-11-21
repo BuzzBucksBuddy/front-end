@@ -70,8 +70,6 @@ const savLen = computed(() => {
 const guLoader = watch(() => selectDo.value, (newValue, old) => {
   if (newValue !== null) {
     store.guLoader(newValue)
-    // GuList.value = store.guList
-    // console.log('gu', GuList.value)
   }
 })
 

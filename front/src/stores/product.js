@@ -2,7 +2,7 @@ import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import axios from 'axios'
 
-export const useProductStore = defineStore('article', () => {
+export const useProductStore = defineStore('product', () => {
   const API_URL = 'http://127.0.0.1:8000/api/v1/products'
   const dep_products = ref([])
   const sav_products = ref([])
