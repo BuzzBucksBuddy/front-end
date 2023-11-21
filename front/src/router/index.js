@@ -13,6 +13,7 @@ import ArticleListView from '@/views/ArticleListView.vue'
 import ArticleDetailView from '@/views/ArticleDetailView.vue'
 import ArticleCreateView from '@/views/ArticleCreateView.vue'
 import FavoriteSelectView from '@/views/FavoriteSelectView.vue'
+import JoinListView from '@/views/JoinListView.vue'
 
 
 const router = createRouter({
@@ -42,6 +43,11 @@ const router = createRouter({
       path: '/product/:type/:productId',
       name: 'ProductDetail',
       component: ProductDetailView
+    },
+    {
+      path: '/join',
+      name: 'JoinList',
+      component: JoinListView
     },
     {
       path: '/login',
