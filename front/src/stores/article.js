@@ -109,6 +109,6 @@ export const useArticleStore = defineStore('article', () => {
     searchArticles,
     getBankCategories,
     getProductCategories,
-    setBankCategories
+    setBankCategories,
   }
 }, { persist: true })

@@ -1,41 +1,44 @@
 <template>
   <div>
-    <h1>상품 목록</h1>
     <button @click="isDeposit = !isDeposit">{{ isDeposit ? '적금 상품 보기' : '예금 상품 보기' }}</button>
-    <hr>
-
+    
     <section v-show="isDeposit">
       <h2>예금 상품</h2>
         <select name="depBank" id="depBank" v-model="selectDepBank">
-          <option disabled value="">은행을 선택하세요</option>
-          <option v-for="depBank in articleStore.bankCategories" :key="depBank" :value="depBank.id">{{ depBank.name }}</option>
+          <option :value="'선택 안함'" disabled>은행을 선택하세요</option>
+          <option v-for="depBank in articleStore.bankCategories" :key="depBank" :value="depBank.name">{{ depBank.name }}</option>
         </select>
         <select name="depTerm" id="depTerm" v-model="selectDepTerm">
-          <option disabled value="">기간을 선택하세요</option>
-          <option>6개월</option>
-          <option>12개월</option>
-          <option>24개월</option>
-          <option>36개월</option>
+          <option :value="0" disabled>기간을 선택하세요</option>
+          <option :value="6">6개월</option>
+          <option :value="12">12개월</option>
+          <option :value="24">24개월</option>
+          <option :value="36">36개월</option>
         </select>
       <DepositProductList
         v-for="product in productStore.dep_products"
         :key="product.id"
         :product="product"
-      />
+      /> 
     </section>
 
     <section v-show="!isDeposit">
       <h2>적금 상품</h2>
       <select name="savBank" id="savBank" v-model="selectSavBank">
-          <option disabled value="">은행을 선택하세요</option>
-          <option v-for="savBank in articleStore.bankCategories" :key="savBank" :value="savBank.id">{{ savBank.name }}</option>
+          <option :value="'선택 안함'" disabled>은행을 선택하세요</option>
+          <option v-for="savBank in articleStore.bankCategories" :key="savBank" :value="savBank.name">{{ savBank.name }}</option>
         </select>
         <select name="savTerm" id="savTerm" v-model="selectSavTerm">
-          <option disabled value="">기간을 선택하세요</option>
-          <option>6개월</option>
-          <option>12개월</option>
-          <option>24개월</option>
-          <option>36개월</option>
+          <option :value="0" disabled>기간을 선택하세요</option>
+          <option :value="6">6개월</option>
+          <option :value="12">12개월</option>
+          <option :value="24">24개월</option>
+          <option :value="36">36개월</option>
+        </select>
+        <select name="savType" id="savType" v-model="selectSavType">
+          <option :value="'선택 안함'" disabled>유형을 선택하세요</option>
+          <option :value="'정액적립식'">정액적립식</option>
+          <option :value="'자유적립식'">자유적립식</option>
         </select>
       <SavingProductList
         v-for="product in productStore.sav_products"
@@ -48,28 +51,45 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
-import { useProductStore } from '@/stores/product'
-import { useArticleStore } from '@/stores/article'
+import { ref, onMounted, watch } from 'vue'
+import { useProductStore } from '@/stores/product.js'
+import { useArticleStore } from '@/stores/article.js'
 import DepositProductList from '@/components/DepositProductList.vue'
 import SavingProductList from '@/components/SavingProductList.vue'
-import axios from 'axios'
 
 const productStore = useProductStore()
 const articleStore = useArticleStore()
 const isDeposit = ref(true)
-const selectDepBank = ref(0)
-const selectDepTerm = ref(0)
-const selectSavBank = ref(0)
-const selectSavTerm = ref(0)
 
-onMounted(() => {
-  productStore.getDepProducts()
-  productStore.getSavProducts()
-  articleStore.setBankCategories
-  articleStore.getBankCategories
+const selectDepBank = ref('선택 안함')
+const selectDepTerm = ref(0)
+
+const selectSavBank = ref('선택 안함')
+const selectSavTerm = ref(0)
+const selectSavType = ref('선택 안함')
+
+const depBankWatch = watch(() => (selectDepBank.value), (newValue) => {
+  productStore.getDepProducts(newValue)
 })
 
+const savBankWatch = watch(() => (selectSavBank.value), (newValue) => {
+  productStore.getSavProducts(newValue)
+})
+
+const depOptionWatch = watch(() => (selectDepTerm.value), (newValue) => {
+  productStore.depCategorize(newValue)
+})
+
+const savOptionWatch = watch(() => [selectSavTerm.value, selectSavType.value], ([newTerm, newType]) => {
+  productStore.savCategorize(newTerm, newType)
+})
+
+onMounted(() => {
+  productStore.getDepProducts(selectDepBank.value)
+  productStore.getSavProducts(selectSavBank.value)
+  articleStore.setBankCategories()
+  articleStore.getBankCategories()
+})
 </script>
 
 <style scoped>
