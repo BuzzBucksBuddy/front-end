@@ -118,16 +118,12 @@ export const useLoginStore = defineStore('login', () => {
   }
 
 
-  const favoriteSelect = function (payload) {
-    const { favorite } = payload
+  const favoriteSelect = function (favoriteId) {
     axios({
       method: 'post',
-      url: `${API_URL}/api/v1/accounts/favorites/`,
-      data: {
-        favorite,
-      },
+      url: `${API_URL}/api/v1/accounts/favorites/${favoriteId}/select/`,
       headers: {
-        Authorization: `Token ${token.value}`     // password1 오류
+        Authorization: `Token ${token.value}`
       }
     })
       .then ((res) => {
@@ -140,8 +136,9 @@ export const useLoginStore = defineStore('login', () => {
 
 
   const editProfile = function(fieldName, newValue) {
+    console.log(newValue)
     axios({
-      method: 'post',
+      method: 'put',
       url: `${API_URL}/api/v1/accounts/profile/`,
       data:{
         [fieldName]: newValue,
