@@ -43,9 +43,13 @@ const exchangeResult = ref(0)
 watch(
   () => [country.value, category.value, money.value],
   ([newCountry, newCategory, newMoney]) => {
-    if (newCountry || newCategory || newMoney === (null || 0)) {
+    if (newCountry && newCategory !== (null || 0)) {
     store.getCountryInfo(newCountry, newCategory)
-    exchangeResult.value = store.exchangeRate * newMoney
+    if (newCountry = ('JPY(100)' || 'IDR(100)')) {
+      exchangeResult.value = store.exchangeRate * newMoney / 100
+    } else {
+      exchangeResult.value = store.exchangeRate * newMoney
+    }
     }  
   }
 )

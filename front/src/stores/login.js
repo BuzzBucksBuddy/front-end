@@ -61,7 +61,7 @@ export const useLoginStore = defineStore('login', () => {
   const getProfile = function () {
     axios({
       method: 'get',
-      url: `${API_URL}/api/v1/accounts/profile/`,     // 잘모르겟..
+      url: `${API_URL}/api/v1/accounts/profile/`,
       headers: {
         Authorization: `Token ${token.value}`
       }
@@ -104,6 +104,9 @@ export const useLoginStore = defineStore('login', () => {
     axios({
       method: 'get',
       url: `${API_URL}/api/v1/accounts/favorites/`,
+      headers: {
+        Authorization: `Token ${token.value}`     // password1 오류
+      }
     })
       .then((res) => {
         console.log(res.data)
@@ -122,6 +125,9 @@ export const useLoginStore = defineStore('login', () => {
       url: `${API_URL}/api/v1/accounts/favorites/`,
       data: {
         favorite,
+      },
+      headers: {
+        Authorization: `Token ${token.value}`     // password1 오류
       }
     })
       .then ((res) => {
@@ -132,6 +138,25 @@ export const useLoginStore = defineStore('login', () => {
       })
   }
 
+
+  const editProfile = function(fieldName, newValue) {
+    axios({
+      method: 'post',
+      url: `${API_URL}/api/v1/accounts/profile/`,
+      data:{
+        [fieldName]: newValue,
+      },
+      headers: {
+        Authorization: `Token ${token.value}`
+      }
+    })
+      .then ((res) => {
+        console.log(res.data)
+      })
+      .catch((err) => {
+        console.log('profile 수정오류', err)
+      })
+  }
 
 
   return { 
@@ -148,5 +173,6 @@ export const useLoginStore = defineStore('login', () => {
     favoriteCategory, 
     getFavoriteCategory,
     favoriteSelect,
+    editProfile,
    }
 }, { persist: true })
