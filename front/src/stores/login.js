@@ -136,12 +136,22 @@ export const useLoginStore = defineStore('login', () => {
 
 
   const editProfile = function(fieldName, newValue) {
+    // const { 
+    //   nickname, 
+    //   money, 
+    //   financial_products_dep, 
+    //   financial_products_sav, 
+    //   salary, 
+    //   favorite, 
+    //   mbti, 
+    //   main_bank 
+    // } = newValue
     console.log(newValue)
     axios({
       method: 'put',
       url: `${API_URL}/api/v1/accounts/profile/`,
       data:{
-        [fieldName]: newValue,
+        [fieldName]: newValue
       },
       headers: {
         Authorization: `Token ${token.value}`
