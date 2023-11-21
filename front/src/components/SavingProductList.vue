@@ -2,7 +2,7 @@
   <div v-show="select">
     <p>공시 제출월 : {{ product.dcls_month }}</p>
     <p>금융회사명 : {{ product.kor_co_nm }}</p>
-    <p @click="goDetail">상품명 : {{ product.fin_prdt_nm }}</p>
+    <p class="name" @click="goDetail">상품명 : {{ product.fin_prdt_nm }}</p>
 
     <p v-for="savOption in sav_category">
       <p v-if="savOption.rsrv_type_nm === '정액적립식'">
@@ -35,7 +35,7 @@ const props = defineProps({
 const sav_category = ref([])
 
 const select = computed(() => {
-  return sav_category.value.length > 0 ? true : false
+  return sav_category.value.length && sav_category.value.intr_rate !== null > 0 ? true : false
 })
 
 const goDetail = function () {
@@ -65,5 +65,7 @@ onMounted(() => {
 </script>
 
 <style scoped>
-
+.name {
+  cursor: pointer;
+}
 </style>
