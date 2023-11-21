@@ -37,13 +37,13 @@ import { ref, computed, watch } from 'vue'
 const store = useExchangeStore()
 const country = ref(null)
 const category = ref(null)
-const money = ref(0)
+const money = ref(1)
 
 const exchangeResult = ref(0)
 watch(
   () => [country.value, category.value, money.value],
   ([newCountry, newCategory, newMoney]) => {
-    if (newCountry && newCategory !== (null || 0)) {
+    if ((newCountry && newCategory ) !== null) {
     store.getCountryInfo(newCountry, newCategory)
     if (newCountry = ('JPY(100)' || 'IDR(100)')) {
       exchangeResult.value = store.exchangeRate * newMoney / 100
@@ -53,6 +53,24 @@ watch(
     }  
   }
 )
+
+// watch(
+//   () => [country.value, category.value, money.value],
+//   ([newCountry, newCategory, newMoney]) => {
+//     store.getCountryInfo(newCountry, newCategory)
+//     if (money.value === 1) {
+//       exchangeResult.value = store.exchangeRate * 1
+//     } else {
+//       exchangeResult.value = store.exchangeRate * newMoney
+//     }
+//     // if (newCountry = ('JPY(100)' || 'IDR(100)')) {
+//     //   exchangeResult.value = store.exchangeRate * newMoney / 100
+//     // } else {
+//     //   exchangeResult.value = store.exchangeRate * newMoney
+//     // }
+  
+//   }
+// )
 
 const emit = defineEmits('countryChanged')
 

@@ -7,7 +7,11 @@
       <p>UserName: {{ myProfile.username }}</p>
 
       <p>NickName: {{ myProfile.nickname }}</p>
+      <input type="text" v-model="changeProfile">
       <button @click="editField('nickname')">Edit</button>
+      <!-- <p v-if="isSaved">NickName: {{ isSaved ? myProfile.nickname : changeProfile }}</p>
+      <input v-else type="text" v-model="changeProfile">
+      <button @click="editField('nickname')">{{ editBtn }}</button> -->
       
       <p>Email: {{ myProfile.email }}</p>
       <p>Age: {{ myProfile.age }}</p>
@@ -36,11 +40,13 @@
 
 <script setup>
 import { useLoginStore } from '@/stores/login'
-import { onMounted, computed } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { useRoute } from 'vue-router'
 
 const store = useLoginStore()
 const route = useRoute()
+const changeProfile = ref(null)
+const editBtn = ref('')
 
 
 onMounted(() => {
@@ -52,7 +58,17 @@ const myProfile = computed(()=>{
 })
 
 
-const editField = function (fieldName, newValue) {
+const isSaved = function () {
+  if (changeProfile === null) {
+    return true
+  } else {
+    return false
+  }
+}
+
+
+const editField = function (fieldName) {
+  const newValue = changeProfile.value
   store.editProfile(fieldName, newValue)
 }
 
