@@ -175,6 +175,26 @@ export const useLoginStore = defineStore('login', () => {
       })
   }
 
+  const depLankfromFavorite = ref([])
+  const savLankfromFavorite = ref([])
+  const usersFavorite = function (favoriteId) {
+    axios({
+      method: 'get',
+      url: `${API_URL}/api/v1/accounts/users_favorite/${favoriteId}/`,
+      headers: {
+        Authorization: `Token ${token.value}`
+      }
+    })
+    .then ((res) => {
+      console.log(res.data)
+      depLankfromFavorite.value = res.data.most_financial_products_dep
+      savLankfromFavorite.value = res.data.most_financial_products_sav
+    })
+    .catch((err) => {
+      console.log('favorit 추천 오류', err)
+    })
+  }
+
 
   return { 
     API_URL, 
@@ -192,5 +212,8 @@ export const useLoginStore = defineStore('login', () => {
     getFavoriteCategory,
     favoriteSelect,
     editProfile,
+    depLankfromFavorite,
+    savLankfromFavorite,
+    usersFavorite,
    }
 }, { persist: true })

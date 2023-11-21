@@ -40,9 +40,37 @@ const category = ref(null)
 const money = ref(1)
 
 const exchangeResult = ref(0)
+const calculate = function(country, money) {
+  if (country = ('JPY(100)' || 'IDR(100)')) {
+      exchangeResult.value = store.exchangeRate * money / 100
+    } else {
+      exchangeResult.value = store.exchangeRate * money
+    }
+}
+
 watch(
-  () => [country.value, category.value, money.value],
-  ([newCountry, newCategory, newMoney]) => {
+  () => [country.value],(newCountry) => {
+    store.getCountryInfo(newCountry)
+  }
+)
+
+
+watch(
+  () => [category.value],(newCategory) => {
+    if ((newCountry && newCategory ) !== null) {
+    store.getCountryInfo(newCountry, newCategory)
+    if (newCountry = ('JPY(100)' || 'IDR(100)')) {
+      exchangeResult.value = store.exchangeRate * newMoney / 100
+    } else {
+      exchangeResult.value = store.exchangeRate * newMoney
+    }
+    }  
+  }
+)
+
+
+watch(
+  () => [money.value],(newMoney) => {
     if ((newCountry && newCategory ) !== null) {
     store.getCountryInfo(newCountry, newCategory)
     if (newCountry = ('JPY(100)' || 'IDR(100)')) {
@@ -57,20 +85,17 @@ watch(
 // watch(
 //   () => [country.value, category.value, money.value],
 //   ([newCountry, newCategory, newMoney]) => {
+//     if ((newCountry && newCategory ) !== null) {
 //     store.getCountryInfo(newCountry, newCategory)
-//     if (money.value === 1) {
-//       exchangeResult.value = store.exchangeRate * 1
+//     if (newCountry = ('JPY(100)' || 'IDR(100)')) {
+//       exchangeResult.value = store.exchangeRate * newMoney / 100
 //     } else {
 //       exchangeResult.value = store.exchangeRate * newMoney
 //     }
-//     // if (newCountry = ('JPY(100)' || 'IDR(100)')) {
-//     //   exchangeResult.value = store.exchangeRate * newMoney / 100
-//     // } else {
-//     //   exchangeResult.value = store.exchangeRate * newMoney
-//     // }
-  
+//     }  
 //   }
 // )
+
 
 const emit = defineEmits('countryChanged')
 
