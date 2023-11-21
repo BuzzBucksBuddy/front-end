@@ -22,7 +22,7 @@
         </option>
       </select>
       <input type="text" v-model="money">
-      <span>{{ store.exchangeUnit }}</span>
+      <span>{{ exchangeUnit }}</span>
       </div>
       <p>{{ exchangeResult }} 원</p>
     </form>
@@ -32,71 +32,44 @@
 
 <script setup>
 import { useExchangeStore } from '@/stores/exchange.js'
-import { ref, computed, watch } from 'vue'
+import { ref, computed, watch, reactive, nextTick, onUnmounted } from 'vue'
 
 const store = useExchangeStore()
 const country = ref(null)
 const category = ref(null)
 const money = ref(1)
-
 const exchangeResult = ref(0)
-const calculate = function(country, money) {
-  if (country = ('JPY(100)' || 'IDR(100)')) {
-      exchangeResult.value = store.exchangeRate * money / 100
-    } else {
-      exchangeResult.value = store.exchangeRate * money
-    }
-}
 
+const exchangeRate = computed(() => store.exchangeRate)
+const exchangeUnit = computed(() => store.exchangeUnit)
+
+// 이 컴포넌트 언마운트될 때, isActive -> false
+const isActive = ref(true)
+onUnmounted(() => {
+  isActive.value = false
+})
+
+// watch - deep (어떤 방향으로도 반응함) + nextTick: 
 watch(
-  () => [country.value],(newCountry) => {
-    store.getCountryInfo(newCountry)
-  }
+  () => ({ country: country.value, category: category.value, money: money.value }),
+  async ({ country: newCountry, category: newCategory, money: newMoney }) => {
+    if ((newCountry !== null && newCategory !== null) || (newMoney !== 1 && (newCountry !== null && newCategory !== null))) {
+      await store.getCountryInfo(newCountry, newCategory)
+      await nextTick()
+      if (isActive.value) {
+        if (newCountry === 'JPY(100)' || newCountry === 'IDR(100)') {
+          exchangeResult.value = exchangeRate.value * newMoney / 100
+        } else {
+          exchangeResult.value = exchangeRate.value * newMoney
+        }
+      }
+    }
+  },
+  { deep: true }
 )
 
 
-watch(
-  () => [category.value],(newCategory) => {
-    if ((newCountry && newCategory ) !== null) {
-    store.getCountryInfo(newCountry, newCategory)
-    if (newCountry = ('JPY(100)' || 'IDR(100)')) {
-      exchangeResult.value = store.exchangeRate * newMoney / 100
-    } else {
-      exchangeResult.value = store.exchangeRate * newMoney
-    }
-    }  
-  }
-)
-
-
-watch(
-  () => [money.value],(newMoney) => {
-    if ((newCountry && newCategory ) !== null) {
-    store.getCountryInfo(newCountry, newCategory)
-    if (newCountry = ('JPY(100)' || 'IDR(100)')) {
-      exchangeResult.value = store.exchangeRate * newMoney / 100
-    } else {
-      exchangeResult.value = store.exchangeRate * newMoney
-    }
-    }  
-  }
-)
-
-// watch(
-//   () => [country.value, category.value, money.value],
-//   ([newCountry, newCategory, newMoney]) => {
-//     if ((newCountry && newCategory ) !== null) {
-//     store.getCountryInfo(newCountry, newCategory)
-//     if (newCountry = ('JPY(100)' || 'IDR(100)')) {
-//       exchangeResult.value = store.exchangeRate * newMoney / 100
-//     } else {
-//       exchangeResult.value = store.exchangeRate * newMoney
-//     }
-//     }  
-//   }
-// )
-
-
+// country값 상위 View로 emit
 const emit = defineEmits('countryChanged')
 
 const handleCountryChange = () => {
@@ -104,6 +77,27 @@ const handleCountryChange = () => {
     emit('countryChanged', country.value)
   }
 }
+
+
+
+
+// watch(
+//   () => [country.value, category.value, money.value],
+//   async ([newCountry, newCategory, newMoney]) => {
+//     if (newCountry !== null && newCategory !== null) {
+//       await store.getCountryInfo(newCountry, newCategory)
+//       if (newCountry === 'JPY(100)' || newCountry === 'IDR(100)')  {
+//         exchangeResult.value = exchangeRate
+//       } else {
+//         exchangeResult.value = exchangeRate.value * newMoney
+//         console.log('4444')
+//       }
+//     // console.log(calculate)
+//     // exchangeResult.value = calculate
+//     }  
+//   }
+// )
+
 
 
 

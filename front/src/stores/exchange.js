@@ -42,14 +42,14 @@ export const useExchangeStore = defineStore('exchange', () => {
 
   const exchangeRate = ref(null)
   const exchangeUnit = ref(null)
-  const getCountryInfo = function(country, category) {
-    axios({
+  const getCountryInfo = async function(country, category) {
+    await axios({
       method: 'get',
       url: `${API_URL}/api/v1/exchanges/${country}/${category}/`
     })
       .then((res) => {
         console.log(res)
-        exchangeRate.value = res.data.rate
+        exchangeRate.value = Number(res.data.rate)
         exchangeUnit.value = res.data.unit
       })
       .catch((err) => {
@@ -74,6 +74,7 @@ export const useExchangeStore = defineStore('exchange', () => {
       })
   }
 
+  // 뉴스 크롤링
   const searchTitleResults = ref([])
   const searchLinkResults = ref([])
   const searchNews = function(keyword) {
