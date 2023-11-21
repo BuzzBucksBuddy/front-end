@@ -35,7 +35,7 @@ export const useSignupStore = defineStore('signup', () => {
     })
       .then((res) => {
         // console.log(formData)
-        loginStore.logIn(payload)
+        loginStore.toSignupfromLogIn(payload)
         router.push({name: 'FavoriteSelect'})
       })
       .catch((err) => {
