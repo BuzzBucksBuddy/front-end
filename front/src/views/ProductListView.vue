@@ -19,6 +19,7 @@
         v-for="product in productStore.dep_products"
         :key="product.id"
         :product="product"
+        :selectDepTerm="selectDepTerm"
       /> 
     </section>
 
@@ -44,6 +45,8 @@
         v-for="product in productStore.sav_products"
         :key="product.id"
         :product="product"
+        :selectSavTerm="selectSavTerm"
+        :selectSavType="selectSavType"
       />
     </section>
     
@@ -74,14 +77,6 @@ const depBankWatch = watch(() => (selectDepBank.value), (newValue) => {
 
 const savBankWatch = watch(() => (selectSavBank.value), (newValue) => {
   productStore.getSavProducts(newValue)
-})
-
-const depOptionWatch = watch(() => (selectDepTerm.value), (newValue) => {
-  productStore.depCategorize(newValue)
-})
-
-const savOptionWatch = watch(() => [selectSavTerm.value, selectSavType.value], ([newTerm, newType]) => {
-  productStore.savCategorize(newTerm, newType)
 })
 
 onMounted(() => {
