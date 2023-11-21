@@ -1,4 +1,4 @@
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 import axios from 'axios'
 
@@ -6,10 +6,7 @@ export const useProductStore = defineStore('product', () => {
   const API_URL = 'http://127.0.0.1:8000/api/v1/products'
   const dep_products = ref([])
   const sav_products = ref([])
-  const dep_category = ref([])
-  const sav_category = ref([])
 
-  // 은행별 예금 상품 가져오기
   const getDepProducts = function(bank) {
     axios({
       method: 'get',
@@ -23,7 +20,6 @@ export const useProductStore = defineStore('product', () => {
       })
   }
 
-  // 은행별 적금 상품 가져오기
   const getSavProducts = function(bank) {
     axios({
       method: 'get',
@@ -37,7 +33,6 @@ export const useProductStore = defineStore('product', () => {
       })
   }
 
-  // 기간별 예금 상품 옵션 가져오기
   const depCategorize = function(code, term) {
     axios({
       method: 'get',
@@ -51,7 +46,6 @@ export const useProductStore = defineStore('product', () => {
       })
   }
 
-  // 기간별 적금 상품 옵션 가져오기
   const savCategorize = function(code, term, type) {
     axios({
       method: 'get',
@@ -69,11 +63,9 @@ export const useProductStore = defineStore('product', () => {
     API_URL,
     dep_products,
     sav_products,
-    dep_category,
-    sav_category,
     getDepProducts,
     getSavProducts,
     depCategorize,
-    savCategorize,
+    savCategorize
   }
 }, { persist: false })
