@@ -2,8 +2,8 @@
   <div v-show="select">
     <p>공시 제출월 : {{ product.dcls_month }}</p>
     <p>금융회사명 : {{ product.kor_co_nm }}</p>
-    <p @click="goDetail">상품명 : {{ product.fin_prdt_nm }}</p>
-    <p v-for="depOption in dep_category">
+    <p class="name" @click="goDetail">상품명 : {{ product.fin_prdt_nm }}</p>
+    <p v-for="depOption in dep_category" v-show="depOption.intr_rate">
       {{ depOption.save_trm }}개월 : {{ depOption.intr_rate }}
     </p>
 
@@ -28,6 +28,7 @@ const props = defineProps({
 const dep_category = ref([])
 
 const select = computed(() => {
+
   return dep_category.value.length > 0 ? true : false
 })
 
@@ -58,5 +59,7 @@ onMounted(() => {
 </script>
 
 <style scoped>
-
+.name {
+  cursor: pointer;
+}
 </style>
