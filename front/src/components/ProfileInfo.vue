@@ -12,14 +12,23 @@
       </div>
       <div v-else>
         <span>NickName:</span>
-        <input type="text" v-model="changeProfile">
+        <input type="text" v-model="myProfile.nickname">
         <button @click="editField('nickname')">저장</button>
       </div>
       <!-- <p v-if="isSaved">NickName: {{ isSaved ? myProfile.nickname : changeProfile }}</p>
       <input v-else type="text" v-model="changeProfile">
       <button @click="editField('nickname')">{{ editBtn }}</button> -->
       
-      <p>Email: {{ myProfile.email }}</p>
+      <div v-if="isSavedEmail">
+        <p>Email: {{ myProfile.email }}</p>
+        <button @click="isSavedEmail =!isSavedEmail">🖍</button>
+      </div>
+      <div v-else>
+        <span>E-mail:</span>
+        <input type="text" v-model="myProfile.email">
+        <button @click="editField('email')">저장</button>
+      </div>
+
       <p>Age: {{ myProfile.age }}</p>
 
       <div v-if="isSavedMoney">
@@ -28,7 +37,7 @@
       </div>
       <div v-else>
         <span>Money:</span>
-        <input type="text" v-model="changeProfile">
+        <input type="text" v-model="myProfile.money">
         <button @click="editField('money')">저장</button>
       </div>
 
@@ -56,7 +65,7 @@
       </div>
       <div v-else>
         <span>Salary:</span>
-        <input type="text" v-model="changeProfile">
+        <input type="text" v-model="myProfile.salary">
         <button @click="editField('salary')">저장</button>
       </div>
 
@@ -98,15 +107,7 @@ import { useRoute } from 'vue-router'
 
 const store = useLoginStore()
 const route = useRoute()
-const changeProfile = ref(null)
-// const changeNickName = ref(null)
-// const changeMoney = ref(null)
-// const changeFinancialProductsDep = ref(null)
-// const changechangeFinancialProductsSav = ref(null)
-// const changeSalary = ref(null)
-// const changeFavorite = ref(null)
-// const changeMbti = ref(null)
-// const changeMainBank = ref(null)
+// const changeProfile = ref(null)
 const editBtn = ref('변경')
 
 
@@ -119,15 +120,8 @@ const myProfile = computed(()=>{
 })
 
 
-// const isSaved = function () {
-//   if (changeProfile === null) {
-//     return true
-//   } else {
-//     return false
-//   }
-// }
-
 const isSavedNickname = ref(true)
+const isSavedEmail = ref(true)
 const isSavedMoney = ref(true)
 const isSavedDep = ref(true)
 const isSavedSav = ref(true)
@@ -136,14 +130,16 @@ const isSavedFavorite = ref(true)
 const isSavedMbti = ref(true)
 const isSavedMainBank = ref(true)
 
+// 프로필 수정
 const editField = function (fieldName) {
-  const newValue = changeProfile.value
+  const newValue = myProfile[fieldName]
   store.editProfile(fieldName, newValue)
 
-  changeProfile.value = null
+  // changeProfile.value = null
   editBtn.value = '저장'
   
   isSavedNickname.value = true
+  isSavedEmail.value = true
   isSavedMoney.value = true
   isSavedDep.value = true
   isSavedSav.value = true
