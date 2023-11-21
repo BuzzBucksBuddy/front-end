@@ -3,7 +3,8 @@
       <h1>가입한 상품 목록</h1>
       <div v-if="joinedItems">
         <div v-for="product in joinedItems" :key="product.id">
-          <p>{{ product.kor_co_nm }} - {{ product.fin_prdt_nm }}</p>
+          <p>금융회사명 : {{ product.kor_co_nm }}</p>
+          <p>상품명 : {{ product.fin_prdt_nm }}</p>
           <button @click="goDetail(product)">상품 상세</button>
           <button @click="removeList(product)">가입 취소</button>
           <hr>

@@ -3,8 +3,17 @@
     <p>공시 제출월 : {{ product.dcls_month }}</p>
     <p>금융회사명 : {{ product.kor_co_nm }}</p>
     <p @click="goDetail">상품명 : {{ product.fin_prdt_nm }}</p>
+    <h5>정액적립식</h5>
     <p v-for="option in options">
-      {{ option.rsrv_type_nm }}: {{ option.save_trm }}개월 - {{ option.intr_rate }}
+      <p v-if="option.rsrv_type_nm === '정액적립식'">
+        {{ option.save_trm }}개월 : {{ option.intr_rate }}
+      </p>
+    </p>
+    <h5>자유적립식</h5>
+    <p v-for="option in options">
+      <p v-if="option.rsrv_type_nm === '자유적립식'">
+        {{ option.save_trm }}개월 : {{ option.intr_rate }}
+      </p>
     </p>
     <hr>
   </div>

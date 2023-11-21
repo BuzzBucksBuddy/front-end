@@ -6,8 +6,11 @@
       <p>금융회사명 : {{ product.kor_co_nm }}</p>
       <p>상품명 : {{ product.fin_prdt_nm }}</p>
       <p>가입제한 : {{ product.join_deny }}</p>
-      <p>가입 방법 : {{ product.join_way }}</p>
+      <p>가입 대상 : {{ product.join_member }}</p>
       <p>우대조건 : {{ product.spcl_cnd }}</p>
+      <p>만기 후 이자율 : {{ product.mtrt_int }}</p>
+      <p>기타 유의사항 : {{ product.etc_note }}</p>
+      <p>가입 방법 : {{ product.join_way }}</p>
     </div>
     <button @click="joinProduct(product)">가입하기</button>
   </div>
@@ -27,10 +30,8 @@ const product = ref(null)
 const joinProduct = function (product) {
   const existingJoin = JSON.parse(localStorage.getItem('join')) || []
 
-  // 중복된 상품이 있는지 확인
   const isDuplicate = existingJoin.length > 0 && existingJoin.find((item) => item.id === product.id)
 
-  // 중복이 아니라면 추가
   if(!isDuplicate) {
     alert('가입 성공!')
     existingJoin.push(product)
@@ -38,7 +39,6 @@ const joinProduct = function (product) {
     alert('이미 가입한 상품입니다. 가입 상품 목록 페이지로 이동합니다.')
   }
 
-  // 수정된 데이터를 localStorage 에 저장
   localStorage.setItem('join', JSON.stringify(existingJoin))
 
   router.push({ name: 'JoinList' })
