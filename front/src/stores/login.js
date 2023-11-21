@@ -104,6 +104,9 @@ export const useLoginStore = defineStore('login', () => {
     axios({
       method: 'get',
       url: `${API_URL}/api/v1/accounts/favorites/`,
+      headers: {
+        Authorization: `Token ${token.value}`     // password1 오류
+      }
     })
       .then((res) => {
         console.log(res.data)
