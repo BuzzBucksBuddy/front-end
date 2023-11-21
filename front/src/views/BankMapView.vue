@@ -82,10 +82,11 @@ onMounted(() => {
   store.doLoader()
   articleStore.setBankCategories()
   articleStore.getBankCategories()
-  bankList.value = articleStore.bankCategories
   store.getAllDepositProducts()
   store.getAllSavingProducts()
 })
+
+bankList.value = articleStore.bankCategories
 
 const bankWatcher = watch(() => selectBank.value, (newValue, old) => {
   if (newValue === '은행') {
