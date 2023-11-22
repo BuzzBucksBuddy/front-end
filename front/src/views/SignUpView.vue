@@ -70,7 +70,7 @@
         </select>
       </div>
 
-      <input type="submit" value="가입하기">
+      <input class="submit-btn" type="submit" value="가입하기">
     </form>
   </div>
 </template>
@@ -179,5 +179,17 @@ const signUp = function () {
   border: 2px solid rgb(138, 138, 138);
   height: 36px;
   border-radius: 6px;
+}
+.submit-btn {
+  width: 300px;
+  height: 48px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.5s;
+  background-color: rgb(255, 237, 203);
+}
+.submit-btn:hover {
+  background-color: rgb(255, 215, 130);
 }
 </style>
