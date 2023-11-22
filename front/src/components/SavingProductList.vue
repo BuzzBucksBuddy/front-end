@@ -1,20 +1,40 @@
 <template>
-  <div v-show="select">
-    <p>공시 제출월 : {{ product.dcls_month }}</p>
-    <p>금융회사명 : {{ product.kor_co_nm }}</p>
-    <p class="name" @click="goDetail">상품명 : {{ product.fin_prdt_nm }}</p>
+  <div class="card" v-show="select">
+    <div class="card-body">
+      <!--상품명-->
+      <h5 class="name card-title" @click="goDetail">{{ product.fin_prdt_nm }}</h5>
+      <!--금융회사명-->
+      <h6 class="card-subtitle mb-2 text-body-secondary">{{ product.kor_co_nm }}</h6>
 
-    <p v-for="savOption in sav_category">
-      <p v-if="savOption.rsrv_type_nm === '정액적립식'">
-        <p>정액적립식 - {{ savOption.save_trm }}개월 : {{ savOption.intr_rate }}</p>
+      <!--옵션-->
+      <p v-for="savOption in sav_category">
+        <p v-if="savOption.rsrv_type_nm === '정액적립식'">
+          <div class="card text-center" style="width: 7rem; height: 7rem;">
+            <div class="card-body">
+              <h2 class="card-title">{{ savOption.intr_rate }}</h2>
+              <p class="card-subtitle">
+                <span class="badge text-bg-secondary">{{ savOption.save_trm }}개월</span>
+                <span class="badge text-bg-primary">정액적립식</span>
+              </p>
+            </div>
+          </div>
+        </p>
+        <p v-if="savOption.rsrv_type_nm === '자유적립식'">
+          <div class="card text-center" style="width: 7rem; height: 7rem;">
+            <div class="card-body">
+              <h2 class="card-title">{{ savOption.intr_rate }}</h2>
+              <p class="card-subtitle">
+                <span class="badge text-bg-secondary">{{ savOption.save_trm }}개월</span>
+                <span class="badge text-bg-success">자유적립식</span>
+              </p>
+            </div>
+          </div>
+        </p>
       </p>
-      <p v-if="savOption.rsrv_type_nm === '자유적립식'">
-        <p>자유적립식 - {{ savOption.save_trm }}개월 : {{ savOption.intr_rate }}</p>
-      </p>
-    </p>
-      
-    <hr>
+    
+    </div>
   </div>
+
 </template>
 
 <script setup>
@@ -67,5 +87,9 @@ onMounted(() => {
 <style scoped>
 .name {
   cursor: pointer;
+}
+
+h2 {
+  margin: 1px;
 }
 </style>
