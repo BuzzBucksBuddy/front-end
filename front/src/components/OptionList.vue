@@ -25,7 +25,9 @@ import axios from 'axios'
 import { useRouter } from 'vue-router'
 
 onMounted(() => {
-  loginStore.getProfile()
+  if (loginStore.isLogin) {
+    loginStore.getProfile()
+  }
   makeJoined()
 })
 
@@ -135,25 +137,27 @@ const isJoinedProduct = computed(() => {
 })
 
 const makeJoined = function () {
-  console.log('makeList')
-  if (type === 'dep') {
-    myProfile.value.financial_options_dep.forEach((option) => {
-      if (!joinedOptions.value.includes(option.id)) {
-        joinedOptions.value.push(option.id)
-      }
-      if (!joinedProducts.value.includes(option.fin_prdt_cd)) {
-        joinedProducts.value.push(option.fin_prdt_cd)
-      }
-    })
-  } else if (type === 'sav') {
-    myProfile.value.financial_options_sav.forEach((option) => {
-      if (!joinedOptions.value.includes(option.id)) {
-        joinedOptions.value.push(option.id)
-      }
-      if (!joinedProducts.value.includes(option.fin_prdt_cd)) {
-        joinedProducts.value.push(option.fin_prdt_cd)
-      }
-    })
+  if (myProfile.length > 0) {
+    console.log('makeList')
+    if (type === 'dep') {
+      myProfile.value.financial_options_dep.forEach((option) => {
+        if (!joinedOptions.value.includes(option.id)) {
+          joinedOptions.value.push(option.id)
+        }
+        if (!joinedProducts.value.includes(option.fin_prdt_cd)) {
+          joinedProducts.value.push(option.fin_prdt_cd)
+        }
+      })
+    } else if (type === 'sav') {
+      myProfile.value.financial_options_sav.forEach((option) => {
+        if (!joinedOptions.value.includes(option.id)) {
+          joinedOptions.value.push(option.id)
+        }
+        if (!joinedProducts.value.includes(option.fin_prdt_cd)) {
+          joinedProducts.value.push(option.fin_prdt_cd)
+        }
+      })
+    }
   }
 }
 
