@@ -115,6 +115,8 @@
       </div>
       
     </div>
+
+    <MyProductsChart/>
   </div>
 </template>
 
@@ -122,6 +124,8 @@
 import { useLoginStore } from '@/stores/login'
 import { ref, onMounted, computed } from 'vue'
 import { useRoute } from 'vue-router'
+import MyProductsChart from '@/components/MyProductsChart.vue'
+
 
 const store = useLoginStore()
 const route = useRoute()

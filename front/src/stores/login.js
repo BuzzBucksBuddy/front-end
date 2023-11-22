@@ -186,16 +186,11 @@ export const useLoginStore = defineStore('login', () => {
         Authorization: `Token ${token.value}`
       }
     })
-    .then ((res) => {
-      console.log(res.data)
-      depLankfromFavorite.value = res.data.most_financial_products_dep
-      savLankfromFavorite.value = res.data.most_financial_products_sav
-    })
-    .catch((err) => {
-      console.log('favorit 추천 오류', err)
-    })
+    
   }
 
+
+  
 
   return { 
     API_URL, 
@@ -216,5 +211,6 @@ export const useLoginStore = defineStore('login', () => {
     depLankfromFavorite,
     savLankfromFavorite,
     usersFavorite,
+
    }
 }, { persist: true })
