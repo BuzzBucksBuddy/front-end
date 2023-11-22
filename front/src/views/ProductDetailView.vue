@@ -12,6 +12,16 @@
       <p>기타 유의사항 : {{ product.etc_note }}</p>
       <p>가입 방법 : {{ product.join_way }}</p>
     </div>
+    <hr>
+    <div>
+      <OptionList
+        v-for="option in options"
+        v-show="option.intr_rate"
+        :key="option.id"
+        :option="option"
+        :type="route.params.type"
+      />
+    </div>
     <button @click="joinProduct(product.fin_prdt_cd)">{{ joinSelector }}</button>
   </div>
 </template>
@@ -22,6 +32,7 @@ import { useProductStore } from '@/stores/product'
 import { useLoginStore } from '@/stores/login'
 import { useRoute, useRouter } from 'vue-router'
 import axios from 'axios'
+import OptionList from '@/components/OptionList.vue'
 
 const route = useRoute()
 const router = useRouter()
@@ -30,6 +41,8 @@ const loginStore = useLoginStore()
 const product = ref(null)
 
 const userList = ref([])
+
+const options = ref([])
 
 // 가입하기
 const joinProduct = function (fin_prdt_cd) {
@@ -148,13 +161,41 @@ const getSavProduct = function(sav_cd) {
     })
 }
 
+const depCategorize = function(code, term) {
+  axios({
+    method: 'get',
+    url: `${store.API_URL}/deposit-categorize/${code}/${term}/`
+  })
+    .then(res => {
+      options.value = res.data
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+}
+
+const savCategorize = function(code, term, type) {
+  axios({
+    method: 'get',
+    url: `${store.API_URL}/saving-categorize/${code}/${term}/${type}/`
+  })
+    .then(res => {
+      options.value = res.data
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+}
+
 onMounted(() => {
   if (route.params.type === 'dep') {
     getDepProduct(route.params.productId)
     joiners(route.params.productId)
+    depCategorize(route.params.productId, 0)
   } else if (route.params.type === 'sav') {
     getSavProduct(route.params.productId)
     joiners(route.params.productId)
+    savCategorize(route.params.productId, 0, '선택 안함')
   }
 })
 
