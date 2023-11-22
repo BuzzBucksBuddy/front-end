@@ -1,35 +1,35 @@
 <template>
   <div id="app">
-    <nav :class="{'nav-narrow': !switcher}">
-      <i id="switcher" :class="[{'nav-item-narrow': !switcher}, 'nav-item']" @click="switcher = !switcher" class="fa-solid fa-bars"></i>
-      <div @click="routerTo('Home')" :class="[{active: $route.name === 'Home', 'nav-item-narrow': !switcher}, 'nav-item']">
-        <i class="fa-solid fa-house"></i>
-        <p :class="{'name-narrow': !switcher, 'name-wide': switcher}">Home</p>
-      </div>
-      <div @click="routerTo('Profile')" :class="[{active: $route.name === 'Profile', 'nav-item-narrow': !switcher}, 'nav-item']">
-        <i class="fa-solid fa-user"></i>
-        <p :class="{'name-narrow': !switcher, 'name-wide': switcher}">Profile</p>
-      </div>
-      <div @click="routerTo('ProductList')" :class="[{active: $route.name === 'ProductList', 'nav-item-narrow': !switcher}, 'nav-item']">
-        <i class="fa-solid fa-coins"></i>
-        <p :class="{'name-narrow': !switcher, 'name-wide': switcher}">Products</p>
-      </div>
-      <div @click="routerTo('ExchangeRate')" :class="[{active: $route.name === 'ExchangeRate', 'nav-item-narrow': !switcher}, 'nav-item']">
-        <i class="fa-solid fa-arrow-right-arrow-left"></i>
-        <p :class="{'name-narrow': !switcher, 'name-wide': switcher}">Exchange</p>
-      </div>
-      <div @click="routerTo('BankMap')" :class="[{active: $route.name === 'BankMap', 'nav-item-narrow': !switcher}, 'nav-item']">
-        <i class="fa-solid fa-map"></i>
-        <p :class="{'name-narrow': !switcher, 'name-wide': switcher}">BankMap</p>
-      </div>
-      <div @click="routerTo('ArticleList')" :class="[{active: $route.name === 'ArticleList', 'nav-item-narrow': !switcher}, 'nav-item']">
-        <i class="fa-solid fa-newspaper"></i>
-        <p :class="{'name-narrow': !switcher, 'name-wide': switcher}">Article</p>
-      </div>
-    </nav>
-    <main class="nav-active" :class="{'nav-disactive': !switcher}">
-      <header>
+    <nav :class="['up-down', {'nav-narrow': !switcher}]">
+      <section>
         <h1>BBB</h1>
+        <i id="switcher" :class="[{'nav-item-narrow': !switcher}, 'nav-item']" @click="switcher = !switcher" class="fa-solid fa-bars"></i>
+        <div @click="routerTo('Home')" :class="[{active: $route.name === 'Home', 'nav-item-narrow': !switcher}, 'nav-item']">
+          <i class="fa-solid fa-house"></i>
+          <p :class="{'name-narrow': !switcher, 'name-wide': switcher}">Home</p>
+        </div>
+        <div @click="routerTo('Profile')" :class="[{active: $route.name === 'Profile', 'nav-item-narrow': !switcher}, 'nav-item']">
+          <i class="fa-solid fa-user"></i>
+          <p :class="{'name-narrow': !switcher, 'name-wide': switcher}">Profile</p>
+        </div>
+        <div @click="routerTo('ProductList')" :class="[{active: $route.name === 'ProductList', 'nav-item-narrow': !switcher}, 'nav-item']">
+          <i class="fa-solid fa-coins"></i>
+          <p :class="{'name-narrow': !switcher, 'name-wide': switcher}">Products</p>
+        </div>
+        <div @click="routerTo('ExchangeRate')" :class="[{active: $route.name === 'ExchangeRate', 'nav-item-narrow': !switcher}, 'nav-item']">
+          <i class="fa-solid fa-arrow-right-arrow-left"></i>
+          <p :class="{'name-narrow': !switcher, 'name-wide': switcher}">Exchange</p>
+        </div>
+        <div @click="routerTo('BankMap')" :class="[{active: $route.name === 'BankMap', 'nav-item-narrow': !switcher}, 'nav-item']">
+          <i class="fa-solid fa-map"></i>
+          <p :class="{'name-narrow': !switcher, 'name-wide': switcher}">BankMap</p>
+        </div>
+        <div @click="routerTo('ArticleList')" :class="[{active: $route.name === 'ArticleList', 'nav-item-narrow': !switcher}, 'nav-item']">
+          <i class="fa-solid fa-newspaper"></i>
+          <p :class="{'name-narrow': !switcher, 'name-wide': switcher}">Article</p>
+        </div>
+      </section>
+      <section>
         <div class="user-info" v-if="!loginStore.isLogin">
           <h4>로그인 해주세요</h4>
           <div class="log-link">
@@ -43,6 +43,10 @@
             <a @click="loginStore.logOut">LogOut</a>
           </div>
         </div>
+      </section>
+    </nav>
+    <main class="nav-active" :class="{'nav-disactive': !switcher}">
+      <header>
       </header>
       <hr>
       <section class="container">
@@ -163,6 +167,8 @@ const routerTo = function (name) {
   }
 }
 nav {
+  z-index: 99;
+  background-color: white;
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -172,6 +178,11 @@ nav {
   padding: 20px 2px;
   border-right: 1px solid rgb(224, 214, 192);
   transition: all 0.5s;
+}
+.up-down {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 .container {
   width: 100%;

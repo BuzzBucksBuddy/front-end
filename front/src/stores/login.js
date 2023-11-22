@@ -55,7 +55,7 @@ export const useLoginStore = defineStore('login', () => {
         console.log(res.data)
         token.value = res.data.key
         userInfo()
-        router.push({name: 'FavoriteSelect'})
+        // router.push({name: 'FavoriteSelect'})
       })
       .catch((err) => {
         console.log(err)
