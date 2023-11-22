@@ -1,18 +1,22 @@
 <template>
   <div>
-    <h1>상품 상세 정보</h1>
-    <div v-if="product">
-      <p>공시 제출월 : {{ product.dcls_month }}</p>
-      <p>금융회사명 : {{ product.kor_co_nm }}</p>
-      <p>상품명 : {{ product.fin_prdt_nm }}</p>
-      <p>가입제한 : {{ product.join_deny }}</p>
-      <p>가입 대상 : {{ product.join_member }}</p>
-      <p>우대조건 : {{ product.spcl_cnd }}</p>
-      <p>만기 후 이자율 : {{ product.mtrt_int }}</p>
-      <p>기타 유의사항 : {{ product.etc_note }}</p>
-      <p>가입 방법 : {{ product.join_way }}</p>
+    <div class="card">
+      <div class="card-body">
+        <h3>상품 상세 정보</h3>
+        <div v-if="product">
+          <p>공시 제출월 : {{ product.dcls_month }}</p>
+          <p>금융회사명 : {{ product.kor_co_nm }}</p>
+          <p>상품명 : {{ product.fin_prdt_nm }}</p>
+          <p>가입제한 : {{ product.join_deny }}</p>
+          <p>가입 대상 : {{ product.join_member }}</p>
+          <p>우대조건 : {{ product.spcl_cnd }}</p>
+          <p>만기 후 이자율 : {{ product.mtrt_int }}</p>
+          <p>기타 유의사항 : {{ product.etc_note }}</p>
+          <p>가입 방법 : {{ product.join_way }}</p>
+        </div>
+      </div>
     </div>
-    <hr>
+    
     <div>
       <OptionList
         v-for="option in options"

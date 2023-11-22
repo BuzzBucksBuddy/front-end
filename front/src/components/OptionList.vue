@@ -1,20 +1,23 @@
 <template>
-  <div :class="{'unable': !isJoinedOption && isJoinedProduct}">
-    <h4>기간 : {{ option.save_trm }}개월</h4>
-    <p>저축 금리 유형 : {{ option.intr_rate_type_nm }}</p>
-    <p>저축 금리 : {{ option.intr_rate }}</p>
-    <p>최고 우대 금리 : {{ option.intr_rate2 }}</p>
-    <div v-if="isJoinedOption && isJoinedProduct">
-      <button @click="joinOption(optionId)">가입 취소</button>
+    <div class="card">
+      <div class="card-body">
+        <div :class="{'unable': !isJoinedOption && isJoinedProduct}">
+          <h5 class="card-title">기간 : {{ option.save_trm }}개월</h5>
+          <p class="card-text">저축 금리 유형 : {{ option.intr_rate_type_nm }}</p>
+          <p class="card-text">저축 금리 : {{ option.intr_rate }}</p>
+          <p class="card-text">최고 우대 금리 : {{ option.intr_rate2 }}</p>
+          <div v-if="isJoinedOption && isJoinedProduct">
+            <button class="btn btn-light" @click="joinOption(optionId)">가입 취소</button>
+          </div>
+          <div v-else-if="!isJoinedOption && !isJoinedProduct">
+            <button class="btn btn-warning" @click="joinOption(optionId)">가입하기</button>
+          </div>
+        </div>
+      </div>
     </div>
-    <div v-else-if="!isJoinedOption && !isJoinedProduct">
-      <button @click="joinOption(optionId)">가입</button>
-    </div>
-    <br>
-    {{ isJoinedProduct }}
-    {{ isJoinedOption }}
-    <hr>
-  </div>
+  <br>
+  {{ isJoinedProduct }}
+  {{ isJoinedOption }}
 </template>
 
 <script setup>
