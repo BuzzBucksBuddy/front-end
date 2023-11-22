@@ -20,6 +20,8 @@ export const useLoginStore = defineStore('login', () => {
     }
   })
 
+
+  // 로그인
   const logIn = function (payload) {
     const { username, password } = payload
 
@@ -41,7 +43,9 @@ export const useLoginStore = defineStore('login', () => {
       })
   }
 
-  const toSignupfromLogIn = function (payload) {
+
+  // 회원가입페이지 -> 로그인 상태로 -> 관심사 선택 페이지 
+  const fromSignuptoLogIn = function (payload) {
     const { username, password } = payload
 
     axios({
@@ -62,6 +66,8 @@ export const useLoginStore = defineStore('login', () => {
       })
   }
 
+
+  // 로그아웃
   const logOut = function () {
     axios({
       method: 'post',
@@ -78,6 +84,30 @@ export const useLoginStore = defineStore('login', () => {
   }
 
 
+  // user 정보 가져오기(로그인시 사용)
+  const userInfo = function () {
+    if (isLogin.value === true) {
+      axios({
+        method: 'get',
+        url: `${API_URL}/dj-rest-auth/user/`,
+        headers: {
+          Authorization: `Token ${token.value}`
+        }
+      })
+      .then((res) => {
+        console.log(res.data)
+        
+        myName.value = res.data.username
+        myId.value = res.data.pk
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+    }
+  }
+  
+
+  // user 전체 정보 가져오기
   const myProfile = ref([])
   const getProfile = function () {
     axios({
@@ -97,65 +127,7 @@ export const useLoginStore = defineStore('login', () => {
   }
 
 
-  const userInfo = function () {
-    if (isLogin.value === true) {
-      axios({
-        method: 'get',
-        url: `${API_URL}/dj-rest-auth/user/`,
-        headers: {
-          Authorization: `Token ${token.value}`
-        }
-      })
-        .then((res) => {
-          console.log(res.data)
-
-          myName.value = res.data.username
-          myId.value = res.data.pk
-        })
-        .catch((err) => {
-          console.log(err)
-        })
-    }
-  }
-
-
-  
-  const favoriteCategory = ref([])
-  const getFavoriteCategory = function () {
-    axios({
-      method: 'get',
-      url: `${API_URL}/api/v1/accounts/favorites/`,
-      headers: {
-        Authorization: `Token ${token.value}`     // password1 오류
-      }
-    })
-      .then((res) => {
-        console.log(res.data)
-        favoriteCategory.value = res.data
-      })
-      .catch((err) => {
-        console.log(err)
-      })
-  }
-
-
-  const favoriteSelect = function (favoriteId) {
-    axios({
-      method: 'post',
-      url: `${API_URL}/api/v1/accounts/favorites/${favoriteId}/select/`,
-      headers: {
-        Authorization: `Token ${token.value}`
-      }
-    })
-      .then ((res) => {
-        console.log(res.data)
-      })
-      .catch((err) => {
-        console.log(err)
-      })
-  }
-
-
+  // user 프로필 정보 수정
   const editProfile = function(fieldName, newValue) {
     console.log(newValue)
     axios({
@@ -175,7 +147,49 @@ export const useLoginStore = defineStore('login', () => {
         console.log('profile 수정오류', err)
       })
   }
+  
 
+  // 관심사 카테고리 가져오기
+  const favoriteCategory = ref([])
+  const getFavoriteCategory = function () {
+    axios({
+      method: 'get',
+      url: `${API_URL}/api/v1/accounts/favorites/`,
+      headers: {
+        Authorization: `Token ${token.value}`     // password1 오류
+      }
+    })
+      .then((res) => {
+        console.log(res.data)
+        favoriteCategory.value = res.data
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
+
+
+  // 관심사 선택 / 저장
+  const favoriteSelect = function (favoriteId) {
+    axios({
+      method: 'post',
+      url: `${API_URL}/api/v1/accounts/favorites/${favoriteId}/select/`,
+      headers: {
+        Authorization: `Token ${token.value}`
+      }
+    })
+      .then ((res) => {
+        console.log(res.data)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
+
+
+
+
+  // 관심사가 비슷한 사람들의 가입 상품 순위
   const depLankfromFavorite = ref([])
   const savLankfromFavorite = ref([])
   const usersFavorite = function (favoriteId) {
@@ -188,8 +202,8 @@ export const useLoginStore = defineStore('login', () => {
     })
     .then ((res) => {
       console.log(res.data)
-      depLankfromFavorite.value = res.data.most_financial_products_dep
-      savLankfromFavorite.value = res.data.most_financial_products_sav
+      depLankfromFavorite.value = res.data.most_financial_options_dep
+      savLankfromFavorite.value = res.data.most_financial_options_sav
     })
     .catch((err) => {
       console.log('favorit 추천 오류', err)
@@ -197,10 +211,12 @@ export const useLoginStore = defineStore('login', () => {
   }
 
 
+  
+
   return { 
     API_URL, 
     logIn,
-    toSignupfromLogIn, 
+    fromSignuptoLogIn, 
     token, 
     isLogin, 
     userInfo, 
@@ -216,5 +232,6 @@ export const useLoginStore = defineStore('login', () => {
     depLankfromFavorite,
     savLankfromFavorite,
     usersFavorite,
+
    }
 }, { persist: true })
