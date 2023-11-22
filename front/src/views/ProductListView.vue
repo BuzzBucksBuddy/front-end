@@ -52,6 +52,8 @@
         :selectSavType="selectSavType"
       />
     </section>
+
+    <button class="scroll" @click="scrollUp">상단으로 이동하기</button>
   </div>
 </template>
 
@@ -95,6 +97,15 @@ const getProductsData = function() {
       })
   }
 
+const scrollUp = function() {
+  if (window.scrollY != 0) {
+    setTimeout(function () {
+      window.scrollTo(0, window.scrollY - 100)
+      scrollUp()
+    }, 10)
+  }
+}
+
 onMounted(() => {
   getProductsData()
   productStore.getDepProducts(selectDepBank.value)
@@ -105,5 +116,11 @@ onMounted(() => {
 </script>
 
 <style scoped>
+button {
+  cursor: pointer;
+}
 
+.scroll {
+  float: right;
+}
 </style>
