@@ -59,7 +59,7 @@ export const useLoginStore = defineStore('login', () => {
         console.log(res.data)
         token.value = res.data.key
         userInfo()
-        router.push({name: 'FavoriteSelect'})
+        // router.push({name: 'FavoriteSelect'})
       })
       .catch((err) => {
         console.log(err)
@@ -127,7 +127,62 @@ export const useLoginStore = defineStore('login', () => {
   }
 
 
-  // user 프로필 정보 수정
+  const userInfo = function () {
+    if (isLogin.value === true) {
+      axios({
+        method: 'get',
+        url: `${API_URL}/dj-rest-auth/user/`,
+        headers: {
+          Authorization: `Token ${token.value}`
+        }
+      })
+        .then((res) => {
+          console.log(res.data)
+
+          myName.value = res.data.username
+          myId.value = res.data.pk
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    }
+  }
+
+
+  
+  const favoriteCategory = ref([])
+  const getFavoriteCategory = function () {
+    axios({
+      method: 'get',
+      url: `${API_URL}/api/v1/accounts/favorites/`,
+      headers: {
+        Authorization: `Token ${token.value}`     // password1 오류
+      }
+    })
+      .then((res) => {
+        console.log(res.data)
+        favoriteCategory.value = res.data
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
+
+
+  const favoriteSelect = function (favoriteId) {
+    axios({
+      method: 'post',
+      url: `${API_URL}/api/v1/accounts/favorites/${favoriteId}/select/`
+    })
+      .then ((res) => {
+        console.log(res.data)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
+
+
   const editProfile = function(fieldName, newValue) {
     console.log(newValue)
     axios({

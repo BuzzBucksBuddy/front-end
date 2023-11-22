@@ -8,8 +8,6 @@ import App from './App.vue'
 import router from './router'
 import { Bar } from 'vue-chartjs';
 
-import '@/assets/fonts.css'
-
 const app = createApp(App)
 const pinia = createPinia()
 
