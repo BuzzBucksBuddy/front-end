@@ -16,21 +16,14 @@
 </template>
 
 <script setup>
-import { ref, watch, computed } from 'vue'
+import { ref, watch, computed, onMounted } from 'vue'
 import { useExchangeStore } from '@/stores/exchange'
-
-const keyword = ref('')
-// const titleList = ref([])
-// const linkList = ref([])
-const store = useExchangeStore()
 
 const props = defineProps({
   country: String
 })
 
-// const { title_list, link_list } = defineProps(['title_list', 'link_list'])
-
-
+const keyword = ref('')
 watch(() => props.country, (newCountry) => {
   // Update the Country and perform the news search
   keyword.value = newCountry
@@ -44,12 +37,33 @@ const searchNews = function () {
   store.searchNews(keyword.value)
 }
 
+const store = useExchangeStore()
 const titleList = computed(() =>{
   return store.searchTitleResults
 })
+
 const linkList = computed(() =>{
   return store.searchLinkResults
 })
+
+const removeNews = function () {
+  store.searchTitleResults = []
+  keyword.value = ''
+}
+
+// 로드될때, 이전 데이터 지우기
+onMounted (() => {
+  removeNews()
+})
+
+
+// const { title_list, link_list } = defineProps(['title_list', 'link_list'])
+
+
+
+
+
+
 
 
 </script>

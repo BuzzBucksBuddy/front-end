@@ -59,6 +59,23 @@ export const useProductStore = defineStore('product', () => {
       })
   }
 
+
+  // 그래프 -> 디테일
+  const go = ref(null)
+  const findProduct = function (productName) {
+    axios({
+      method : 'get',
+      url: `${API_URL}/goDetail/${productName}/`,
+    })
+      .then((res) => {
+        console.log(res.data,'여기@')
+        go.value = res.data        
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
+
   return { 
     API_URL,
     dep_products,
@@ -66,6 +83,8 @@ export const useProductStore = defineStore('product', () => {
     getDepProducts,
     getSavProducts,
     depCategorize,
-    savCategorize
+    savCategorize,
+    findProduct,
+    go
   }
 }, { persist: false })

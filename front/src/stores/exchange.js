@@ -42,8 +42,8 @@ export const useExchangeStore = defineStore('exchange', () => {
 
   const exchangeRate = ref(null)
   const exchangeUnit = ref(null)
-  const getCountryInfo = async function(country, category) {
-    await axios({
+  const getCountryInfo =function(country, category) {
+    axios({
       method: 'get',
       url: `${API_URL}/api/v1/exchanges/${country}/${category}/`
     })

@@ -115,8 +115,9 @@
       </div>
       
     </div>
-
-    <MyProductsChart/>
+    <div class="my-products-chart">
+      <MyProductsChart/>
+    </div>
   </div>
 </template>
 
@@ -178,6 +179,10 @@ const editField = function (value, fieldName) {
 .profile {
   border: 1px solid rgb(123, 153, 252);
   padding: 10px;
+}
+
+.my-products-chart {
+  height: 800px;
 }
 
 </style>

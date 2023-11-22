@@ -1,5 +1,6 @@
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
+import { useProductStore } from '@/stores/product'
 
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 
@@ -20,3 +21,6 @@ app.use(pinia)
 app.use(router)
 
 app.mount('#app')
+
+// 다른 곳에서 사용할 때
+const productStore = useProductStore()

@@ -38,7 +38,7 @@ export const useSignupStore = defineStore('signup', () => {
     })
       .then((res) => {
         // console.log(formData)
-        loginStore.toSignupfromLogIn(payload)
+        loginStore.fromSignuptoLogIn(payload)
       })
       .catch((err) => {
         console.log(err)
