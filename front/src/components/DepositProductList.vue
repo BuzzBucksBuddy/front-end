@@ -1,13 +1,21 @@
 <template>
-  <div v-show="select">
-    <p>공시 제출월 : {{ product.dcls_month }}</p>
-    <p>금융회사명 : {{ product.kor_co_nm }}</p>
-    <p class="name" @click="goDetail">상품명 : {{ product.fin_prdt_nm }}</p>
-    <p v-for="depOption in dep_category" v-show="depOption.intr_rate">
-      {{ depOption.save_trm }}개월 : {{ depOption.intr_rate }}
-    </p>
+  <div class="card" v-show="select">
+    <div class="card-body">
+      <!--상품명-->
+      <h5 class="name card-title" @click="goDetail">{{ product.fin_prdt_nm }}</h5>
+      <!--금융회사명-->
+      <h6 class="card-subtitle mb-2 text-body-secondary">{{ product.kor_co_nm }}</h6>
 
-    <hr>
+      <!--옵션-->
+      <p v-for="depOption in dep_category" v-show="depOption.intr_rate">
+        <div class="card text-center" style="width: 6rem; height: 6rem;">
+          <div class="card-body">
+            <h3 class="card-title">{{ depOption.intr_rate }}</h3>
+            <p class="badge text-bg-secondary">{{ depOption.save_trm }}개월</p>
+          </div>
+        </div>
+      </p>
+    </div>
   </div>
 </template>
 

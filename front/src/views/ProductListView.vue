@@ -1,13 +1,29 @@
 <template>
   <div>
-    <button @click="isDeposit = !isDeposit">{{ isDeposit ? '적금 상품 보기' : '예금 상품 보기' }}</button>
-    
+    <!--버튼 가운데 정렬 하고 싶어요 ㅠㅠ-->
+    <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+      <input @click="isDeposit = true" type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
+      <label class="btn btn-warning" for="btnradio1">예금 상품</label>
+      <input @click="isDeposit = false" type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
+      <label class="btn btn-warning" for="btnradio2">적금 상품</label>
+    </div>
+
+    <!--예금 상품-->
     <section v-show="isDeposit">
-      <h2>예금 상품</h2>
-        <select name="depBank" id="depBank" v-model="selectDepBank">
-          <option :value="'선택 안함'" disabled>은행을 선택하세요</option>
-          <option v-for="depBank in articleStore.bankCategories" :key="depBank" :value="depBank.name">{{ depBank.name }}</option>
-        </select>
+        <!--은행 선택 드롭다운...-->
+        <div class="btn-group">
+          <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            은행 선택
+          </button>
+          <ul class="dropdown-menu">
+            <select name="depBank" id="depBank" v-model="selectDepBank">
+              <li class="dropdown-item" :value="'선택 안함'">모든 은행</li>
+              <li class="dropdown-item" v-for="depBank in articleStore.bankCategories" :key="depBank" :value="depBank.name">{{ depBank.name }}</li>
+            </select>
+          </ul>
+        </div>
+
+        <!--기간 선택-->
         <select name="depTerm" id="depTerm" v-model="selectDepTerm">
           <option :value="0" disabled>기간을 선택하세요</option>
           <option :value="6">6개월</option>
@@ -26,8 +42,8 @@
       </p>
     </section>
 
+    <!--적금 상품-->
     <section v-show="!isDeposit">
-      <h2>적금 상품</h2>
       <select name="savBank" id="savBank" v-model="selectSavBank">
           <option :value="'선택 안함'" disabled>은행을 선택하세요</option>
           <option v-for="savBank in articleStore.bankCategories" :key="savBank" :value="savBank.name">{{ savBank.name }}</option>
