@@ -142,10 +142,7 @@ export const useLoginStore = defineStore('login', () => {
   const favoriteSelect = function (favoriteId) {
     axios({
       method: 'post',
-      url: `${API_URL}/api/v1/accounts/favorites/${favoriteId}/select/`,
-      headers: {
-        Authorization: `Token ${token.value}`
-      }
+      url: `${API_URL}/api/v1/accounts/favorites/${favoriteId}/select/`
     })
       .then ((res) => {
         console.log(res.data)

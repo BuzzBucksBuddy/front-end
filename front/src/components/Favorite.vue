@@ -43,6 +43,9 @@ const submitFavorite = function () {
 </script>
 
 <style>
+.selected {
+  background-color: orange;
+}
 .favorite-container {
   display: flex;
   flex-direction: column;
@@ -69,6 +72,7 @@ const submitFavorite = function () {
   flex-wrap: wrap;
   justify-content: space-around;
   gap: 8px;
+  overflow-y: scroll;
 }
 .submit-btn {
   margin-top: 12px;

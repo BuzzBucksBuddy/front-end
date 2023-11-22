@@ -232,6 +232,7 @@ const signUp = function () {
   width: 50%;
   height: 500px;
   opacity: 1;
+  padding: 16px;
 }
 #favorite-back {
 
