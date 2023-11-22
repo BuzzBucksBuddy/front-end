@@ -1,60 +1,93 @@
 <template>
-  <div>
+  <div :class="{'unable': !isJoinedOption && isJoinedProduct}">
     <h4>기간 : {{ option.save_trm }}개월</h4>
     <p>저축 금리 유형 : {{ option.intr_rate_type_nm }}</p>
     <p>저축 금리 : {{ option.intr_rate }}</p>
     <p>최고 우대 금리 : {{ option.intr_rate2 }}</p>
-    <div>
-      <button>가입하기</button>
+    <div v-if="isJoinedOption && isJoinedProduct">
+      <button @click="joinOption(optionId)">가입 취소</button>
     </div>
-    {{ option }}
+    <div v-else-if="!isJoinedOption && !isJoinedProduct">
+      <button @click="joinOption(optionId)">가입</button>
+    </div>
+    <br>
+    {{ isJoinedProduct }}
+    {{ isJoinedOption }}
+    <hr>
   </div>
-  <hr>
 </template>
 
 <script setup>
 import { useLoginStore } from '@/stores/login'
+import { useProductStore } from '@/stores/product'
+import { ref, computed, onMounted } from 'vue'
+import axios from 'axios'
+import { useRouter } from 'vue-router'
 
+onMounted(() => {
+  loginStore.getProfile()
+  makeJoined()
+})
+
+const router = useRouter()
 const loginStore = useLoginStore()
+const productStore = useProductStore()
 const props = defineProps({
   option: Object,
   type: String
 })
 
-const productId = props.option.fin_prdt_cd
+const type = props.type
+const optionId = ref(null)
+const optionPrdt = ref(null)
+
+optionId.value = props.option.id
+optionPrdt.value = props.option.fin_prdt_cd
+
+const myProfile = computed(()=>{
+  return loginStore.myProfile
+})
 
 //가입하기
-const joinOption = function (fin_prdt_cd) {
+const joinOption = function (optionId) {
   if (loginStore.isLogin) {
-    if (route.params.type === 'dep') {
+    if (type === 'dep') {
       axios({
         method: 'post',
-        url: `${store.API_URL}/deposit-product/${fin_prdt_cd}/join/`,
+        url: `${productStore.API_URL}/deposit-options/${optionId}/join/`,
         headers: {
           Authorization: `Token ${loginStore.token}`
         }
       })
         .then((res) => {
           console.log(res)
-          getDepProduct(route.params.productId)
-          joiners(route.params.productId)
-          console.log(isJoined.value)
+          loginStore.getProfile()
+          makeJoined()
+          emit('updatePlz')
+          // getDepProduct(route.params.productId)
+          // joiners(route.params.productId)
+          // console.log(isJoined.value)
+          router.push({'name': 'ProductList'})
         })
         .catch((err) => {
           console.log(err)
         })
-    } else if (route.params.type === 'sav') {
+    } else if (type === 'sav') {
       axios({
         method: 'post',
-        url: `${store.API_URL}/saving-product/${fin_prdt_cd}/join/`,
+        url: `${productStore.API_URL}/saving-options/${optionId}/join/`,
         headers: {
           Authorization: `Token ${loginStore.token}`
         }
       })
         .then((res) => {
           console.log(res)
-          getSavProduct(route.params.productId)
-          joiners(route.params.productId)
+          loginStore.getProfile()
+          makeJoined()
+          emit('updatePlz')
+          // getSavProduct(route.params.productId)
+          // joiners(route.params.productId)
+          router.push({'name': 'ProductList'})
         })
         .catch((err) => {
           console.log(err)
@@ -69,41 +102,18 @@ const joinOption = function (fin_prdt_cd) {
   }
 }
 
-// 가입한 유저들 확인
-const joiners = function (fin_prdt_cd) {
-  if (route.params.type === 'dep') {
-    axios({
-      method: 'get',
-      url: `http://127.0.0.1:8000/api/v1/accounts/dep_users/${fin_prdt_cd}/`
-    })
-      .then((res) => {
-        console.log(res)
-        userList.value = res.data
-      })
-      .catch((err) => {
-        console.log(err)
-      })
-  } else {
-    axios({
-      method: 'get',
-      url: `http://127.0.0.1:8000/api/v1/accounts/sav_users/${fin_prdt_cd}/`
-    })
-      .then((res) => {
-        console.log(res)
-        userList.value = res.data
-      })
-      .catch((err) => {
-        console.log(err)
-      })
-  }
-}
+const emit = defineEmits('updatePlz')
 
-// 가입한 옵션인지 확인
-const isJoined = computed(() => {
-  if (userList.value.length == 0) {
+// 가입 여부 확인
+const joinedProducts = ref([])
+const joinedOptions = ref([])
+
+const isJoinedOption = computed(() => {
+  console.log(myProfile.value.length)
+  if (joinedOptions.value.length == 0) {
     return false
   } else {
-    if (userList.value.users.includes(loginStore.myId)) {
+    if (joinedOptions.value.includes(optionId.value)) {
       return true
     } else {
       return false
@@ -111,15 +121,49 @@ const isJoined = computed(() => {
   }
 })
 
-// 버튼 string
-const joinSelector = computed(() => {
-  return isJoined.value ? '가입취소' : '가입하기'
+const isJoinedProduct = computed(() => {
+  console.log(myProfile.value.length)
+  if (joinedProducts.value.length == 0) {
+    return false
+  } else {
+    if (joinedProducts.value.includes(optionPrdt.value)) {
+      return true
+    } else {
+      return false
+    }
+  }
 })
+
+const makeJoined = function () {
+  console.log('makeList')
+  if (type === 'dep') {
+    myProfile.value.financial_options_dep.forEach((option) => {
+      if (!joinedOptions.value.includes(option.id)) {
+        joinedOptions.value.push(option.id)
+      }
+      if (!joinedProducts.value.includes(option.fin_prdt_cd)) {
+        joinedProducts.value.push(option.fin_prdt_cd)
+      }
+    })
+  } else if (type === 'sav') {
+    myProfile.value.financial_options_sav.forEach((option) => {
+      if (!joinedOptions.value.includes(option.id)) {
+        joinedOptions.value.push(option.id)
+      }
+      if (!joinedProducts.value.includes(option.fin_prdt_cd)) {
+        joinedProducts.value.push(option.fin_prdt_cd)
+      }
+    })
+  }
+}
 
 </script>
 
 <style scoped>
 h4 {
   margin: 0;
+}
+.unable {
+  color: rgb(179, 179, 179);
 }
 </style>
