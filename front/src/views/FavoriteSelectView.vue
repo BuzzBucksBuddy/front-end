@@ -2,7 +2,7 @@
   <div>
     <div v-for="favorite in favoriteCategory">
       <div @click="favoriteSelect(favorite.id)" class="favorite-box" :class="{select: !isSelected, selected: isSelected}">
-        <span>{{ favorite.favorite }}</span>
+        <span>{{ favorite.content }}</span>
       </div>
     </div>
   </div>

@@ -55,6 +55,7 @@ export const useLoginStore = defineStore('login', () => {
         console.log(res.data)
         token.value = res.data.key
         userInfo()
+        router.push({name: 'FavoriteSelect'})
       })
       .catch((err) => {
         console.log(err)
@@ -168,7 +169,7 @@ export const useLoginStore = defineStore('login', () => {
       }
     })
       .then ((res) => {
-        console.log(res.data)
+        console.log(res.data, 'ddddd')
       })
       .catch((err) => {
         console.log('profile 수정오류', err)

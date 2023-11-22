@@ -13,7 +13,7 @@
       <div v-else>
         <span>NickName:</span>
         <input type="text" v-model="myProfile.nickname">
-        <button @click="editField('nickname')">저장</button>
+        <button @click="editField(myProfile.nickname, 'nickname')">저장</button>
       </div>
       <!-- <p v-if="isSaved">NickName: {{ isSaved ? myProfile.nickname : changeProfile }}</p>
       <input v-else type="text" v-model="changeProfile">
@@ -26,7 +26,7 @@
       <div v-else>
         <span>E-mail:</span>
         <input type="text" v-model="myProfile.email">
-        <button @click="editField('email')">저장</button>
+        <button @click="editField(myProfile.email, 'email')">저장</button>
       </div>
 
       <p>Age: {{ myProfile.age }}</p>
@@ -38,25 +38,25 @@
       <div v-else>
         <span>Money:</span>
         <input type="text" v-model="myProfile.money">
-        <button @click="editField('money')">저장</button>
+        <button @click="editField(myProfile.money, 'money')">저장</button>
       </div>
 
       <p>Financial Products</p>
       <div v-if="isSavedDep">
         <span>예금: {{ myProfile.financial_products_dep }}</span>
-        <button @click="isSavedDep =!isSavedDep">🖍</button>
+        <!-- <button @click="isSavedDep =!isSavedDep">🖍</button> -->
       </div>
       <div v-else>
         <span>예금:</span>
-        <button @click="editField('financial_products_dep')">저장</button>
+        <button @click="editField(myProfile.financial_products_dep, 'financial_products_dep')">저장</button>
       </div>
       <div v-if="isSavedSav">
         <span>적금: {{ myProfile.financial_products_sav }}</span>
-        <button @click="isSavedSav =!isSavedSav">🖍</button>
+        <!-- <button @click="isSavedSav =!isSavedSav">🖍</button> -->
       </div>
       <div v-else>
         <span>적금:</span>
-        <button @click="editField('financial_products_sav')">저장</button>
+        <button @click="editField(myProfile.financial_products_sav, 'financial_products_sav')">저장</button>
       </div>
       
       <div v-if="isSavedSalary">
@@ -66,7 +66,7 @@
       <div v-else>
         <span>Salary:</span>
         <input type="text" v-model="myProfile.salary">
-        <button @click="editField('salary')">저장</button>
+        <button @click="editField(myProfile.salary, 'salary')">저장</button>
       </div>
 
       <div v-if="isSavedFavorite">
@@ -75,7 +75,7 @@
       </div>
       <div v-else>
         <span>Favorite:</span>
-        <button @click="editField('favorite')">저장</button>
+        <button @click="editField(myProfile.favorite, 'favorite')">저장</button>
       </div>
       
       <div v-if="isSavedMbti">
@@ -83,8 +83,26 @@
         <button @click="isSavedMbti =!isSavedMbti">🖍</button>
       </div>
       <div v-else>
-        <span>MBTI:</span>
-        <button @click="editField('mbti')">저장</button>
+        <label for="mbti">MBTI: </label>
+        <select id="mbti" v-model="myProfile.mbti">
+          <option value="ISTJ">ISTJ</option>
+          <option value="ISFJ">ISFJ</option>
+          <option value="INFJ">INFJ</option>
+          <option value="INTJ">INTJ</option>
+          <option value="ISTP">ISTP</option>
+          <option value="ISFP">ISFP</option>
+          <option value="INFP">INFP</option>
+          <option value="INTP">INTP</option>
+          <option value="ESTP">ESTP</option>
+          <option value="ESFP">ESFP</option>
+          <option value="ENFP">ENFP</option>
+          <option value="ENTP">ENTP</option>
+          <option value="ESTJ">ESTJ</option>
+          <option value="ESFJ">ESFJ</option>
+          <option value="ENFJ">ENFJ</option>
+          <option value="ENTJ">ENTJ</option>
+        </select>
+        <button @click="editField(myProfile.mbti, 'mbti')">저장</button>
       </div>
       
       <div v-if="isSavedMainBank">
@@ -93,7 +111,7 @@
       </div>
       <div v-else>
         <span>Main Bank:</span>
-        <button @click="editField('main_bank')">저장</button>
+        <button @click="editField(myProfile.main_bank, 'main_bank')">저장</button>
       </div>
       
     </div>
@@ -129,11 +147,12 @@ const isSavedSalary = ref(true)
 const isSavedFavorite = ref(true)
 const isSavedMbti = ref(true)
 const isSavedMainBank = ref(true)
+const newValue = ref(null)
 
 // 프로필 수정
-const editField = function (fieldName) {
-  const newValue = myProfile[fieldName]
-  store.editProfile(fieldName, newValue)
+const editField = function (value, fieldName) {
+  newValue.value = value
+  store.editProfile(fieldName, newValue.value)
 
   // changeProfile.value = null
   editBtn.value = '저장'
