@@ -9,6 +9,9 @@ export const useSignupStore = defineStore('signup', () => {
   const API_URL = 'http://127.0.0.1:8000'
   const loginStore = useLoginStore()
 
+  const errData = ref(null)
+  const errLoad = ref(null)
+
   const signUp = function (payload, formData) {
     const { username, password } = payload
     console.log(formData)
@@ -39,9 +42,10 @@ export const useSignupStore = defineStore('signup', () => {
       })
       .catch((err) => {
         console.log(err)
+        errData.value = err.data
       })
   }
 
 
-  return { API_URL, signUp }
+  return { API_URL, signUp, errData }
 }, { persist: true })
