@@ -41,22 +41,22 @@
         <button @click="editField(myProfile.money, 'money')">저장</button>
       </div>
 
-      <p>Financial Products</p>
+      <p>My Financial Product(=Options기준)</p>
       <div v-if="isSavedDep">
-        <span>예금: {{ myProfile.financial_products_dep }}</span>
+        <span>예금: {{ myProfile.financial_options_dep }}</span>
         <!-- <button @click="isSavedDep =!isSavedDep">🖍</button> -->
       </div>
       <div v-else>
         <span>예금:</span>
-        <button @click="editField(myProfile.financial_products_dep, 'financial_products_dep')">저장</button>
+        <button @click="editField(myProfile.financial_options_dep, 'financial_options_dep')">저장</button>
       </div>
       <div v-if="isSavedSav">
-        <span>적금: {{ myProfile.financial_products_sav }}</span>
+        <span>적금: {{ myProfile.financial_options_sav }}</span>
         <!-- <button @click="isSavedSav =!isSavedSav">🖍</button> -->
       </div>
       <div v-else>
         <span>적금:</span>
-        <button @click="editField(myProfile.financial_products_sav, 'financial_products_sav')">저장</button>
+        <button @click="editField(myProfile.financial_options_sav, 'financial_options_sav')">저장</button>
       </div>
       
       <div v-if="isSavedSalary">
