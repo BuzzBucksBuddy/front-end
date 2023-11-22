@@ -20,7 +20,10 @@
         :key="product.id"
         :product="product"
         :selectDepTerm="selectDepTerm"
-      /> 
+      />
+      <p v-if="productStore.dep_products.length === 0">
+        <h3>해당하는 상품이 없습니다.</h3>
+      </p>
     </section>
 
     <section v-show="!isDeposit">
@@ -49,7 +52,6 @@
         :selectSavType="selectSavType"
       />
     </section>
-    
   </div>
 </template>
 
@@ -59,6 +61,7 @@ import { useProductStore } from '@/stores/product.js'
 import { useArticleStore } from '@/stores/article.js'
 import DepositProductList from '@/components/DepositProductList.vue'
 import SavingProductList from '@/components/SavingProductList.vue'
+import axios from 'axios'
 
 const productStore = useProductStore()
 const articleStore = useArticleStore()
@@ -79,7 +82,21 @@ const savBankWatch = watch(() => (selectSavBank.value), (newValue) => {
   productStore.getSavProducts(newValue)
 })
 
+const getProductsData = function() {
+    axios({
+      method: 'get',
+      url: `${productStore.API_URL}/products-data/`
+    })
+      .then(res => {
+        console.log('success!')
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
+
 onMounted(() => {
+  getProductsData()
   productStore.getDepProducts(selectDepBank.value)
   productStore.getSavProducts(selectSavBank.value)
   articleStore.setBankCategories()
