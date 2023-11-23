@@ -2,25 +2,25 @@
   <div>
     <div v-if="!lockSwitcher || whosComment">
       <div v-if="!isUpdate">
-        <h4>{{ comment.content }}</h4>
+        <h5>{{ comment.content }}</h5>
         <p v-if="whosComment">내 댓글</p>
         <p v-else>{{ comment.user.username }}</p>
         <p>{{ comment.created_at.slice(0, 10) }}</p>
-        <span @click="setLike" :class="{like: !isLiked, liked: isLiked}"><i class="fa-solid fa-heart"></i>{{ likeCounter }}</span><br>
-        <div v-if="whosComment">
-          <button @click="isUpdate = !isUpdate">수정</button>
+        <span @click="setLike" :class="{like: !isLiked, liked: isLiked}"><i class="fa-solid fa-heart"></i> {{ likeCounter }}</span><br>
+        <div class="btns" v-if="whosComment">
+          <button @click="isUpdate = !isUpdate" class="btn btn-light">수정</button>
           <form @submit.prevent="deleteComment">
-            <input type="submit" value="삭제">
+            <input type="submit" class="btn btn-light" value="삭제">
           </form>
         </div>
       </div>
       <div v-else>
         <form @submit.prevent="updateComment">
           <input type="text" v-model="content">
-          <span>숨기기:<input type="checkbox" v-model="isLocked"></span>
-          <input type="submit">
+          <span class="hide">숨기기<input type="checkbox" v-model="isLocked"></span>
+          <input class="add btn btn-light" type="submit" value="등록">
         </form>
-        <button @click="isUpdate = !isUpdate">취소</button>
+        <button @click="isUpdate = !isUpdate" class="btn btn-light">취소</button>
       </div>
     </div>
     <div v-else>
@@ -28,7 +28,7 @@
       <p v-show="!inputSwitcher">숨은 댓글입니다.</p>
       <form v-show="inputSwitcher" @submit.prevent="checkPassword">
         <input type="password" v-model="inputPwd">
-        <input type="submit">
+        <input type="submit" class="btn btn-light sub-btn">
       </form>
     </div>
     <hr>
@@ -191,5 +191,21 @@ const isLiked = computed(() => {
 .liked {
   color: rgb(255, 135, 175);
   cursor: pointer;
+}
+
+.add {
+  margin-left: 5px;
+}
+
+.btns {
+  display: flex;
+}
+
+.hide {
+  padding: 0px 5px;
+}
+
+.sub-btn {
+  padding: 0px 5px;
 }
 </style>
