@@ -78,6 +78,7 @@ export const useLoginStore = defineStore('login', () => {
         myName.value = null
         myId.value = null
         myProfile.value = []
+        router.push({name: 'Home'})
       })
       .catch((err) => {
         console.log(err)
