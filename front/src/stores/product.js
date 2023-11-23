@@ -78,7 +78,7 @@ export const useProductStore = defineStore('product', () => {
   }
 
 
-  // 그래프 -> 디테일
+  // 그래프 -> 디테일 페이지
   const go = ref(null)
   const findProduct = function (productName) {
     axios({
@@ -93,6 +93,7 @@ export const useProductStore = defineStore('product', () => {
         console.log(err)
       })
   }
+
 
   return { 
     API_URL,

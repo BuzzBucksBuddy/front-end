@@ -128,6 +128,7 @@ export const useLoginStore = defineStore('login', () => {
   }
 
 
+  // 프로필 정보 편집
   const editProfile = function(fieldName, newValue) {
     console.log(newValue)
     axios({
@@ -208,6 +209,69 @@ export const useLoginStore = defineStore('login', () => {
   }
 
 
+  // 내가 가입한 상품 이름가져오기
+  const myDepProductName = ref([])
+  const mySavProductName = ref([])
+  const getMyPdtName = function() {
+    axios({
+      method: 'get',
+      url: `${API_URL}/api/v1/accounts/my_products/`,
+      headers: {
+        Authorization: `Token ${token.value}`
+      }
+    })
+    .then ((res) => {
+      console.log(res.data)
+      myDepProductName.value = res.data.deposit_products
+      mySavProductName.value = res.data.saving_products
+    })
+    .catch((err) => {
+      console.log('favorit 추천 오류', err)
+    })
+  }
+  
+
+  // 마일리지 저장
+  const addMileage = function (mileage) {
+    console.log('???')
+    axios({
+      method: 'put',
+      url: `${API_URL}/api/v1/accounts/mileage/`,
+      data: { mileage: mileage.value },
+      headers: {
+        Authorization: `Token ${token.value}`
+      }
+    })
+    .then((res) => {
+      console.log(res.data, 'mileage + 1')
+    })
+    .catch((err) => {
+      console.log(err, '마일리지 저장 실패')
+    })
+    
+  }
+
+  
+  // 관심사가 비슷한 사람들의 가입 상품 순위
+  const depLankfromMbti = ref([])
+  const savLankfromMbti = ref([])
+  const usersMbti = function (mbtiId) {
+    axios({
+      method: 'get',
+      url: `${API_URL}/api/v1/accounts/users_Mbti/${mbtiId}/`,
+      headers: {
+        Authorization: `Token ${token.value}`
+      }
+    })
+    .then ((res) => {
+      console.log(res.data)
+      depLankfromMbti.value = res.data.most_financial_options_dep
+      savLankfromMbti.value = res.data.most_financial_options_sav
+    })
+    .catch((err) => {
+      console.log('mbti 추천 오류', err)
+    })
+  }
   
 
   return { 
@@ -229,5 +293,12 @@ export const useLoginStore = defineStore('login', () => {
     depLankfromFavorite,
     savLankfromFavorite,
     usersFavorite,
+    myDepProductName,
+    mySavProductName,
+    getMyPdtName,
+    addMileage,
+    depLankfromMbti,
+    savLankfromMbti,
+    usersMbti,
    }
 }, { persist: true })

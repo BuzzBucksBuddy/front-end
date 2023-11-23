@@ -1,6 +1,6 @@
 <template>
   <div class="favorite-container">
-    <h2>관심사를 선택해주세요</h2>
+    <h2>나는 이런 사람이에요</h2>
     <section id="favorite-section">
       <div
         v-for="favorite in favoriteCategory"

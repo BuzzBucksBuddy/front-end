@@ -2,9 +2,9 @@
   <div class="news-box">
     <!-- <h2>Exchange Rate News</h2> -->
     <!-- {{ keyword }} -->
-    <button @click="searchNews">뉴스 알아보기</button>
+    <button @click="searchNews" class="custom-btn btn-open">뉴스 보기</button>
     <!-- <h3>Search Results</h3> -->
-    <div class="row row-cols-1 row-cols-md-3 g-2 mb-3">
+    <div class="row row-cols-1 row-cols-md-3 g-2 mb-3 mt-3">
         <div v-for="(title, index) in titleList" :key="index" class="col my-2">
           <div  class="card-body h-100 position-relative">
             <h6 class="card-title">{{ title }}</h6>
@@ -106,7 +106,58 @@ onMounted (() => {
 }
 
 .news-box {
-  margin-top: 30px;
+  margin-top: 15px;
+  margin-left: 8px;
+}
+
+.custom-btn {
+  margin-left: 20px;
+  width: 130px;
+  height: 40px;
+  padding: 10px 25px;
+  border: 2px solid #000;
+  font-family: 'Lato', sans-serif;
+  font-weight: 500;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  display: inline-block;
+}
+
+.btn-open {
+   line-height: 40px;
+  padding: 0;
+  background: transparent;
+  position: relative;
+  z-index: 2;
+  color: #fff;
+  -webkit-perspective: 300px;
+  perspective: 300px;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+}
+.btn-open:hover{
+  color: #000;
+}
+.btn-open:after {
+  position: absolute;
+  content: "";
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #000;
+  z-index: -1;
+  -webkit-transform-origin: center bottom;
+  transform-origin: center bottom;
+  -webkit-transform: rotateX(0);
+  transform: rotateX(0);
+  transition: all 0.3s ease;
+}
+.btn-open:hover:after {
+  -webkit-transform: rotateX(-180deg);
+  transform: rotateX(-180deg);
 }
 
 

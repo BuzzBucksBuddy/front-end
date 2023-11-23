@@ -7,14 +7,15 @@
       />
     </div>
 
-    <h2>Profile Info</h2>
-    <!-- <p>{{ myProfile }}</p> -->
+    <!-- <h2>Profile Info</h2> -->
+    <!-- 나의 개인 정보 -->
     <div class="profile ">
       <div class="profile-img">
-        <img :src="`${store.API_URL}${myProfile.profile_thumbnail}`" alt="Profile_image">
+        <img :src="`${LoginStore.API_URL}${myProfile.profile_thumbnail}`" alt="Profile_image">
       </div>
 
-      <div>
+      <div class="info-box">
+      <div class="inner-box">
       <p class="d-flex gap-3">아이디 <span>{{ myProfile.username }}</span></p>
       <br>
 
@@ -29,10 +30,7 @@
         <button @click="editField(myProfile.nickname, 'nickname')">저장</button>
       </div>
       <br>
-      <!-- <p v-if="isSaved">NickName: {{ isSaved ? myProfile.nickname : changeProfile }}</p>
-      <input v-else type="text" v-model="changeProfile">
-      <button @click="editField('nickname')">{{ editBtn }}</button> -->
-      
+
       <div v-if="isSavedEmail" class="d-flex gap-3">
         <p class="d-flex gap-3">Email <span>{{ myProfile.email }}</span></p>
         <button @click="isSavedEmail =!isSavedEmail" class="edit-button">🖍</button>
@@ -48,7 +46,7 @@
       <br>
       </div>
 
-      <div>
+      <div class="inner-box">
       <div v-if="isSavedMoney" class="d-flex gap-3">
         <p>자산</p>
         <span>{{ myProfile.money }}</span>
@@ -74,14 +72,20 @@
       </div>
       <br>
       
-      <div v-if="isSavedFavorite" class="d-flex gap-3">
-        <p>Favorite</p>
-        <span v-for="favorie in myProfile.favorite">{{ favorie.title }}</span>
-        <button @click="isSavedFavorite =!isSavedFavorite" class="edit-button">🖍</button>
-      </div>
-      <div v-else class="d-flex gap-3">
-        <p>Favorite</p>
-        <button @click="editField(myProfile.favorite, 'favorite')">저장</button>
+      <div>
+        <div v-if="isSavedFavorite" class="gap-3">
+          <p>Favorite</p>
+          <div class="d-flex m-1 flex-wrap">
+            <div v-for="favorie in myProfile.favorite" class="me-3">
+              <span>{{ favorie.title }}</span>
+            </div>
+            <button @click="isSavedFavorite =!isSavedFavorite" class="edit-button">🖍</button>
+          </div>
+        </div>
+        <div v-else class="d-flex gap-3">
+          <p>Favorite</p>
+          <button @click="editField(myProfile.favorite, 'favorite')">저장</button>
+        </div>
       </div>
       <br>
       
@@ -144,68 +148,39 @@
         <button @click="editField(myProfile.main_bank, 'main_bank')">저장</button>
       </div>
       <br>
+    
+      </div>
     </div>
   </div>
-     
 
-    <div>
-      <div class="profile">
-        <p>My Financial Product(=Options기준)</p>
-        <div v-if="isSavedDep">
-          <span>예금: {{ myProfile.financial_options_dep }}</span>
-          <!-- <button @click="isSavedDep =!isSavedDep">🖍</button> -->
-        </div>
-        <div v-else>
-          <span>예금:</span>
-          <button @click="editField(myProfile.financial_options_dep, 'financial_options_dep')">저장</button>
-        </div>
-        <div v-if="isSavedSav">
-          <span>적금: {{ myProfile.financial_options_sav }}</span>
-          <!-- <button @click="isSavedSav =!isSavedSav">🖍</button> -->
-        </div>
-        <div v-else>
-          <span>적금:</span>
-          <button @click="editField(myProfile.financial_options_sav, 'financial_options_sav')">저장</button>
-        </div>
-        <div class="my-products-chart">
-          <MyProductsChart/>
-        </div>
-      </div>
-
-    
-  </div> 
-</div>
-  
+  </div>
 </template>
 
 <script setup>
 import { useLoginStore } from '@/stores/login'
 import { ref, onMounted, computed } from 'vue'
-import { useRoute } from 'vue-router'
-import MyProductsChart from '@/components/MyProductsChart.vue'
 import Favorite from '@/components/Favorite.vue'
 
 
 const update = function () {
   isSavedFavorite.value = !isSavedFavorite.value
-  store.getProfile()
+  LoginStore.getProfile()
 }
 
-const store = useLoginStore()
-const route = useRoute()
-// const changeProfile = ref(null)
+const LoginStore = useLoginStore()
 const editBtn = ref('변경')
 
 
 onMounted(() => {
-  store.getProfile()
+  LoginStore.getProfile()
 })
 
 const myProfile = computed(()=>{
-  return store.myProfile
+  return LoginStore.myProfile
 })
 
 
+// 내 프로필 정보
 const isSavedNickname = ref(true)
 const isSavedEmail = ref(true)
 const isSavedMoney = ref(true)
@@ -220,9 +195,8 @@ const newValue = ref(null)
 // 프로필 수정
 const editField = function (value, fieldName) {
   newValue.value = value
-  store.editProfile(fieldName, newValue.value)
+  LoginStore.editProfile(fieldName, newValue.value)
 
-  // changeProfile.value = null
   editBtn.value = '저장'
   
   isSavedNickname.value = true
@@ -236,34 +210,46 @@ const editField = function (value, fieldName) {
   isSavedMainBank.value = true
   }
 
+
 </script>
 
 <style scoped>
 .profile {
+  width: 90%;
+  height: 80%;
   border: 1px solid var(--gray-color);
   border-radius: 10px;
   padding: 50px;
-  margin-bottom: 10px;
+  margin-top: 20px;
+  margin-bottom: 20px;
   box-shadow: 1px 1px 3px #333;
 }
 
 .profile-img {
   /* display: flex; */
   text-align: center; 
-  margin-top: 30px;
+  /* margin-top: 30px; */
   margin-bottom: 60px;
-  border: ;
 }
 
 .profile-img > img {
   border-radius: 50%;
   height: 200px;
   width: 200px;
+  border-bottom: 4px solid black;
+}
+
+.info-box {
+  display: flex;
+  justify-content: space-around;
+  gap: 10%;
+  margin-left: 10%;
   
 }
-.my-products-chart {
-  height: 800px;
+.inner-box {
+  width: 40%;
 }
+
 #favorite {
   background-color: white;
   border-radius: 24px;
@@ -304,5 +290,16 @@ button {
   font-size: 15px; 
   padding: 2px 2px 2px 2px;
 }
+
+input {
+  width: 50%;
+}
+
+select {
+  width:40%
+}
+
+
+
 
 </style>

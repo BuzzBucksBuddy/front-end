@@ -20,8 +20,8 @@ import { useProductStore } from '@/stores/product'
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
 
 const token = computed(() => {
-  const store = useLoginStore()
-  return store.token
+  const LoginStore = useLoginStore()
+  return LoginStore.token
 })
 
 
@@ -30,22 +30,23 @@ export default defineComponent({
   name: 'BarChart',
   components: { Bar },
   setup() {
-    const Loginstore = useLoginStore()
-    const Productstore = useProductStore()
-    const router = useRouter()
+    const ProductStore = useProductStore()
+    const LoginStore = useLoginStore()
     const loaded = ref(false)
     const chartData = ref(null)
+    const router = useRouter()
+    const goDetail = ref([])
 
-    const goDetail = computed(()=>{
-      return Productstore.go
-    })
+    // const goDetail = computed(()=>{
+    //   return ProductStore.go
+    // })
 
     onMounted(async () => {
       loaded.value = false
-      goDetail.value = null
+      // goDetail.value = null
 
       try {
-        const res = await axios.get(`${Loginstore.API_URL}/api/v1/accounts/my_intr_rate_graph/`, {
+        const res = await axios.get(`${LoginStore.API_URL}/api/v1/accounts/my_intr_rate_graph/`, {
           headers: {
             Authorization: `Token ${token.value}`
           },
@@ -57,8 +58,8 @@ export default defineComponent({
           datasets: [
             {
               label: '기본 금리',
-              backgroundColor: 'rgba(75, 192, 192, 0.5)',
-              borderColor: 'rgba(75, 192, 192, 0.9)',
+              backgroundColor: 'rgba(75, 192, 192, 0.7)',
+              borderColor: 'rgba(56, 189, 221, 0.9)',
               hoverBackgroundColor: 'mediumturquoise',
               hoverBorderWidth:2,
               data: res.data.intr_rates
@@ -116,28 +117,37 @@ export default defineComponent({
       onClick: (event, elements) => {
         if (elements.length > 0) {
           const clickedBarIndex = elements[0].index
-          // console.log(chartData)
           const clickedLabel = chartData.value.labels[clickedBarIndex]
           // console.log(clickedLabel)
-          Productstore.findProduct(clickedLabel)
-          router.push({name:'ProductDetail', params:{type: goDetail.value.type, productId: goDetail.value.productId}})
-
+          
+          axios({
+            method : 'get',
+            url: `${ProductStore.API_URL}/goDetail/${clickedLabel}/`,
+          })
+          .then((res) => {
+            console.log(res.data,'여기@')
+            goDetail.value = res.data
+            router.push({name:'ProductDetail', params:{type: goDetail.value.type, productId: goDetail.value.productId}})   
+          })
+          .catch((err) => {
+            console.log(err)
+          })
+          
+          
         }
       }
     }
 
     return {
+      ProductStore,
       loaded,
       chartData,
-      chartOptions
+      chartOptions,
+      router,
+      goDetail,
     }
   }
 })
-
-
-const goDetail = function() {
-
-}
 
 </script>
 
