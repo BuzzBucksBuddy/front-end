@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Exchange Rate View</h1>
+    <!-- <h1>Exchange Rate View</h1> -->
     <ExchangeRateCalculator @country-changed="handleCountryChange" />
     <ExchangeRateNews :country="currentCountry"/>
   </div>

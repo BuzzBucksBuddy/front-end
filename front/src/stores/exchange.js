@@ -48,7 +48,7 @@ export const useExchangeStore = defineStore('exchange', () => {
       url: `${API_URL}/api/v1/exchanges/${country}/${category}/`
     })
       .then((res) => {
-        console.log(res)
+        console.log(res,'ddd')
         exchangeRate.value = Number(res.data.rate)
         exchangeUnit.value = res.data.unit
       })

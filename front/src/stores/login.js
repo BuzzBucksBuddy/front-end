@@ -127,81 +127,25 @@ export const useLoginStore = defineStore('login', () => {
   }
 
 
-  // const userInfo = function () {
-  //   if (isLogin.value === true) {
-  //     axios({
-  //       method: 'get',
-  //       url: `${API_URL}/dj-rest-auth/user/`,
-  //       headers: {
-  //         Authorization: `Token ${token.value}`
-  //       }
-  //     })
-  //       .then((res) => {
-  //         console.log(res.data)
-
-  //         myName.value = res.data.username
-  //         myId.value = res.data.pk
-  //       })
-  //       .catch((err) => {
-  //         console.log(err)
-  //       })
-  //   }
-  // }
-
-
-  
-  // const favoriteCategory = ref([])
-  // const getFavoriteCategory = function () {
-  //   axios({
-  //     method: 'get',
-  //     url: `${API_URL}/api/v1/accounts/favorites/`,
-  //     headers: {
-  //       Authorization: `Token ${token.value}`     // password1 오류
-  //     }
-  //   })
-  //     .then((res) => {
-  //       console.log(res.data)
-  //       favoriteCategory.value = res.data
-  //     })
-  //     .catch((err) => {
-  //       console.log(err)
-  //     })
-  // }
-
-
-  // const favoriteSelect = function (favoriteId) {
-  //   axios({
-  //     method: 'post',
-  //     url: `${API_URL}/api/v1/accounts/favorites/${favoriteId}/select/`
-  //   })
-  //     .then ((res) => {
-  //       console.log(res.data)
-  //     })
-  //     .catch((err) => {
-  //       console.log(err)
-  //     })
-  // }
-
-
-  // const editProfile = function(fieldName, newValue) {
-  //   console.log(newValue)
-  //   axios({
-  //     method: 'put',
-  //     url: `${API_URL}/api/v1/accounts/profile/`,
-  //     data:{
-  //       [fieldName]: newValue
-  //     },
-  //     headers: {
-  //       Authorization: `Token ${token.value}`
-  //     }
-  //   })
-  //     .then ((res) => {
-  //       console.log(res.data, 'ddddd')
-  //     })
-  //     .catch((err) => {
-  //       console.log('profile 수정오류', err)
-  //     })
-  // }
+  const editProfile = function(fieldName, newValue) {
+    console.log(newValue)
+    axios({
+      method: 'put',
+      url: `${API_URL}/api/v1/accounts/profile/`,
+      data:{
+        [fieldName]: newValue
+      },
+      headers: {
+        Authorization: `Token ${token.value}`
+      }
+    })
+      .then ((res) => {
+        console.log(res.data, 'ddddd')
+      })
+      .catch((err) => {
+        console.log('profile 수정오류', err)
+      })
+  }
   
 
   // 관심사 카테고리 가져오기
