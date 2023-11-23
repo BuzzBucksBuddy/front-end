@@ -130,6 +130,7 @@ const bankWatcher = watch(() => selectBank.value, (newValue, old) => {
 .selected {
   color: var(--sub-color);
   background-color: var(--main-color);
+  border: 4px solid var(--sub-color);
 }
 .selector {
   display: flex;
@@ -145,9 +146,11 @@ const bankWatcher = watch(() => selectBank.value, (newValue, old) => {
   color: white;
 }
 h2 {
+  text-align: center;
   margin-top: 12px;
   margin-bottom: 0;
   margin-left: 12px;
+  font-size: 32px;
   font-weight: 700;
 }
 select {
@@ -165,7 +168,7 @@ select {
 select {
   padding-left: 12px;
   font-weight: 700;
-  margin: 8px 8px;
+  margin: 8px 4px;
   cursor: pointer;
 }
 .prod-toggle {
