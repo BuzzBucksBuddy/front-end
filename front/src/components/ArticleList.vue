@@ -1,6 +1,52 @@
 <template>
-  <div>
-    <div class="article" v-if="!article.is_locked || whosArticle" @click="goDetail">
+  <!-- <div> -->
+    <div class="card article" v-if="!article.is_locked || whosArticle" @click="goDetail">
+      <div class="card-header line-one">
+        <div class="category">
+          <span class="badge text-bg-dark">{{ article.article_bank_category.name }}</span>
+          <span v-if="article.article_product_category.name === '일반'" class="badge text-bg-primary">{{ article.article_product_category.name }}</span>
+          <span v-if="article.article_product_category.name === '예금'" class="badge text-bg-secondary">{{ article.article_product_category.name }}</span>
+          <span v-if="article.article_product_category.name === '적금'" class="badge text-bg-success">{{ article.article_product_category.name }}</span>
+          <span v-if="article.article_product_category.name === '환율'" class="badge text-bg-danger">{{ article.article_product_category.name }}</span>
+        </div>
+        <div>
+          <p v-if="whosArticle">내 게시글</p>
+          <p v-else>{{ article.user.username }}</p>
+        </div>
+      </div>
+      <div class="card-body line-two">
+        <h3>{{ article.title }}</h3>
+          <p>
+            <i class="fa-solid fa-heart"></i>
+            {{ likeCounter }}
+          </p>
+      </div>
+      <div class="info-box">
+        <p class="time">{{ article.created_at.slice(0, 10) }} {{ article.created_at.slice(11, 19) }}</p>
+      </div>
+    </div>
+  
+  <div class="card article-locked" v-else>
+    <div class="card-header line-one">
+      <div class="category">
+        <span class="badge text-bg-dark">{{ article.article_bank_category.name }}</span>
+          <span v-if="article.article_product_category.name === '일반'" class="badge text-bg-primary">{{ article.article_product_category.name }}</span>
+          <span v-if="article.article_product_category.name === '예금'" class="badge text-bg-secondary">{{ article.article_product_category.name }}</span>
+          <span v-if="article.article_product_category.name === '적금'" class="badge text-bg-success">{{ article.article_product_category.name }}</span>
+          <span v-if="article.article_product_category.name === '환율'" class="badge text-bg-danger">{{ article.article_product_category.name }}</span>
+      </div>
+    </div>
+    <div class="title">
+      <i id="locker" @click="showInput" class="fa-solid fa-lock"></i><br>
+      <h3>{{ article.title }}</h3>
+    </div>
+    <form v-show="unlock" @submit.prevent="checkPassword">
+      <input type="password" v-model="inputPwd">
+      <input type="submit">
+    </form>
+  </div>
+
+    <!-- <div class="article" v-if="!article.is_locked || whosArticle" @click="goDetail">
       <div class="line-one">
         <div class="category">
           <span class="category-item">{{ article.article_product_category.name }}</span>
@@ -23,8 +69,9 @@
       <div class="info-box">
         <p class="time">{{ article.created_at.slice(0, 10) }} {{ article.created_at.slice(11, 19) }}</p>
       </div>
-    </div>
-    <div class="article-locked" v-else>
+    </div> -->
+
+    <!-- <div class="article-locked" v-else>
       <div class="line-one">
         <div class="category">
           <span class="category-item">{{ article.article_product_category.name }}</span>
@@ -41,7 +88,7 @@
       </form>
     </div>
     <hr>
-  </div>
+  </div> -->
 </template>
 
 <script setup>
@@ -89,18 +136,20 @@ const likeCounter = computed(() => {
 </script>
 
 <style scoped>
+
 .line-one {
   display: flex;
   justify-content: space-between;
-  margin: 8px 0;
+  margin: 0px;
 }
 .line-two {
   display: flex;
   justify-content: space-between;
-  margin: 8px 0;
+  margin-left: 5px;
+  padding: 5px;
+  height: 30px;
 }
-.category {
-}
+
 .category-item {
   margin-right: 4px;
 }
@@ -111,6 +160,7 @@ const likeCounter = computed(() => {
 }
 .time {
   font-size: 14px;
+  padding: 5px;
 }
 #locker {
   cursor: pointer;
@@ -118,6 +168,7 @@ const likeCounter = computed(() => {
 }
 h3 {
   margin: 0;
+  height: 30px;
 }
 hr {
   margin: 0;
@@ -126,16 +177,16 @@ p {
   margin: 0;
 }
 .article-locked {
-  height: 88px;
+  height: 150px;
   background-color: white;
   margin: 8px 0;
 }
 .article {
-  height: 88px;
+  height: 150px;
   background-color: white;
   transition: all 0.5s;
   cursor: pointer;
-  margin: 8px 0;
+  margin: 15px 0;
 }
 .article:hover {
   background-color: rgb(235, 235, 235);

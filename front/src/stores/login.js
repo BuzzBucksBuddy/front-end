@@ -227,7 +227,7 @@ export const useLoginStore = defineStore('login', () => {
     favoriteCategory, 
     getFavoriteCategory,
     favoriteSelect,
-    editProfile,
+    // editProfile,
     depLankfromFavorite,
     savLankfromFavorite,
     usersFavorite,
