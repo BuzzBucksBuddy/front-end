@@ -56,7 +56,6 @@
 </template>
 
 <script setup>
-<<<<<<< front/src/views/HomeView.vue
 import axios from 'axios'
 import { onMounted } from 'vue';
 import { useProductStore } from '@/stores/product.js'
