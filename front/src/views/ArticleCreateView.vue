@@ -1,35 +1,36 @@
 <template>
-  <div>
-    <div class="title"></div>
-    <h2>게시글 작성</h2>
-    <hr>
-    <form @submit.prevent="createArticle">
-      <select class="create-form" name="product" id="product" v-model="articleProductCategory">
-        <option value="null">카테고리를 선택하세요.</option>
-        <option v-for="product in store.productCategories" :value="product.id">{{ product.name }}</option>
-      </select>
-      <select class="create-form" name="bank" id="bank" v-model="articleBankCategory">
-        <option value="null">은행을 선택하세요.</option>
-        <option v-for="bank in store.bankCategories" :value="bank.id">{{ bank.name }}</option>
-      </select>
-      <div class="input-group mb-3 form-group">
-        <span class="input-group-text" id="basic-addon1">제목</span>
-        <input type="text" v-model.trim="title" id="title" class="form-control" aria-label="Username" aria-describedby="basic-addon1">
-      </div>
-      <div class="input-group form-group">
-        <span class="input-group-text">내용</span>
-        <textarea v-model.trim="content" id="content" class="form-control" aria-label="With textarea"></textarea>
-      </div>
-      <div class="form-check form-switch form-group">
-        <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" v-model="isLocked">
-        <label class="form-check-label" for="flexSwitchCheckDefault">게시물 잠금</label>
-          <p class="input-group mb-3 form-group lock-form" v-show="isLocked">
-            <span class="input-group-text" id="basic-addon1">암호</span>
-            <input type="password" v-model="password" id="title" class="form-control" aria-label="Username" aria-describedby="basic-addon1">
-          </p>
-      </div>
-      <input type="submit" class="form-group" value="등록">
-    </form>
+  <h2>게시글 작성</h2>
+  <hr>
+  <div class="outer">
+    <div class="inner">
+      <form @submit.prevent="createArticle">
+        <select class="create-form" name="product" id="product" v-model="articleProductCategory">
+          <option value="null">카테고리를 선택하세요.</option>
+          <option v-for="product in store.productCategories" :value="product.id">{{ product.name }}</option>
+        </select>
+        <select class="create-form" name="bank" id="bank" v-model="articleBankCategory">
+          <option value="null">은행을 선택하세요.</option>
+          <option v-for="bank in store.bankCategories" :value="bank.id">{{ bank.name }}</option>
+        </select>
+        <div class="input-group mb-3 form-group">
+          <span class="input-group-text" id="basic-addon1">제목</span>
+          <input type="text" v-model.trim="title" id="title" placeholder="제목을 입력하세요." class="form-control" aria-label="제목을 입력하세요." aria-describedby="basic-addon1">
+        </div>
+        <div class="input-group form-group">
+          <span class="input-group-text">내용</span>
+          <textarea v-model.trim="content" id="content" class="form-control" aria-label="With textarea"></textarea>
+        </div>
+        <div class="form-check form-switch form-group">
+          <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" v-model="isLocked">
+          <label class="form-check-label" for="flexSwitchCheckDefault">게시물 잠금</label>
+            <p class="input-group mb-3 form-group lock-form" v-show="isLocked">
+              <span class="input-group-text" id="basic-addon1">암호</span>
+              <input type="password" v-model="password" id="title" class="form-control" aria-label="Username" aria-describedby="basic-addon1">
+            </p>
+        </div>
+        <input type="submit" class="form-group post-btn" value="등록">
+      </form>
+    </div>
   </div>
 </template>
 
@@ -81,6 +82,12 @@ const createArticle = function () {
 </script>
 
 <style>
+.outer {
+  display: flex;
+  justify-content: center;
+  margin-top: 100px;
+}
+
 h2 {
   margin-top: 50px;
   margin-bottom: 20px;
@@ -91,9 +98,10 @@ h2 {
   padding: 5px;
   background-color: var(--main-color);
   border: 2px solid var(--sub-color);
-  width: 25%;
+  width: 240px;
   height: 40px;
   border-radius: 20px;
+  cursor: pointer;
 }
 
 .form-group {
@@ -107,5 +115,16 @@ textarea {
 
 .lock-form {
   width: 450px;
+}
+
+.post-btn {
+  margin-right: 5px;
+  padding: 5px;
+  background-color: var(--main-color);
+  border: 2px solid var(--sub-color);
+  width: 100%;
+  height: 35px;
+  border-radius: 20px;
+  cursor: pointer;
 }
 </style>

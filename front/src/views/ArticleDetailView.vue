@@ -1,46 +1,53 @@
 <template>
   <div>
-    <div v-if="article">
-      <p>{{ article.id }}</p>
-      <p>{{ article.article_product_category.name }}</p>
-      <p>{{ article.article_bank_category.name }}</p>
-      <h3>{{ article.title }}</h3>
-      <p v-if="whosArticle">내 게시글</p>
-      <p v-else>{{ article.user.username }}</p>
-      <p>{{ article.content }}</p>
-      <p>작성일 : {{ article.created_at.slice(0, 10) }}</p>
-      <p>수정일 : {{ article.updated_at.slice(0, 10) }}</p>
-    </div>
-    <div class="center-box">
-      <div @click="setLike" class="center-box" :class="{like: !isLiked, liked: isLiked}">
-        <p>{{ likeCounter }}</p>
-        <p>(●'◡'●)</p>
-      </div>
-    </div>
-    <div v-if="whosArticle">
-      <button @click="articleUpdate">수정</button>
-      <form @submit.prevent="deleteArticle">
-        <input type="submit" value="삭제">
-      </form>
-    </div>
+    <h2>게시글 상세</h2>
     <hr>
-    <h3>댓글 목록</h3>
-    <p v-if="isCommentExist">{{ commentsCount }}</p>
-    <CommentCreate
-      :article="article"
-      @go-comment="pushComment"
-    />
-    <div v-if="isCommentExist">
-      <Comment 
-        v-for="comment in comments"
-        :key="comment.id"
-        :comment="comment"
-        :article="article"
-        @go-comment="loadComment"
-      />
-    </div>
-    <div v-else>
-      <p>댓글이 없습니다 ㅠㅠ</p>
+    <div class="outer">
+      <div class="card">
+        <div v-if="article">
+          <!-- <h6>글 번호: {{ article.id }}</h6> -->
+          <h6 v-if="whosArticle">내 게시글</h6>
+          <h6 v-else>작성자: {{ article.user.username }}</h6>
+          <h6>카테고리: {{ article.article_product_category.name }}</h6>
+          <h6>금융회사명: {{ article.article_bank_category.name }}</h6>
+          <h6>제목: {{ article.title }}</h6>
+          <h6>내용: {{ article.content }}</h6>
+          <h6>작성일: {{ article.created_at.slice(0, 10) }}</h6>
+          <h6>수정일: {{ article.updated_at.slice(0, 10) }}</h6>
+        </div>
+        <div class="center-box">
+          <div @click="setLike" class="center-box" :class="{like: !isLiked, liked: isLiked}">
+            <p>{{ likeCounter }}</p>
+            <p>(●'◡'●)</p>
+          </div>
+        </div>
+        <div class="btns" v-if="whosArticle">
+          <button @click="articleUpdate" type="button" class="btn btn-light">수정</button>
+          <form @submit.prevent="deleteArticle">
+            <input type="submit" class="btn btn-light" value="삭제">
+          </form>
+        </div>
+        <hr>
+        <CommentCreate
+          :article="article"
+          @go-comment="pushComment"
+        />
+        <hr>
+        <h6>댓글 목록<span v-if="isCommentExist"> ({{ commentsCount }})</span></h6>
+        <hr>
+        <div v-if="isCommentExist">
+          <Comment 
+            v-for="comment in comments"
+            :key="comment.id"
+            :comment="comment"
+            :article="article"
+            @go-comment="loadComment"
+          />
+        </div>
+        <div v-else>
+          <p>댓글을 작성해 주세요.</p>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -248,5 +255,20 @@ onMounted(() => {
 }
 .liked:hover {
   background-color: rgb(220, 116, 150);
+}
+
+.outer {
+  display: flex;
+  justify-content: center;
+}
+
+.card {
+  padding: 30px;
+  width: 500px;
+}
+
+.btns {
+  display: flex;
+  justify-content: center;
 }
 </style>

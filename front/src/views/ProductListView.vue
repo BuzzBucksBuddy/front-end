@@ -1,12 +1,6 @@
 <template>
   <div>
     <!--버튼-->
-    <!-- <div class="btn-group btn-group-lg product-btn" role="group" aria-label="Basic radio toggle button group">
-      <input @click="isDeposit = true" type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
-      <label class="btn btn-warning dep-btn" for="btnradio1">예금 상품</label>
-      <input @click="isDeposit = false" type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
-      <label class="btn btn-warning sav-btn" for="btnradio2">적금 상품</label>
-    </div> -->
     <div class="selector">
       <h4 :class="['prod-toggle', { selected: isDeposit}]" @click="isDeposit=true">예금</h4>
       <h4 :class="['prod-toggle', { selected: !isDeposit}]" @click="isDeposit=false">적금</h4>

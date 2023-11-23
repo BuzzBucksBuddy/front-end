@@ -1,12 +1,23 @@
 <template>
   <div>
     <form @submit.prevent="createComment">
-      <input type="text" v-model="content">
+      <!-- <input type="text" v-model="content">
       <span>숨기기:<input type="checkbox" v-model="isLocked"></span>
       <p v-show="isLocked">암호 : 
         <input type="password" v-model="password">
       </p>
-      <input type="submit">
+      <input type="submit"> -->
+
+      <div class="form-check form-switch form-group">
+          <p><label class="form-check-label" for="flexSwitchCheckDefault">댓글: <input type="text" v-model="content" class="text-box"></label>
+          <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" v-model="isLocked">
+            <p class="input-group mb-3 form-group lock-form" v-show="isLocked">
+              <span class="input-group-text" id="basic-addon1">암호</span>
+              <input type="password" v-model="password" id="title" class="form-control" aria-label="Username" aria-describedby="basic-addon1">
+              <input class="add btn btn-light" type="submit" value="등록">
+            </p>
+          </p>
+      </div>
     </form>
   </div>
 </template>
@@ -65,5 +76,15 @@ const createComment = function () {
 </script>
 
 <style scoped>
+.text-box {
+  width: 300px;
+}
 
+.lock-form {
+  width: 300px;
+}
+
+.add {
+  margin-left: 5px;
+}
 </style>

@@ -2,18 +2,18 @@
   <div>
     <section class="selections">
       <select name="dos" id="do" v-model="selectDo">
-        <option :value="null" selected disabled>선택해주세요</option>
+        <option :value="null" selected disabled>선택해 주세요</option>
         <option v-for="dos in store.doList" :key="dos.code" :value="dos.code">{{ dos.name }}</option>
       </select>
       <select name="gus" id="gu" v-model="selectGu">
-        <option :value="null" selected disabled>선택해주세요</option>
+        <option :value="null" selected disabled>선택해 주세요</option>
         <option v-for="gus in store.guList" :key="gus.code" :value="gus.name">{{ gus.name }}</option>
       </select>
       <select name="bank" id="bank" v-model="selectBank">
         <option value="은행" selected="selected">모든 은행</option>
         <option v-for="bank in articleStore.bankCategories" :key="bank" :value="bank.name">{{ bank.name }}</option>
       </select>
-      <h2>{{ selectBank }} 어디있을까요?</h2>
+      <h2>{{ selectBank }} 어디에 있을까요?</h2>
     </section>
     <section class="container">
       <div class="map-container">
@@ -113,7 +113,7 @@ const bankWatcher = watch(() => selectBank.value, (newValue, old) => {
 .map-container {
   width: 50%;
   height: 700px;
-  border: 6px solid black;
+  border: 3px solid black;
 }
 .bank-container {
   height: 700px;
@@ -124,13 +124,13 @@ const bankWatcher = watch(() => selectBank.value, (newValue, old) => {
   height: 644px;
   overflow-y: scroll;
   padding: 0 10px;
-  border-top: 4px solid black;
-  border-bottom: 4px solid black;
+  border-top: 3px solid black;
+  border-bottom: 3px solid black;
 }
 .selected {
   color: var(--sub-color);
   background-color: var(--main-color);
-  border: 4px solid var(--sub-color);
+  border: 2px solid var(--sub-color);
 }
 .selector {
   display: flex;
@@ -157,11 +157,12 @@ select {
   outline: 0;
   height: 48px;
   width: 200px;
-  border: 4px solid black;
+  border: 2px solid black;
   border-radius: 24px;
   background-color: var(--main-color);
   margin-right: 12px;
 }
+
 .selections {
   margin: 24px 0;
 }
