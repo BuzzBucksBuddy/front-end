@@ -23,9 +23,9 @@
           <i class="fa-solid fa-house"></i>
           <p :class="{'name-narrow': !switcher, 'name-wide': switcher}">홈</p>
         </div>
-        <div @click="routerTo('Profile')" :class="[{active: $route.name === 'Profile', 'nav-item-narrow': !switcher}, 'nav-item']">
-          <i class="fa-solid fa-user"></i>
-          <p :class="{'name-narrow': !switcher, 'name-wide': switcher}">프로필</p>
+        <div @click="routerTo('Recommand')" :class="[{active: $route.name === 'Recommand', 'nav-item-narrow': !switcher}, 'nav-item']">
+          <i class="fa-solid fa-gift"></i>
+          <p :class="{'name-narrow': !switcher, 'name-wide': switcher}">추천</p>
         </div>
         <div @click="routerTo('ProductList')" :class="[{active: $route.name === 'ProductList', 'nav-item-narrow': !switcher}, 'nav-item']">
           <i class="fa-solid fa-coins"></i>
@@ -52,7 +52,10 @@
           </div>
         </div>
         <div class="user-info" v-else>
-          <h4>{{ loginStore.myName }}</h4>
+          <div @click="routerTo('Profile')" :class="[{active: $route.name === 'Profile', 'nav-item-narrow': !switcher}, 'nav-item']">
+            <i class="fa-solid fa-user"></i>
+            <p :class="{'name-narrow': !switcher, 'name-wide': switcher}">{{ loginStore.myName }}</p>
+          </div>
           <div class="log-link">
             <a @click="loginStore.logOut">LogOut</a>
           </div>
@@ -245,7 +248,7 @@ function randomizeButtonPosition() {
 }
 nav {
   z-index: 99;
-  background-color: white;
+  background-color: var(--main-color);
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -253,7 +256,7 @@ nav {
   top: 0;
   left: 0;
   padding: 20px 4px;
-  border-right: 3px solid rgb(22, 22, 22);
+  border-right: 4px solid var(--sub-color);
   transition: all 0.5s;
 }
 .up-down {
@@ -328,7 +331,7 @@ h4 {
   cursor: pointer;
 }
 .log-link a:hover {
-  color: rgb(242, 185, 60);
+  color: var(--main-color);
 }
 hr {
   margin: 0;

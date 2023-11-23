@@ -1,13 +1,12 @@
 <template>
   <div class="container">
     <section class="container">
-      <h1>로그인</h1>
       <div class="login-img">
-  
+        <img src="@/assets/svg/piggy.svg" alt="logo" id="logo">
       </div>
       <form @submit.prevent="logIn">
-        <input type="text" v-model.trim="username">
-        <input type="password" v-model.trim="password">
+        <input type="text" v-model.trim="username" placeholder="아이디">
+        <input type="password" v-model.trim="password" placeholder="비밀번호">
         <input type="submit" value="로그인">
       </form>
     </section>
@@ -32,8 +31,12 @@ const logIn = function () {
 </script>
 
 <style scoped>
+.login-img {
+  width: 360px;
+  margin: 24px 0;
+}
 .container {
-  margin-top: 48px;
+  margin-top: 64px;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -54,7 +57,7 @@ form input[type="password"] {
   border: 6px solid var(--gray-color);
   transition: all 0.3s;
   padding-left: 24px;
-  font-size: 16px;
+  font-size: 18px;
 }
 form input[type="text"]:hover,
 form input[type="password"]:hover {
@@ -74,6 +77,7 @@ form input[type="submit"] {
   font-size: 24px;
   font-weight: 700;
   transition: all 0.5s;
+  margin-top: 12px;
 }
 form input[type="submit"]:hover {
   border-radius: 32px;

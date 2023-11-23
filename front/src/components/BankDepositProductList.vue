@@ -26,7 +26,7 @@ const goDetail = function () {
   align-items: center;
   padding: 16px;
   border-radius: 16px;
-  transition: background-color 0.5s;
+  transition: all 0.5s;
   margin: 8px 0;
 }
 h4 {
@@ -35,6 +35,7 @@ h4 {
   font-weight: 600;
 }
 .bank-card:hover {
+  border: 4px solid var(--sub-color);
   background-color: var(--main-color);
   cursor: pointer;
 }

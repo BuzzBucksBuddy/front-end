@@ -284,12 +284,11 @@ h2 {
   flex-direction: column;
   align-items: center;
   width: 480px;
-  padding: 12px 0;
 }
 .input-section {
   border: 1px solid var(--gray-color);
   border-radius: 16px;
-  padding: 16px;
+  padding: 8px 16px;
   margin-top: 12px;
   display: flex;
   flex-direction: column;
@@ -301,7 +300,7 @@ h2 {
   border: 1px solid var(--gray-color);
   border-radius: 16px;
   padding: 16px;
-  margin-top: 12px;
+  margin-top: 8px;
   width: 100%;
   display: flex;
   justify-content: center;

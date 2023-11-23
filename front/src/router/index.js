@@ -14,6 +14,7 @@ import ArticleDetailView from '@/views/ArticleDetailView.vue'
 import ArticleCreateView from '@/views/ArticleCreateView.vue'
 import FavoriteSelectView from '@/views/FavoriteSelectView.vue'
 import JoinListView from '@/views/JoinListView.vue'
+import RecommandView from '@/views/RecommandView.vue'
 
 
 const router = createRouter({
@@ -89,6 +90,11 @@ const router = createRouter({
       name: 'FavoriteSelect',
       component: FavoriteSelectView
     },
+    {
+      path: '/recommand',
+      name: 'Recommand',
+      component: RecommandView
+    }
   ]
 })
 
@@ -111,7 +117,8 @@ router.beforeEach((to, from) => {
     && (
       to.name === 'ArticleCreate' ||
       to.name === 'ArticleUpdate' ||
-      to.name === 'Profile'
+      to.name === 'Profile' ||
+      to.name === 'Recommand'
       )) {
     window.alert('로그인이 필요합니다.')
     return { name: 'LogIn' }
