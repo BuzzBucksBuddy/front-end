@@ -1,16 +1,19 @@
 <template>
-  <div>
-    <h2>Exchange Rate News</h2>
-    {{ keyword }}
-
-    <div v-if="titleList">
-      <h3>Search Results</h3>
-      <ul>
-        <li v-for="(title, index) in titleList" :key="index">
-          <h4>{{ title }}</h4>
-          <a :href="`https://news.google.com/${linkList[index]}`" target="_blank">Read more</a>
-        </li>
-      </ul>
+  <div class="news-box">
+    <!-- <h2>Exchange Rate News</h2> -->
+    <!-- {{ keyword }} -->
+    <button @click="searchNews">뉴스 알아보기</button>
+    <!-- <h3>Search Results</h3> -->
+    <div class="row row-cols-1 row-cols-md-3 g-2 mb-3">
+        <div v-for="(title, index) in titleList" :key="index" class="col my-2">
+          <div  class="card-body h-100 position-relative">
+            <h6 class="card-title">{{ title }}</h6>
+            <br>
+            <div class="position-absolute bottom-0 end-0 m-2">
+              <a :href="`https://news.google.com/${linkList[index]}`" target="_blank" class="text-decoration-none text-body-secondary">Read more</a>
+            </div>
+          </div>
+        </div>
     </div>
   </div>
 </template>
@@ -23,7 +26,9 @@ const props = defineProps({
   country: String
 })
 
-const keyword = ref('')
+const keyword = ref(null)
+
+
 watch(() => props.country, (newCountry) => {
   // Update the Country and perform the news search
   keyword.value = newCountry
@@ -31,15 +36,20 @@ watch(() => props.country, (newCountry) => {
   searchNews()
 })
 
+
+
 const searchNews = function () {
-  console.log('eeee')
-  // store.setKeyword(keyword.value)
-  store.searchNews(keyword.value)
-}
+  if (props.country) {
+    store.searchNews(props.country)
+  } else {
+    store.searchNews('USD')
+  }
+  }
+  
 
 const store = useExchangeStore()
 const titleList = computed(() =>{
-  return store.searchTitleResults
+  return limitTitle(store.searchTitleResults)
 })
 
 const linkList = computed(() =>{
@@ -47,9 +57,26 @@ const linkList = computed(() =>{
 })
 
 const removeNews = function () {
-  store.searchTitleResults = []
-  keyword.value = ''
+  store.searchTitleResults.value = []
+  // keyword.value = null
 }
+
+//문자 길이 제한
+ const limitTitle = (title, limit = 15) => {
+  const newTitle = [];
+  if(title.length > limit) {
+    title.split(' ').reduce((acc, cur) => {
+      if (acc + cur.length <= limit) {
+        newTitle.push(cur)
+      }
+      return acc + cur.length
+    }, 0);
+    return `${newTitle.join(' ')} ...`
+  }
+  return title
+}
+
+
 
 // 로드될때, 이전 데이터 지우기
 onMounted (() => {
@@ -69,9 +96,18 @@ onMounted (() => {
 </script>
 
 <style scoped>
-li {
-  border: 1px solid rgb(123, 153, 252);
+
+.card-body {
+  border: 1px solid var(--gray-color);
+  border-radius: 10px;
+  background-color: var(--gray-color);
   padding: 10px;
+  margin: 10px;
 }
+
+.news-box {
+  margin-top: 30px;
+}
+
 
 </style>

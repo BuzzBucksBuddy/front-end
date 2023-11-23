@@ -56,6 +56,29 @@
 </template>
 
 <script setup>
+import axios from 'axios'
+import { onMounted } from 'vue';
+
+const API_URL = 'http://127.0.0.1:8000'
+
+
+onMounted(()=> {
+  exchangeSave()
+})
+
+const exchangeSave = function() {
+  axios({
+    method: 'get',
+    url: `${API_URL}/api/v1/exchanges/save-exchange-rates/`
+  })
+   .then ((res) => {
+    console.log(res)
+   })
+   .catch((err) => {
+    console.log(err)
+  })
+}
+  
 
 </script>
 
