@@ -23,6 +23,7 @@
         <option :value="24">24개월</option>
         <option :value="36">36개월</option>
       </select>
+
       <DepositProductList
         v-for="product in productStore.dep_products"
         :key="product.id"
@@ -34,10 +35,12 @@
 
     <!--적금 상품-->
     <section v-show="!isDeposit">
+      <!--은행 선택-->
       <select name="savBank" id="savBank" v-model="selectSavBank">
         <option :value="'선택 안함'">모든 은행</option>
         <option v-for="savBank in articleStore.bankCategories" :key="savBank" :value="savBank.name">{{ savBank.name }}</option>
       </select>
+      <!--기간 선택-->
       <select name="savTerm" id="savTerm" v-model="selectSavTerm">
         <option :value="0">모든 기간</option>
         <option :value="6">6개월</option>
@@ -45,6 +48,7 @@
         <option :value="24">24개월</option>
         <option :value="36">36개월</option>
       </select>
+      <!--유형 선택-->
       <select name="savType" id="savType" v-model="selectSavType">
         <option :value="'선택 안함'">모든 유형</option>
         <option :value="'정액적립식'">정액적립식</option>
@@ -62,6 +66,7 @@
       </div>
     </section>
 
+    <!--페이지 최상단으로 이동-->
     <button type="button" class="btn btn-light scroll" @click="scrollUp">
       <p><i class="fa-solid fa-angles-up fa-bounce fa-lg" style="color: #ffd43b;"></i></p>
       <p>&nbsp</p>
@@ -76,7 +81,6 @@ import { useProductStore } from '@/stores/product.js'
 import { useArticleStore } from '@/stores/article.js'
 import DepositProductList from '@/components/DepositProductList.vue'
 import SavingProductList from '@/components/SavingProductList.vue'
-import axios from 'axios'
 
 const productStore = useProductStore()
 const articleStore = useArticleStore()
@@ -96,19 +100,6 @@ const depBankWatch = watch(() => (selectDepBank.value), (newValue) => {
 const savBankWatch = watch(() => (selectSavBank.value), (newValue) => {
   productStore.getSavProducts(newValue)
 })
-
-// const getProductsData = function() {
-//     axios({
-//       method: 'get',
-//       url: `${productStore.API_URL}/products-data/`
-//     })
-//       .then(res => {
-//         console.log('success!')
-//       })
-//       .catch((err) => {
-//         console.log(err)
-//       })
-//   }
 
 const scrollUp = function() {
   window.scrollTo({ top: 0, behavior: "smooth" })
@@ -143,8 +134,4 @@ button {
   bottom: 30px;
   right: 30px;
 }
-
-/* .product-cards {
-  gap: 10px;
-} */
 </style>

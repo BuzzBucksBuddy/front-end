@@ -1,5 +1,4 @@
 <template>
-  
   <div class="card product-card" v-show="select">
     <div class="card-body">
       <!--상품명-->
@@ -21,7 +20,6 @@
               </div>
             </div>
           </p>
-        
           <p v-if="savOption.rsrv_type_nm === '자유적립식'">
             <div class="card text-bg-light text-center" style="width: 6.5rem; height: 6.5rem;">
               <div class="card-body card-option-body">
@@ -35,11 +33,8 @@
           </p>
         </div>
       </div>
-    
     </div>
   </div>
-  
-
 </template>
 
 <script setup>
