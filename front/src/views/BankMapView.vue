@@ -1,27 +1,28 @@
 <template>
   <div>
-    <h1>은행 찾기</h1>
-    <select name="dos" id="do" v-model="selectDo">
-      <option :value="null" selected disabled>--선택하세요--</option>
-      <option v-for="dos in store.doList" :key="dos.code" :value="dos.code">{{ dos.name }}</option>
-    </select>
-    <select name="gus" id="gu" v-model="selectGu">
-      <option :value="null" selected disabled>--선택하세요--</option>
-      <option v-for="gus in store.guList" :key="gus.code" :value="gus.name">{{ gus.name }}</option>
-    </select>
-    <select name="bank" id="bank" v-model="selectBank">
-      <option value="은행" selected="selected">모든 은행</option>
-      <option v-for="bank in articleStore.bankCategories" :key="bank" :value="bank.name">{{ bank.name }}</option>
-    </select>
+    <section class="selections">
+      <select name="dos" id="do" v-model="selectDo">
+        <option :value="null" selected disabled>선택해주세요</option>
+        <option v-for="dos in store.doList" :key="dos.code" :value="dos.code">{{ dos.name }}</option>
+      </select>
+      <select name="gus" id="gu" v-model="selectGu">
+        <option :value="null" selected disabled>선택해주세요</option>
+        <option v-for="gus in store.guList" :key="gus.code" :value="gus.name">{{ gus.name }}</option>
+      </select>
+      <select name="bank" id="bank" v-model="selectBank">
+        <option value="은행" selected="selected">모든 은행</option>
+        <option v-for="bank in articleStore.bankCategories" :key="bank" :value="bank.name">{{ bank.name }}</option>
+      </select>
+      <h2>{{ selectBank }} 어디있을까요?</h2>
+    </section>
     <section class="container">
       <div class="map-container">
         <BankMap :select-gu="selectGu" :select-bank="selectBank"/>
       </div>
       <div class="bank-container">
         <div class="selector">
-          <h2>{{ selectBank }}</h2>
-          <h3 :class="{ selected: switcher}" @click="switcher=true">예금</h3>
-          <h3 :class="{ selected: !switcher}" @click="switcher=false">적금</h3>
+          <h3 :class="['prod-toggle', { selected: switcher}]" @click="switcher=true">예금</h3>
+          <h3 :class="['prod-toggle', { selected: !switcher}]" @click="switcher=false">적금</h3>
         </div>
         <section class="bank-items" v-show="switcher">
           <div v-if="depLen">
@@ -107,29 +108,32 @@ const bankWatcher = watch(() => selectBank.value, (newValue, old) => {
   display: flex;
   height: 700px;
   gap: 20px;
-  margin-top: 20px;
+  margin-top: 12px;
 }
 .map-container {
   width: 50%;
-  height: 100%;
+  height: 700px;
+  border: 6px solid black;
 }
 .bank-container {
-  height: 100%;
+  height: 700px;
   width: 50%;
   padding: 0;
 }
 .bank-items {
-  height: 100%;
+  height: 644px;
   overflow-y: scroll;
   padding: 0 10px;
+  border-top: 4px solid black;
+  border-bottom: 4px solid black;
 }
 .selected {
-  color: rgb(242, 185, 60);
+  color: var(--sub-color);
+  background-color: var(--main-color);
 }
 .selector {
   display: flex;
   align-items: baseline;
-  border-bottom: 1px solid;
 }
 .selector h3 {
   margin-left: 10px;
@@ -137,9 +141,42 @@ const bankWatcher = watch(() => selectBank.value, (newValue, old) => {
   cursor: pointer;
 }
 .selector h3:hover {
-  color: rgb(242, 185, 60);
+  color: var(--sub-color);
+  color: white;
 }
 h2 {
-  margin: 0;
+  margin-top: 12px;
+  margin-bottom: 0;
+  margin-left: 12px;
+  font-weight: 700;
+}
+select {
+  outline: 0;
+  height: 48px;
+  width: 200px;
+  border: 4px solid black;
+  border-radius: 24px;
+  background-color: var(--main-color);
+  margin-right: 12px;
+}
+.selections {
+  margin: 24px 0;
+}
+select {
+  padding-left: 12px;
+  font-weight: 700;
+  margin: 8px 8px;
+  cursor: pointer;
+}
+.prod-toggle {
+  width: 120px;
+  height: 48px;
+  border-radius: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.prod-toggle:hover {
+  background-color: var(--sub-color);
 }
 </style>

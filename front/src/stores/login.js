@@ -77,6 +77,7 @@ export const useLoginStore = defineStore('login', () => {
         token.value = null
         myName.value = null
         myId.value = null
+        myProfile.value = []
       })
       .catch((err) => {
         console.log(err)
@@ -127,62 +128,6 @@ export const useLoginStore = defineStore('login', () => {
   }
 
 
-  const userInfo = function () {
-    if (isLogin.value === true) {
-      axios({
-        method: 'get',
-        url: `${API_URL}/dj-rest-auth/user/`,
-        headers: {
-          Authorization: `Token ${token.value}`
-        }
-      })
-        .then((res) => {
-          console.log(res.data)
-
-          myName.value = res.data.username
-          myId.value = res.data.pk
-        })
-        .catch((err) => {
-          console.log(err)
-        })
-    }
-  }
-
-
-  
-  const favoriteCategory = ref([])
-  const getFavoriteCategory = function () {
-    axios({
-      method: 'get',
-      url: `${API_URL}/api/v1/accounts/favorites/`,
-      headers: {
-        Authorization: `Token ${token.value}`     // password1 오류
-      }
-    })
-      .then((res) => {
-        console.log(res.data)
-        favoriteCategory.value = res.data
-      })
-      .catch((err) => {
-        console.log(err)
-      })
-  }
-
-
-  const favoriteSelect = function (favoriteId) {
-    axios({
-      method: 'post',
-      url: `${API_URL}/api/v1/accounts/favorites/${favoriteId}/select/`
-    })
-      .then ((res) => {
-        console.log(res.data)
-      })
-      .catch((err) => {
-        console.log(err)
-      })
-  }
-
-
   const editProfile = function(fieldName, newValue) {
     console.log(newValue)
     axios({
@@ -209,10 +154,7 @@ export const useLoginStore = defineStore('login', () => {
   const getFavoriteCategory = function () {
     axios({
       method: 'get',
-      url: `${API_URL}/api/v1/accounts/favorites/`,
-      headers: {
-        Authorization: `Token ${token.value}`     // password1 오류
-      }
+      url: `${API_URL}/api/v1/accounts/favorites/`
     })
       .then((res) => {
         console.log(res.data)
@@ -287,6 +229,5 @@ export const useLoginStore = defineStore('login', () => {
     depLankfromFavorite,
     savLankfromFavorite,
     usersFavorite,
-
    }
 }, { persist: true })

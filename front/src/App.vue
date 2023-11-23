@@ -2,36 +2,37 @@
   <div id="app">
     <nav :class="['up-down', {'nav-narrow': !switcher}]">
       <section>
-        <h1>BBB</h1>
+        <div>
+          <img src="@/assets/image/logo.png" alt="logo" id="logo">
+        </div>
         <i id="switcher" :class="[{'nav-item-narrow': !switcher}, 'nav-item']" @click="switcher = !switcher" class="fa-solid fa-bars"></i>
         <div @click="routerTo('Home')" :class="[{active: $route.name === 'Home', 'nav-item-narrow': !switcher}, 'nav-item']">
           <i class="fa-solid fa-house"></i>
-          <p :class="{'name-narrow': !switcher, 'name-wide': switcher}">Home</p>
+          <p :class="{'name-narrow': !switcher, 'name-wide': switcher}">홈</p>
         </div>
         <div @click="routerTo('Profile')" :class="[{active: $route.name === 'Profile', 'nav-item-narrow': !switcher}, 'nav-item']">
           <i class="fa-solid fa-user"></i>
-          <p :class="{'name-narrow': !switcher, 'name-wide': switcher}">Profile</p>
+          <p :class="{'name-narrow': !switcher, 'name-wide': switcher}">프로필</p>
         </div>
         <div @click="routerTo('ProductList')" :class="[{active: $route.name === 'ProductList', 'nav-item-narrow': !switcher}, 'nav-item']">
           <i class="fa-solid fa-coins"></i>
-          <p :class="{'name-narrow': !switcher, 'name-wide': switcher}">Products</p>
+          <p :class="{'name-narrow': !switcher, 'name-wide': switcher}">예적금 찾기</p>
         </div>
         <div @click="routerTo('ExchangeRate')" :class="[{active: $route.name === 'ExchangeRate', 'nav-item-narrow': !switcher}, 'nav-item']">
           <i class="fa-solid fa-arrow-right-arrow-left"></i>
-          <p :class="{'name-narrow': !switcher, 'name-wide': switcher}">Exchange</p>
+          <p :class="{'name-narrow': !switcher, 'name-wide': switcher}">환율</p>
         </div>
         <div @click="routerTo('BankMap')" :class="[{active: $route.name === 'BankMap', 'nav-item-narrow': !switcher}, 'nav-item']">
           <i class="fa-solid fa-map"></i>
-          <p :class="{'name-narrow': !switcher, 'name-wide': switcher}">BankMap</p>
+          <p :class="{'name-narrow': !switcher, 'name-wide': switcher}">은행 찾기</p>
         </div>
         <div @click="routerTo('ArticleList')" :class="[{active: $route.name === 'ArticleList', 'nav-item-narrow': !switcher}, 'nav-item']">
           <i class="fa-solid fa-newspaper"></i>
-          <p :class="{'name-narrow': !switcher, 'name-wide': switcher}">Article</p>
+          <p :class="{'name-narrow': !switcher, 'name-wide': switcher}">게시판</p>
         </div>
       </section>
       <section>
         <div class="user-info" v-if="!loginStore.isLogin">
-          <h4>로그인 해주세요</h4>
           <div class="log-link">
             <RouterLink :to="{ name: 'SignUp' }">SignUp</RouterLink>
             <RouterLink :to="{ name: 'LogIn' }">LogIn</RouterLink>
@@ -46,11 +47,10 @@
       </section>
     </nav>
     <main class="nav-active" :class="{'nav-disactive': !switcher}">
-      <header>
-      </header>
-      <hr>
       <section class="container">
-        <RouterView />
+        <RouterView
+          id="wrapper"
+        />
       </section>
     </main>
   </div>
@@ -75,6 +75,11 @@ const routerTo = function (name) {
 </script>
 
 <style scoped>
+#logo {
+  width: 80px;
+  margin-left: 8px;
+  margin-bottom: 8px;
+}
 #app {
   display: flex;
   justify-content: center;
@@ -151,7 +156,7 @@ const routerTo = function (name) {
 }
 @media screen and (min-width: 1920px) {
   nav {
-    width: 240px;
+    width: 220px;
   }
   main {
     width: 1200px;
@@ -160,7 +165,7 @@ const routerTo = function (name) {
     margin-left: 240px;
   }
   .nav-narrow {
-    width: 100px;
+    width: 108px;
   }
   .nav-disactive {
     margin-left: 100px;
@@ -175,8 +180,8 @@ nav {
   position: fixed;
   top: 0;
   left: 0;
-  padding: 20px 2px;
-  border-right: 1px solid rgb(224, 214, 192);
+  padding: 20px 4px;
+  border-right: 3px solid rgb(22, 22, 22);
   transition: all 0.5s;
 }
 .up-down {
@@ -198,7 +203,7 @@ main {
   padding: 16px 20px;
   cursor: pointer;
   transition: background-color 0.5s;
-  border-radius: 8px;
+  border-radius: 16px;
   margin-bottom: 4px;
 }
 .nav-item-narrow {
@@ -208,29 +213,28 @@ main {
 }
 .nav-item p {
   text-decoration: none;
-  color: black;
+  font-weight: 700;
+  /* color: black; */
+  white-space: nowrap;
 }
 .nav-item:hover {
-  background-color: rgb(255, 235, 191);
+  background-color: var(--sub-color);
+  color: white;
 }
 .active {
-  background-color: rgb(255, 235, 191);
+  background-color: var(--main-color);
+  border: 4px solid var(--sub-color);
 }
 .active:hover {
-  background-color: rgb(255, 221, 158);
-}
-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  background-color: var(--sub-color);
 }
 .user-info {
-  width: 160px;
+  width: 100%;
   height: 60px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: end;
+  align-items: start;
   padding: 0px 10px;
 }
 h1 {
@@ -238,6 +242,12 @@ h1 {
 }
 h4 {
   margin: 0;
+}
+.log-link {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: flex-start;
 }
 .log-link a {
   text-decoration: none;

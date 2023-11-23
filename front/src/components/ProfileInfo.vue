@@ -1,5 +1,12 @@
 <template>
   <div>
+    <div id="favorite-back" v-if="!isSavedFavorite">
+      <Favorite
+        id="favorite"
+        @do-update="update"
+      />
+    </div>
+
     <h2>Profile Info</h2>
     <p>{{ myProfile }}</p>
     <div class="profile">
@@ -126,7 +133,13 @@ import { useLoginStore } from '@/stores/login'
 import { ref, onMounted, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import MyProductsChart from '@/components/MyProductsChart.vue'
+import Favorite from '@/components/Favorite.vue'
 
+
+const update = function () {
+  isSavedFavorite.value = !isSavedFavorite.value
+  store.getProfile()
+}
 
 const store = useLoginStore()
 const route = useRoute()
@@ -184,5 +197,25 @@ const editField = function (value, fieldName) {
 .my-products-chart {
   height: 800px;
 }
-
+#favorite {
+  background-color: white;
+  border-radius: 24px;
+  padding: 16px;
+  width: 50%;
+  height: 500px;
+  opacity: 1;
+  padding: 16px;
+}
+#favorite-back {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 </style>
