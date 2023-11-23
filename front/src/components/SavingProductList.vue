@@ -1,5 +1,6 @@
 <template>
-  <div class="card" v-show="select">
+  
+  <div class="card product-card" v-show="select">
     <div class="card-body">
       <!--상품명-->
       <h5 class="name card-title" @click="goDetail">{{ product.fin_prdt_nm }}</h5>
@@ -7,33 +8,37 @@
       <h6 class="card-subtitle mb-2 text-body-secondary">{{ product.kor_co_nm }}</h6>
 
       <!--옵션-->
-      <p v-for="savOption in sav_category">
-        <p v-if="savOption.rsrv_type_nm === '정액적립식'">
-          <div class="card text-center" style="width: 7rem; height: 7rem;">
-            <div class="card-body">
-              <h2 class="card-title">{{ savOption.intr_rate }}</h2>
-              <p class="card-subtitle">
-                <span class="badge text-bg-secondary">{{ savOption.save_trm }}개월</span>
-                <span class="badge text-bg-primary">정액적립식</span>
-              </p>
+      <div class="option-cards">
+        <div v-for="savOption in sav_category">
+          <p v-if="savOption.rsrv_type_nm === '정액적립식'">
+            <div class="card text-bg-light text-center" style="width: 6.5rem; height: 6.5rem;">
+              <div class="card-body card-option-body">
+                <h3 class="card-title card-option-title">{{ savOption.intr_rate }}</h3>
+                <p class="card-subtitle">
+                  <span class="badge rounded-pill text-bg-secondary">{{ savOption.save_trm }}개월</span>
+                  <span class="badge rounded-pill text-bg-primary">정액적립식</span>
+                </p>
+              </div>
             </div>
-          </div>
-        </p>
-        <p v-if="savOption.rsrv_type_nm === '자유적립식'">
-          <div class="card text-center" style="width: 7rem; height: 7rem;">
-            <div class="card-body">
-              <h2 class="card-title">{{ savOption.intr_rate }}</h2>
-              <p class="card-subtitle">
-                <span class="badge text-bg-secondary">{{ savOption.save_trm }}개월</span>
-                <span class="badge text-bg-success">자유적립식</span>
-              </p>
+          </p>
+        
+          <p v-if="savOption.rsrv_type_nm === '자유적립식'">
+            <div class="card text-bg-light text-center" style="width: 6.5rem; height: 6.5rem;">
+              <div class="card-body card-option-body">
+                <h3 class="card-title card-option-title">{{ savOption.intr_rate }}</h3>
+                <p class="card-subtitle">
+                  <span class="badge rounded-pill text-bg-secondary">{{ savOption.save_trm }}개월</span>
+                  <span class="badge rounded-pill text-bg-success">자유적립식</span>
+                </p>
+              </div>
             </div>
-          </div>
-        </p>
-      </p>
+          </p>
+        </div>
+      </div>
     
     </div>
   </div>
+  
 
 </template>
 
@@ -85,6 +90,23 @@ onMounted(() => {
 </script>
 
 <style scoped>
+.card-option-title {
+  margin: 0px;
+}
+
+.card-option-body {
+  padding-top: 10px;
+}
+
+.product-card {
+  margin: 10px 0px;
+}
+
+.option-cards {
+  display: flex;
+  gap: 5px;
+}
+
 .name {
   cursor: pointer;
 }

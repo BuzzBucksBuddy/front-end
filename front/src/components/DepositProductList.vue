@@ -1,5 +1,5 @@
 <template>
-  <div class="card" v-show="select">
+  <div class="card product-card" v-show="select">
     <div class="card-body">
       <!--상품명-->
       <h5 class="name card-title" @click="goDetail">{{ product.fin_prdt_nm }}</h5>
@@ -7,14 +7,16 @@
       <h6 class="card-subtitle mb-2 text-body-secondary">{{ product.kor_co_nm }}</h6>
 
       <!--옵션-->
-      <p v-for="depOption in dep_category" v-show="depOption.intr_rate">
-        <div class="card text-center" style="width: 6rem; height: 6rem;">
-          <div class="card-body">
-            <h3 class="card-title">{{ depOption.intr_rate }}</h3>
-            <p class="badge text-bg-secondary">{{ depOption.save_trm }}개월</p>
+      <div class="option-cards">
+        <p v-for="depOption in dep_category" v-show="depOption.intr_rate">
+          <div class="card text-bg-light text-center" style="width: 6rem; height: 6rem;">
+            <div class="card-body">
+              <h3 class="card-title card-option-title">{{ depOption.intr_rate }}</h3>
+              <p class="badge rounded-pill text-bg-secondary">{{ depOption.save_trm }}개월</p>
+            </div>
           </div>
-        </div>
-      </p>
+        </p>
+      </div>
     </div>
   </div>
 </template>
@@ -67,6 +69,19 @@ onMounted(() => {
 </script>
 
 <style scoped>
+.card-option-title {
+  margin: 0px;
+}
+
+.product-card {
+  margin: 10px 0px;
+}
+
+.option-cards {
+  display: flex;
+  gap: 5px;
+}
+
 .name {
   cursor: pointer;
 }
