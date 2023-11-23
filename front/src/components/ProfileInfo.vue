@@ -8,89 +8,90 @@
     </div>
 
     <h2>Profile Info</h2>
-    <p>{{ myProfile }}</p>
-    <div class="profile">
-      <img :src="`${store.API_URL}${myProfile.profile_thumbnail}`" alt="Profile_image">
-      <p>UserName: {{ myProfile.username }}</p>
-
-      <div v-if="isSavedNickname">
-        <p>NickName: {{ myProfile.nickname }}</p>
-        <button @click="isSavedNickname =!isSavedNickname">🖍</button>
+    <!-- <p>{{ myProfile }}</p> -->
+    <div class="profile ">
+      <div class="profile-img">
+        <img :src="`${store.API_URL}${myProfile.profile_thumbnail}`" alt="Profile_image">
       </div>
-      <div v-else>
-        <span>NickName:</span>
+
+      <div>
+      <p class="d-flex gap-3">아이디 <span>{{ myProfile.username }}</span></p>
+      <br>
+
+      <div v-if="isSavedNickname" class="d-flex gap-3">
+        <p>닉네임</p>
+        <span>{{ myProfile.nickname }}</span>
+        <button @click="isSavedNickname =!isSavedNickname" class="edit-button">🖍</button>
+      </div>
+      <div v-else class="d-flex gap-3">
+        <span>닉네임</span>
         <input type="text" v-model="myProfile.nickname">
         <button @click="editField(myProfile.nickname, 'nickname')">저장</button>
       </div>
+      <br>
       <!-- <p v-if="isSaved">NickName: {{ isSaved ? myProfile.nickname : changeProfile }}</p>
       <input v-else type="text" v-model="changeProfile">
       <button @click="editField('nickname')">{{ editBtn }}</button> -->
       
-      <div v-if="isSavedEmail">
-        <p>Email: {{ myProfile.email }}</p>
-        <button @click="isSavedEmail =!isSavedEmail">🖍</button>
+      <div v-if="isSavedEmail" class="d-flex gap-3">
+        <p class="d-flex gap-3">Email <span>{{ myProfile.email }}</span></p>
+        <button @click="isSavedEmail =!isSavedEmail" class="edit-button">🖍</button>
       </div>
-      <div v-else>
-        <span>E-mail:</span>
+      <div v-else class="d-flex gap-3">
+        <span>E-mail</span>
         <input type="text" v-model="myProfile.email">
         <button @click="editField(myProfile.email, 'email')">저장</button>
       </div>
+      <br>
 
-      <p>Age: {{ myProfile.age }}</p>
-
-      <div v-if="isSavedMoney">
-        <p>Money: {{ myProfile.money }}</p>
-        <button @click="isSavedMoney =!isSavedMoney">🖍</button>
+      <p class="d-flex gap-3">나이 <span>{{ myProfile.age }}</span></p>
+      <br>
       </div>
-      <div v-else>
-        <span>Money:</span>
+
+      <div>
+      <div v-if="isSavedMoney" class="d-flex gap-3">
+        <p>자산</p>
+        <span>{{ myProfile.money }}</span>
+        <button @click="isSavedMoney =!isSavedMoney" class="edit-button">🖍</button>
+      </div>
+      <div v-else class="d-flex gap-3">
+        <span>자산</span>
         <input type="text" v-model="myProfile.money">
         <button @click="editField(myProfile.money, 'money')">저장</button>
       </div>
+      <br>
 
-      <p>My Financial Product(=Options기준)</p>
-      <div v-if="isSavedDep">
-        <span>예금: {{ myProfile.financial_options_dep }}</span>
-        <!-- <button @click="isSavedDep =!isSavedDep">🖍</button> -->
-      </div>
-      <div v-else>
-        <span>예금:</span>
-        <button @click="editField(myProfile.financial_options_dep, 'financial_options_dep')">저장</button>
-      </div>
-      <div v-if="isSavedSav">
-        <span>적금: {{ myProfile.financial_options_sav }}</span>
-        <!-- <button @click="isSavedSav =!isSavedSav">🖍</button> -->
-      </div>
-      <div v-else>
-        <span>적금:</span>
-        <button @click="editField(myProfile.financial_options_sav, 'financial_options_sav')">저장</button>
-      </div>
       
-      <div v-if="isSavedSalary">
-        <p>Salary: {{ myProfile.salary }}</p>
-        <button @click="isSavedSalary =!isSavedSalary">🖍</button>
+      <div v-if="isSavedSalary" class="d-flex gap-3">
+        <p>연봉</p>
+        <span>{{ myProfile.salary }}</span>
+        <button @click="isSavedSalary =!isSavedSalary" class="edit-button">🖍</button>
       </div>
-      <div v-else>
-        <span>Salary:</span>
+      <div v-else class="d-flex gap-3">
+        <span>연봉</span>
         <input type="text" v-model="myProfile.salary">
         <button @click="editField(myProfile.salary, 'salary')">저장</button>
       </div>
-
-      <div v-if="isSavedFavorite">
-        <p>Favorite: {{ myProfile.favorite }}</p>
-        <button @click="isSavedFavorite =!isSavedFavorite">🖍</button>
+      <br>
+      
+      <div v-if="isSavedFavorite" class="d-flex gap-3">
+        <p>Favorite</p>
+        <span v-for="favorie in myProfile.favorite">{{ favorie.title }}</span>
+        <button @click="isSavedFavorite =!isSavedFavorite" class="edit-button">🖍</button>
       </div>
-      <div v-else>
-        <span>Favorite:</span>
+      <div v-else class="d-flex gap-3">
+        <p>Favorite</p>
         <button @click="editField(myProfile.favorite, 'favorite')">저장</button>
       </div>
+      <br>
       
-      <div v-if="isSavedMbti">
-        <p>MBTI: {{ myProfile.mbti }}</p>
-        <button @click="isSavedMbti =!isSavedMbti">🖍</button>
+      <div v-if="isSavedMbti" class="d-flex gap-3">
+        <p>MBTI</p>
+        <span>{{ myProfile.mbti }}</span>
+        <button @click="isSavedMbti =!isSavedMbti" class="edit-button">🖍</button>
       </div>
-      <div v-else>
-        <label for="mbti">MBTI: </label>
+      <div v-else class="d-flex gap-3">
+        <label for="mbti">MBTI</label>
         <select id="mbti" v-model="myProfile.mbti">
           <option value="ISTJ">ISTJ</option>
           <option value="ISFJ">ISFJ</option>
@@ -111,13 +112,15 @@
         </select>
         <button @click="editField(myProfile.mbti, 'mbti')">저장</button>
       </div>
+      <br>
       
-      <div v-if="isSavedMainBank">
-      <p>Main Bank: {{ myProfile.main_bank }}</p>
-        <button @click="isSavedMainBank =!isSavedMainBank">🖍</button>
+      <div v-if="isSavedMainBank" class="d-flex gap-3">
+        <p>주거래 은행</p>
+        <span>{{ myProfile.main_bank }}</span>
+        <button @click="isSavedMainBank =!isSavedMainBank" class="edit-button">🖍</button>
       </div>
-      <div v-else>
-        <label>Main Bank:</label>
+      <div v-else class="d-flex gap-3">
+        <label>주거래 은행</label>
         <select id="mbti" v-model="myProfile.main_bank">
           <option value="국민은행">국민은행</option>
           <option value="경남은행">경남은행</option>
@@ -140,12 +143,39 @@
         </select>
         <button @click="editField(myProfile.main_bank, 'main_bank')">저장</button>
       </div>
-      
-    </div>
-    <div class="my-products-chart">
-      <MyProductsChart/>
+      <br>
     </div>
   </div>
+     
+
+    <div>
+      <div class="profile">
+        <p>My Financial Product(=Options기준)</p>
+        <div v-if="isSavedDep">
+          <span>예금: {{ myProfile.financial_options_dep }}</span>
+          <!-- <button @click="isSavedDep =!isSavedDep">🖍</button> -->
+        </div>
+        <div v-else>
+          <span>예금:</span>
+          <button @click="editField(myProfile.financial_options_dep, 'financial_options_dep')">저장</button>
+        </div>
+        <div v-if="isSavedSav">
+          <span>적금: {{ myProfile.financial_options_sav }}</span>
+          <!-- <button @click="isSavedSav =!isSavedSav">🖍</button> -->
+        </div>
+        <div v-else>
+          <span>적금:</span>
+          <button @click="editField(myProfile.financial_options_sav, 'financial_options_sav')">저장</button>
+        </div>
+        <div class="my-products-chart">
+          <MyProductsChart/>
+        </div>
+      </div>
+
+    
+  </div> 
+</div>
+  
 </template>
 
 <script setup>
@@ -210,10 +240,27 @@ const editField = function (value, fieldName) {
 
 <style scoped>
 .profile {
-  border: 1px solid rgb(123, 153, 252);
-  padding: 10px;
+  border: 1px solid var(--gray-color);
+  border-radius: 10px;
+  padding: 50px;
+  margin-bottom: 10px;
+  box-shadow: 1px 1px 3px #333;
 }
 
+.profile-img {
+  /* display: flex; */
+  text-align: center; 
+  margin-top: 30px;
+  margin-bottom: 60px;
+  border: ;
+}
+
+.profile-img > img {
+  border-radius: 50%;
+  height: 200px;
+  width: 200px;
+  
+}
 .my-products-chart {
   height: 800px;
 }
@@ -238,4 +285,24 @@ const editField = function (value, fieldName) {
   justify-content: center;
   align-items: center;
 }
+
+.edit-button {
+  border: none;
+  border-radius: 50%;
+  background-color: var(--main-color);
+  box-shadow: 1px 1px 3px #333;
+}
+
+.field {
+  margin-right: 20px;
+}
+span {
+  font-weight: 600;
+}
+
+button {
+  font-size: 15px; 
+  padding: 2px 2px 2px 2px;
+}
+
 </style>
