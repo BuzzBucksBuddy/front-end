@@ -1,9 +1,10 @@
 <template>
   <div>
     <div class="title">
-      <h1>게시판 목록</h1>
+      <h2>게시글 목록</h2>
       <RouterLink :to="{ name: 'ArticleCreate' }">게시글 작성</RouterLink>
     </div>
+    <!--검색-->
     <div class="searcher">
       <div>
         <select name="product" id="product" v-model="selectProduct">
@@ -26,12 +27,14 @@
       </form>
     </div>
     <hr>
+    <!--게시글 목록-->
     <section class="article-container" v-if="isExist">
       <ArticleList v-for="(article, idx) in list" :key="`article.id`" :article="article"/>
     </section>
     <section class="article-container" v-else>
       <p>게시글이 존재하지 않습니다</p>
     </section>
+    <!--페이징-->
     <ul class="pagination" v-show="isExist">
       <li class="page-item" :class="{'disabled' : isBtnFirst}"><a class="page-link" href="#" @click.prevent="pageArrow('first')">First</a></li>
       <li class="page-item" :class="{'disabled' : isBtnPrev}"><a class="page-link" href="#" @click.prevent="pageArrow('prev')">Previous</a></li>
@@ -80,7 +83,7 @@ onMounted(() => {
 const list = ref([])
 const cache = ref([])
 
-const listCunt = ref('5') // 한 페이지에 보여주는 게시물 개수
+const listCunt = ref('4') // 한 페이지에 보여주는 게시물 개수
 
 let currentPage = ref(0)
 let pageNum = 10 // 페이징 개수
@@ -235,45 +238,63 @@ const pageArrow = (e) => {
 </script>
 
 <style scoped>
+h2 {
+  margin-bottom: 20px;
+}
+
+select {
+  margin-right: 5px;
+}
+
 .title {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-top: 50px;
 }
+
 hr {
   margin: 0;
 }
+
 .title a {
   text-decoration: none;
   color: black;
 }
+
 .title a:hover {
   color: rgb(242, 185, 60);
 }
+
 .searcher {
   display: flex;
   justify-content: space-between;
   margin-bottom: 4px;
 }
+
 .pagination {
   display: flex;
   text-decoration: none;
   padding: 0;
   gap: 10px;
 }
+
 .pagination li {
   list-style: none;
   text-decoration: none;
   cursor: pointer;
   transition: all 0.5s;
 }
+
 .pagination li:hover {
   background-color: rgb(255, 235, 191);
 }
+
 .pagination a {
   text-decoration: none;
   color: black;
 }
+
 .article-container {
   height: 720px;
 }

@@ -120,7 +120,7 @@ export default defineComponent({
           const clickedLabel = chartData.value.labels[clickedBarIndex]
           // console.log(clickedLabel)
           Productstore.findProduct(clickedLabel)
-          router.push({name:'ProductDetail', params:{type: Productstore.go.type, productId: Productstore.go.productId}})
+          router.push({name:'ProductDetail', params:{type: goDetail.value.type, productId: goDetail.value.productId}})
 
         }
       }

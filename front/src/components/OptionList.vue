@@ -1,23 +1,26 @@
 <template>
-    <div class="card">
-      <div class="card-body">
-        <div :class="{'unable': !isJoinedOption && isJoinedProduct}">
-          <h5 class="card-title">기간 : {{ option.save_trm }}개월</h5>
-          <p class="card-text">저축 금리 유형 : {{ option.intr_rate_type_nm }}</p>
-          <p class="card-text">저축 금리 : {{ option.intr_rate }}</p>
-          <p class="card-text">최고 우대 금리 : {{ option.intr_rate2 }}</p>
+  <div class="card text-bg-light option-card">
+    <div class="card-body">
+      <div :class="{'unable': !isJoinedOption && isJoinedProduct}">
+        <h6 class="card-title">저축 기간: {{ option.save_trm }}개월</h6>
+        <p class="card-text">저축 금리 유형: {{ option.intr_rate_type_nm }}</p>
+        <p class="card-text">저축 금리: {{ option.intr_rate }}</p>
+        <p class="card-text">최고 우대 금리: {{ option.intr_rate2 }}</p>
+        <p v-if="option.rsrv_type === 'S'"><span class="position-absolute top-0 start-80 translate-middle badge text-bg-primary">{{ option.rsrv_type_nm }}</span></p>
+        <p v-if="option.rsrv_type === 'F'"><span class="position-absolute top-0 start-80 translate-middle badge text-bg-success">{{ option.rsrv_type_nm }}</span></p>
+
+        <div class="btn-zone">
           <div v-if="isJoinedOption && isJoinedProduct">
-            <button class="btn btn-light" @click="joinOption(optionId)">가입 취소</button>
+            <button class="btn buttons" @click="joinOption(optionId)">가입 취소</button>
           </div>
           <div v-else-if="!isJoinedOption && !isJoinedProduct">
-            <button class="btn btn-warning" @click="joinOption(optionId)">가입하기</button>
+            <button class="btn buttons" @click="joinOption(optionId)">가입하기</button>
           </div>
         </div>
+
       </div>
     </div>
-  <br>
-  {{ isJoinedProduct }}
-  {{ isJoinedOption }}
+  </div>
 </template>
 
 <script setup>
@@ -167,6 +170,28 @@ const makeJoined = function () {
 </script>
 
 <style scoped>
+.card-body {
+  padding: 30px;
+}
+
+button {
+  cursor: pointer;
+}
+
+.buttons {
+  background-color: var(--main-color);
+}
+
+.option-card {
+  width: 440px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.btn-zone {
+  float: right;
+}
+
 h4 {
   margin: 0;
 }
