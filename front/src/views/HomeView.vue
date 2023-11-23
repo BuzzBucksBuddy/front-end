@@ -56,7 +56,14 @@
 </template>
 
 <script setup>
+import { onMounted } from 'vue'
+import { useProductStore } from '@/stores/product.js'
 
+const productStore = useProductStore()
+
+onMounted(() => {
+  productStore.getProductsData()
+})
 </script>
 
 <style scoped>
