@@ -1,11 +1,15 @@
 <template>
   <div>
-    <!--버튼 가운데 정렬 하고 싶어요 ㅠㅠ-->
-    <div class="btn-group btn-group-lg product-btn" role="group" aria-label="Basic radio toggle button group">
+    <!--버튼-->
+    <!-- <div class="btn-group btn-group-lg product-btn" role="group" aria-label="Basic radio toggle button group">
       <input @click="isDeposit = true" type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
-      <label class="btn btn-warning" for="btnradio1">예금 상품</label>
+      <label class="btn btn-warning dep-btn" for="btnradio1">예금 상품</label>
       <input @click="isDeposit = false" type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
-      <label class="btn btn-warning" for="btnradio2">적금 상품</label>
+      <label class="btn btn-warning sav-btn" for="btnradio2">적금 상품</label>
+    </div> -->
+    <div class="selector">
+      <h4 :class="['prod-toggle', { selected: isDeposit}]" @click="isDeposit=true">예금</h4>
+      <h4 :class="['prod-toggle', { selected: !isDeposit}]" @click="isDeposit=false">적금</h4>
     </div>
 
     <!--예금 상품-->
@@ -68,9 +72,8 @@
 
     <!--페이지 최상단으로 이동-->
     <button type="button" class="btn btn-light scroll" @click="scrollUp">
-      <p><i class="fa-solid fa-angles-up fa-bounce fa-lg" style="color: #ffd43b;"></i></p>
-      <p>&nbsp</p>
-      <p><i class="fa-solid fa-piggy-bank fa-bounce fa-xl" style="color: #ffd43b;"></i></p>
+      <p><i class="fa-solid fa-angles-up fa-bounce fa-lg" style="color: #ffe600;"></i></p>
+      <p><i class="fa-solid fa-piggy-bank fa-bounce fa-xl" style="color: #ffe600;"></i></p>
     </button>
   </div>
 </template>
@@ -85,6 +88,7 @@ import SavingProductList from '@/components/SavingProductList.vue'
 const productStore = useProductStore()
 const articleStore = useArticleStore()
 const isDeposit = ref(true)
+const switcher = ref(true)
 
 const selectDepBank = ref('선택 안함')
 const selectDepTerm = ref(0)
@@ -115,13 +119,14 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.product-btn {
-  display: flex;
-  margin: 50px 200px;
-}
-
 select {
   margin-right: 5px;
+  padding: 5px;
+  background-color: var(--main-color);
+  border: 2px solid var(--sub-color);
+  width: 25%;
+  height: 40px;
+  border-radius: 20px;
 }
 
 button {
@@ -133,5 +138,40 @@ button {
   position: fixed;
   bottom: 30px;
   right: 30px;
+  background-color: black;
+  padding: 10px;
+}
+
+.selected {
+  color: var(--sub-color);
+  background-color: var(--main-color);
+}
+
+.selector {
+  display: flex;
+  margin: 50px 370px;
+  align-items: baseline;
+}
+.selector h4 {
+  margin-left: 10px;
+  transition: all 0.3s;
+  cursor: pointer;
+}
+.selector h4:hover {
+  color: var(--sub-color);
+  color: white;
+}
+
+.prod-toggle {
+  width: 120px;
+  height: 48px;
+  border-radius: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  white-space: nowrap;
+}
+.prod-toggle:hover {
+  background-color: var(--sub-color);
 }
 </style>

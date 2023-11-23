@@ -1,31 +1,34 @@
 <template>
   <div>
-    <h1>게시글 작성</h1>
+    <div class="title"></div>
+    <h2>게시글 작성</h2>
+    <hr>
     <form @submit.prevent="createArticle">
-      <select name="product" id="product" v-model="articleProductCategory">
-        <option value="null">--카테고리를 선택해주세요--</option>
+      <select class="create-form" name="product" id="product" v-model="articleProductCategory">
+        <option value="null">카테고리를 선택하세요.</option>
         <option v-for="product in store.productCategories" :value="product.id">{{ product.name }}</option>
       </select>
-      <br>
-      <select name="bank" id="bank" v-model="articleBankCategory">
-        <option value="null">--은행을 선택해주세요--</option>
+      <select class="create-form" name="bank" id="bank" v-model="articleBankCategory">
+        <option value="null">은행을 선택하세요.</option>
         <option v-for="bank in store.bankCategories" :value="bank.id">{{ bank.name }}</option>
       </select>
-      <div>
-        <label for="title">제목:</label>
-        <input type="text" v-model.trim="title" id="title">
+      <div class="input-group mb-3 form-group">
+        <span class="input-group-text" id="basic-addon1">제목</span>
+        <input type="text" v-model.trim="title" id="title" class="form-control" aria-label="Username" aria-describedby="basic-addon1">
       </div>
-      <div>
-        <label for="content">내용:</label>
-        <textarea v-model.trim="content" id="content"></textarea>
+      <div class="input-group form-group">
+        <span class="input-group-text">내용</span>
+        <textarea v-model.trim="content" id="content" class="form-control" aria-label="With textarea"></textarea>
       </div>
-      <div>
-        <p>게시물 잠그기 : <input type="checkbox" v-model="isLocked"></p>
-        <p v-show="isLocked">암호 : 
-          <input type="password" v-model="password">
-        </p>
+      <div class="form-check form-switch form-group">
+        <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" v-model="isLocked">
+        <label class="form-check-label" for="flexSwitchCheckDefault">게시물 잠금</label>
+          <p class="input-group mb-3 form-group lock-form" v-show="isLocked">
+            <span class="input-group-text" id="basic-addon1">암호</span>
+            <input type="password" v-model="password" id="title" class="form-control" aria-label="Username" aria-describedby="basic-addon1">
+          </p>
       </div>
-      <input type="submit">
+      <input type="submit" class="form-group" value="등록">
     </form>
   </div>
 </template>
@@ -78,5 +81,31 @@ const createArticle = function () {
 </script>
 
 <style>
+h2 {
+  margin-top: 50px;
+  margin-bottom: 20px;
+}
 
+.create-form {
+  margin: 10px;
+  padding: 5px;
+  background-color: var(--main-color);
+  border: 2px solid var(--sub-color);
+  width: 25%;
+  height: 40px;
+  border-radius: 20px;
+}
+
+.form-group {
+  margin: 10px;
+  width: 500px;
+}
+
+textarea {
+  resize: none;
+}
+
+.lock-form {
+  width: 450px;
+}
 </style>
