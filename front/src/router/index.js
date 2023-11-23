@@ -110,7 +110,8 @@ router.beforeEach((to, from) => {
   if (store.isLogin === false
     && (
       to.name === 'ArticleCreate' ||
-      to.name === 'ArticleUpdate'
+      to.name === 'ArticleUpdate' ||
+      to.name === 'Profile'
       )) {
     window.alert('로그인이 필요합니다.')
     return { name: 'LogIn' }

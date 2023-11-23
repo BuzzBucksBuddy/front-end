@@ -77,6 +77,7 @@ export const useLoginStore = defineStore('login', () => {
         token.value = null
         myName.value = null
         myId.value = null
+        myProfile.value = []
       })
       .catch((err) => {
         console.log(err)
@@ -153,10 +154,7 @@ export const useLoginStore = defineStore('login', () => {
   const getFavoriteCategory = function () {
     axios({
       method: 'get',
-      url: `${API_URL}/api/v1/accounts/favorites/`,
-      headers: {
-        Authorization: `Token ${token.value}`     // password1 오류
-      }
+      url: `${API_URL}/api/v1/accounts/favorites/`
     })
       .then((res) => {
         console.log(res.data)
@@ -231,6 +229,5 @@ export const useLoginStore = defineStore('login', () => {
     depLankfromFavorite,
     savLankfromFavorite,
     usersFavorite,
-
    }
 }, { persist: true })

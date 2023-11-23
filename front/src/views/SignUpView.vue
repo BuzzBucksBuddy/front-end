@@ -138,6 +138,7 @@
     <div id="favorite-back" v-if="modalDisplay">
       <Favorite
         id="favorite"
+        @do-update="goProfile"
       />
     </div>
   </div>
@@ -146,8 +147,12 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import { useSignupStore } from '@/stores/signup'
+import { useLoginStore } from '@/stores/login'
+import { useRouter } from 'vue-router'
 import Favorite from '@/components/Favorite.vue'
 
+const router = useRouter()
+const loginStore = useLoginStore()
 const store = useSignupStore()
 const username = ref(null)
 const password1 = ref(null)
@@ -166,6 +171,10 @@ const errMsg = ref(null)
 const pwdMsg = ref(null)
 
 const modalDisplay = ref(false)
+
+const goProfile = function () {
+  router.push({ name: 'Home'})
+}
 
 const handleProfileImageChange = function () {
   const file = profileImgInput.value.files[0]
@@ -219,6 +228,8 @@ const signUp = function () {
   
     modalDisplay.value = true
     store.signUp(payload, formData)
+    loginStore.getFavoriteCategory()
+    loginStore.getProfile()
   }
 }
 
@@ -255,7 +266,7 @@ const signUp = function () {
 .preview {
   width: 100px;
   height: 100px;
-  border: 1px solid rgb(196, 196, 196);
+  border: 1px solid var(--gray-color);
   border-radius: 8px;
 
 }
@@ -276,7 +287,7 @@ h2 {
   padding: 12px 0;
 }
 .input-section {
-  border: 1px solid rgb(222, 222, 222);
+  border: 1px solid var(--gray-color);
   border-radius: 16px;
   padding: 16px;
   margin-top: 12px;
@@ -287,7 +298,7 @@ h2 {
   width: 100%;
 }
 .profile-section {
-  border: 1px solid rgb(222, 222, 222);
+  border: 1px solid var(--gray-color);
   border-radius: 16px;
   padding: 16px;
   margin-top: 12px;
@@ -325,19 +336,19 @@ h2 {
   border: 0 solid orange;
   height: 48px;
   border-radius: 24px;
-  background-color: rgb(245, 245, 245);
+  background-color: var(--gray-color);
   padding-left: 24px;
   outline: 0;
   transition: all 0.5s;
 }
 .input-box input[type="text"]:hover,
 .input-box input[type="password"]:hover {
-  background-color: rgb(255, 241, 214);
+  background-color: var(--main-color);
   
 }
 .input-box input[type="text"]:focus,
 .input-box input[type="password"]:focus {
-  background-color: rgb(255, 241, 214);
+  background-color: var(--main-color);
   box-shadow: 1px 1px 3px #d7d7d7;
 }
 input[type="text"]:focus ~ .input-placeholder,
@@ -385,12 +396,13 @@ input:not(:placeholder-shown, :focus) + .input-placeholder {
   border-radius: 24px;
   cursor: pointer;
   transition: all 0.5s;
-  background-color: rgb(255, 226, 165);
+  background-color: var(--main-color);
   font-size: 18px;
   font-weight: 700;
 }
 .submit-btn:hover {
-  background-color: rgb(255, 210, 114);
+  background-color: var(--sub-color);
+  color: white;
 }
 #mbti {
   width: 300px;
