@@ -18,92 +18,55 @@
     <img src="@/assets/svg/main_2.svg" alt="">
 
     <!--캐러셀-->
-    <div id="carousel">
-      <div id="carouselExampleDark" class="carousel carousel-dark slide w-100" data-bs-ride="carousel">
-        <div class="carousel-indicators">
-          <button v-for="(product, index) in randomDepProducts" :key="product.index" type="button" data-bs-target="#carouselExampleDark" :data-bs-slide-to="index" :class="{ 'active': index === 0 }" aria-current="true" :aria-label="'Slide '+ index"></button>
-        </div>
-        <div class="carousel-inner">
-          <div v-for="(product, index) in randomDepProducts" :key="product.index" class="carousel-item" :class="{ 'active': index === 0 }" data-bs-interval="10000">
-            <div class="product-card d-block w-100" height="300px" width="400px">
-              <h5>{{ product.kor_co_nm }}</h5>
-              <h3>{{ product.fin_prdt_nm }}</h3>
-              <h4 v-if="product.spcl_cnd.includes('우대')"><i class="fa-solid fa-circle-up" style="color: #ce225e;">우대이율 있음</i></h4>
+    <section class="contents">
+      <div id="carousel">
+        <div id="carouselExampleDark" class="carousel carousel-dark slide w-100" data-bs-ride="carousel">
+          <div class="carousel-indicators">
+            <!-- <button v-for="(product, index) in randomDepProducts" :key="product.index" type="button" data-bs-target="#carouselExampleDark" :data-bs-slide-to="index" :class="{ 'active': index === 0 }" aria-current="true" :aria-label="'Slide '+ index"></button> -->
+          </div>
+          <div class="carousel-inner">
+            <div v-for="(product, index) in randomDepProducts" :key="product.index" class="carousel-item" :class="{ 'active': index === 0 }" data-bs-interval="10000">
+              <div class="product-card d-block w-100" height="300px" width="400px">
+                <h5>{{ product.kor_co_nm }}</h5>
+                <h3>{{ product.fin_prdt_nm }}</h3>
+                <h5 v-if="product.spcl_cnd.includes('우대')"><i class="fa-solid fa-circle-up" style="color: #ce225e;"> 우대이율 있음</i></h5>
+                <h5 v-else><br></h5>
+                <h6 v-if="product.join_way.includes('인터넷' || '스마트폰')"><i class="fa-solid fa-mobile-screen" style="color: #484ef9;"> 비대면 가입 가능</i></h6>
+                <h6 v-else><br></h6>
+              </div>
             </div>
           </div>
-        </div>
-        <div id="carouselExampleDark" class="carousel carousel-dark slide w-100" data-bs-ride="carousel"></div>
-        <div class="carousel-indicators">
-          <button v-for="(product, index) in randomDepProducts" :key="product.index" type="button" data-bs-target="#carouselExampleDark" :data-bs-slide-to="index" :class="{ 'active': index === 0 }" aria-current="true" :aria-label="'Slide ' + index"></button>
-        </div>
-        <div class="carousel-inner">
-          <div v-for="product in randomSavProducts" :key="product.index" class="carousel-item" :class="{ 'active': index === 0 }" data-bs-interval="10000">
-            <div class="product-card d-block w-100" height="300px" width="400px">
-              <h5>{{ product.kor_co_nm }}</h5>
-              <h3>{{ product.fin_prdt_nm }}</h3>
-              <h4 v-if="product.spcl_cnd.includes('우대')"><i class="fa-solid fa-circle-up" style="color: #ce225e;"> 우대이율 있음</i></h4>
+          <div id="carouselExampleDark" class="carousel carousel-dark slide w-100" data-bs-ride="carousel"></div>
+          <div class="carousel-indicators">
+            <!-- <button v-for="(product, index) in randomDepProducts" :key="product.index" type="button" data-bs-target="#carouselExampleDark" :data-bs-slide-to="index" :class="{ 'active': index === 0 }" aria-current="true" :aria-label="'Slide ' + index"></button> -->
+          </div>
+          <div class="carousel-inner">
+            <div v-for="product in randomSavProducts" :key="product.index" class="carousel-item" :class="{ 'active': index === 0 }" data-bs-interval="10000">
+              <div class="product-card d-block w-100" height="300px" width="400px">
+                <h5>{{ product.kor_co_nm }}</h5>
+                <h3>{{ product.fin_prdt_nm }}</h3>
+                <h5 v-if="product.spcl_cnd.includes('우대')"><i class="fa-solid fa-circle-up" style="color: #ce225e;"> 우대이율 있음</i></h5>
+                <h5 v-else><br></h5>
+                <h6 v-if="product.join_way.includes('인터넷' || '스마트폰')"><i class="fa-solid fa-mobile-screen" style="color: #484ef9;"> 비대면 가입 가능</i></h6>
+                <h6 v-else><br></h6>
+              </div>
             </div>
           </div>
-        </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Next</span>
-        </button>
-      </div>
-    </div>
-    <!-- <div id="carousel">
-      <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
-        <div class="carousel-indicators">
-            <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-            <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>
-            <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"></button>
-        </div>
-        <div class="carousel-inner">
-            <div class="carousel-item active" data-bs-interval="10000">
-            <img src="@/assets/image/img01.jpg" class="d-block w-100" alt="..." height="300px" width="400px">
-            <div class="carousel-caption d-none d-md-block">
-                <h5>상품 1</h5>
-                <p>상품 설명을 적어 보아요~</p>
-            </div>
-            </div>
-            <div class="carousel-item" data-bs-interval="2000">
-            <img src="@/assets/image/img02.jpg" class="d-block w-100" alt="..." height="300px" width="400px">
-            <div class="carousel-caption d-none d-md-block">
-                <h5>상품 2</h5>
-                <p>상품 설명을 적어 보아요~</p>
-            </div>
-            </div>
-            <div class="carousel-item">
-            <img src="@/assets/image/white.jpg" class="d-block w-100" alt="..." height="300px" width="400px">
-            <div class="carousel-caption d-none d-md-block">
-                <h5>상품 3</h5>
-                <p>상품 설명을 적어 보아요~</p>
-            </div>
-            </div>
-        </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
+          <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Next</span>
-        </button>
+          </button>
+        </div>
       </div>
-    </div> -->
-    
-    <!--내 MBTI별 상품가입순 -->
-    <div class="mbti-container">
-      <h2>{{ mbti }}들은 이걸 가입했어요</h2>
 
-      
-    </div>
-  
-  
+      <div class="mbti-container">
+        <RecommandMbti />
+      </div>
+    </section>
   
   </div>
 </template>
@@ -112,34 +75,10 @@
 import axios from 'axios'
 import { ref, onMounted } from 'vue';
 import { useProductStore } from '@/stores/product.js'
+import RecommandMbti from '@/components/Recommand/RecommandMbti.vue'
 
 const API_URL = 'http://127.0.0.1:8000'
 const productStore = useProductStore()
-
-
-// onMounted(()=> {
-//   getProductsData()
-//   // exchangeSave()
-//   carouselDepProducts()
-//   carouselSavProducts()
-//   // 반응형
-//   setInterval(() => {
-//     generateConfetti()
-//   }, 5000)
-
-// })
-
-
-// onMounted(() => {
-//   getProductsData()
-//   exchangeSave()
-//     .then(() => carouselDepProducts())
-//     .then(() => carouselSavProducts())
-//     .setInterval(() => { generateConfetti()}, 5000)
-//     .catch((error) => {
-//       console.error(error);
-//     })
-// })
 
 onMounted(async () => {
   await getProductsData();
@@ -179,8 +118,6 @@ const exchangeSave = function() {
     console.log(err)
   })
 }
-
-
 
 // 예금 랜덤 캐러셀
 const randomDepProducts = ref([])
@@ -325,15 +262,22 @@ body {
 }
 
 .product-card {
+  padding-top: 30px;
   height: 200px;
+  display: flex;
+  /* flex-direction: column; */
+  /* justify-content: center; */
   text-align: center;
+  /* align-items: center; */
   border: 5px solid var(--gray-color);
   background-color: var(--gray-color);
 }
 
 .mbti-container {
-  background-color: var(--gray-color);
+  border: 4px solid var(--gray-color);
   border-radius: 30px;
+  padding: 0 16px;
+  width: 600px;
 }
 
 </style>

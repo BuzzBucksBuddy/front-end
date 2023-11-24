@@ -51,12 +51,13 @@ const country = ref('USD')
 const category = ref('deal_bas_r')
 const money = ref(1)
 const exchangeResult = ref(0)
-// const exchangeRate = ref(null)
+const exchangeUnit = ref(null)
+const exchangeRate = ref(null)
 
 
 const isActive = ref(true)
-const exchangeUnit = computed(() => store.exchangeUnit)
-const exchangeRate = computed(() => store.exchangeUnit)
+// const exchangeUnit = computed(() => store.exchangeUnit)
+// const exchangeRate = computed(() => store.exchangeUnit)
 
 // const exchangeRate = computed(() => {
 //   if (store.exchangeRate !== null) {
@@ -66,8 +67,9 @@ const exchangeRate = computed(() => store.exchangeUnit)
 //   return store.exchangeRate
 // })
 const baseRate = ref(0)
-onMounted(() => {
-  getCountryInfo(country.value, category.value)
+onMounted(async () => {
+  await getCountryInfo(country.value, category.value)
+  
   
   
   // console.log(country.value)
@@ -88,8 +90,15 @@ const getCountryInfo =function(country, category) {
     })
       .then((res) => {
         console.log(res,'ddd')
-        exchangeRate.value = Number(res.data.rate)
+        exchangeRate.value = parseFloat(res.data.rate)
         exchangeUnit.value = res.data.unit
+        console.log(exchangeRate.value, money.value)
+        if (country.value === 'JPY(100)' || country.value === 'IDR(100)') {
+          exchangeResult.value = (exchangeRate.value * money.value / 100).toFixed(2)
+        } else {
+          exchangeResult.value = (exchangeRate.value * money.value).toFixed(2)
+          console.log('2333',exchangeResult)
+        }
         
       })
       .catch((err) => {
@@ -120,18 +129,21 @@ watch(
   { deep: true }
 );
 
-const updateExchangeResult =  () => {
-  store.getCountryInfo(country.value, category.value)
-  nextTick()
+const updateExchangeResult =   () => {
+  getCountryInfo(country.value, category.value)
+  // nextTick()
   if (isActive.value) {
     if (country.value === 'JPY(100)' || country.value === 'IDR(100)') {
-      exchangeResult.value = (store.exchangeRate * money.value / 100).toFixed(2)
+      exchangeResult.value = (exchangeRate * money.value / 100).toFixed(2)
     } else {
-      exchangeResult.value = (store.exchangeRate * money.value).toFixed(2)
+      exchangeResult.value = (exchangeRate * money.value).toFixed(2)
       
     }
   }
 }
+
+
+
 
 const emit = defineEmits('countryChanged')
 const handleCountryChange = () => {

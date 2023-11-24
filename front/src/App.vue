@@ -15,7 +15,7 @@
               <i class="fa-solid fa-coins fa-2xl" style="color: #f53277;"></i>
             </button>
           
-          <p>Mileage: {{ mileage }}</p>
+          <!-- <p>Mileage: {{ mileage }}</p> -->
         </div>
 
         <i id="switcher" :class="[{'nav-item-narrow': !switcher}, 'nav-item']" @click="switcher = !switcher" class="fa-solid fa-bars"></i>
@@ -89,12 +89,15 @@ onMounted(() => {
   // 동전
   loginStore.getProfile()
   mileage.value = loginStore.myProfile.mileage
-  setInterval(() => {
+  if ( loginStore.isLogin.value === true ) {
+    setInterval(() => {
     showButton.value = !showButton.value;
     if (showButton.value) {
       randomizeButtonPosition()
     }
-  }, 10000)
+   }, 10000)
+  }
+  
 })
 
 
