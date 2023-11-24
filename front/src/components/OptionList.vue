@@ -17,7 +17,6 @@
             <button class="btn buttons" @click="joinOption(optionId)">가입하기</button>
           </div>
         </div>
-
       </div>
     </div>
   </div>

@@ -51,6 +51,14 @@ const watcher = watch(() => (moneyInput.value), (newValue) => {
   count.value = parseInt(interest.value / props.fav.price)
 })
 
+// const returnMoney = computed(() => {
+//   interest.value = (depOpt.value.intr_rate2 / 100) * moneyInput.value
+// })
+
+// const counter = computed(() => {
+//   return parseInt(interest.value / props.fav.price)
+// })
+
 const depOpt = ref(null)
 const API_URL = 'http://127.0.0.1:8000/api/v1/products'
 const getDepOpt = function () {
