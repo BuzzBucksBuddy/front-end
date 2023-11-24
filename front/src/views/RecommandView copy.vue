@@ -18,39 +18,11 @@
           </div>
           <h3>당신을 위한 추천 상품</h3>
         </div>
-
-
-        <div class="write" v-if="depOpt">
-          <section class="line">
-            <div class="underline">
-              {{ depOpt.product.fin_prdt_nm }}
-            </div>
-            <p>에</p>
-          </section>
-          <section class="line">
-            <input type="text" class="money-input" v-model="moneyInput">
-            <p>원 저축하면</p>
-          </section>
-          <section class="line">
-            <p>1년에 이자</p>
-            <div class="underline">
-              {{ interest }}
-            </div>
-            <p>원 받을 수 있어요.</p>
-          </section>
-          <section class="line">
-            <div class="underline">
-              {{ sendFav.gift }}
-            </div>
-            <p>{{ sendFav.end }}</p>
-            <div class="underline">
-              {{ count }}
-            </div>
-            <p>개!</p>
-          </section>
-        </div>
-
-
+        <RecommandFav
+          :prod="loginStore.depLankfromFavorite[0]"
+          :fav="sendFav"
+          :price="fav"
+        />
       </div>
 
       <!-- 나이로 추천 -->
@@ -154,7 +126,7 @@ const favList = [
   {aka: 'Music is My Life', gift: '유튜브 뮤직 한달 구독권', price: 8690, end: '이'},
   {aka: '효심이 깊은', gift: '임영웅 콘서트 티켓', price: 165000, end: '이'},
 ]
-
+const fav = ref(0)
 const sendFav = ref('')
 const API_URL = 'http://127.0.0.1:8000/api/v1/accounts'
 
@@ -193,13 +165,34 @@ const usersFavorite = function (array) {
       // console.log(myfavorites[favoriteId])
       favoriteId = myfavorites[randomFavoriteId]
       sendFav.value = favList[randomFavoriteId]
-      getUsersFavorite(randomFavoriteId)
+      fav.value = favList[randomFavoriteId].price
       // console.log(myProfile.value.favorite[1].favorite)
     })
   }
   // console.log(favoriteId)
   loginStore.usersFavorite(favoriteId)
 }
+
+const usersFavorite2 = function () {
+  let favoriteId = null
+  const myfavoritesArr = myProfile.value
+  if ( myfavoritesArr ) {
+    let myfavorites = []
+    myProfile.value.forEach(element => {
+      myfavorites.push(element.id)
+      const randomFavoriteId = Math.floor(Math.random() * myfavorites.length)
+      // console.log(myfavorites[favoriteId])
+      favoriteId = myfavorites[randomFavoriteId]
+      sendFav.value = favList[randomFavoriteId]
+      fav.value = favList[randomFavoriteId].price
+      // console.log(myProfile.value.favorite[1].favorite)
+    })
+  }
+  // console.log(favoriteId)
+  loginStore.usersFavorite(favoriteId)
+}
+
+usersFavorite2()
 
 const depFavoriteMoney = ref([])
 const savFavoriteMoney = ref([])
@@ -263,60 +256,12 @@ const ageReco = function (age) {
     .then((res) => {
       depFavoriteAge.value = res.data.most_financial_options_dep
       savFavoriteAge.value = res.data.most_financial_options_sav
-      getDepOpt()
     })
     .catch((err) => {
       console.log(err)
     })
 }
 
-const moneyInput = ref(10000000)
-const interest = ref(0)
-const count = ref(0)
-
-const watcher = watch(() => (moneyInput.value), (newValue) => {
-  interest.value = Math.floor((depOpt.value.intr_rate2 / 100) * moneyInput.value)
-  count.value = parseInt(interest.value / props.fav.price)
-})
-
-
-
-const depOpt = ref(null)
-const API_URL2 = 'http://127.0.0.1:8000/api/v1/products'
-
-const getDepOpt = function () {
-  axios({
-    method: 'get',
-    url: `${API_URL2}/one-dep-opt/${loginStore.depLankfromFavorite[0].id}/`
-  })
-    .then((res) => {
-      console.log(res.data)
-      depOpt.value = res.data
-      interest.value = Math.floor((depOpt.value.intr_rate2 / 100) * moneyInput.value)
-      count.value = parseInt(interest.value / sendFav.value.price)
-    })
-    .catch((err) => {
-      console.log(err.data)
-    })
-}
-
-const depLankfromFavorite = ref([])
-const getUsersFavorite = function (favoriteId) {
-    axios({
-      method: 'get',
-      url: `${API_URL}/users_favorite/${favoriteId}/`,
-      headers: {
-        Authorization: `Token ${loginStore.token}`
-      }
-    })
-    .then ((res) => {
-      console.log(res.data)
-      depLankfromFavorite.value = res.data.most_financial_options_dep
-    })
-    .catch((err) => {
-      console.log('favorit 추천 오류', err)
-    })
-  }
 </script>
 
 <style scoped>
@@ -417,38 +362,5 @@ h3 {
   border-top: 4px solid var(--sub-color);
   padding: 12px 0;
   transition: all 0.5s;
-}
-.write {
-  width: 90%;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-}
-.underline {
-  border-bottom: 8px solid var(--main-color);
-  font-size: 28px;
-  font-weight: 700;
-  margin: 0 4px;
-  padding: 0 20px;
-  text-align: center;
-}
-.line {
-  display: flex;
-  flex-direction: flex-start;
-  align-items: baseline;
-  margin: 16px 12px;
-}
-.money-input {
-  outline: 0;
-  border: 0;
-  border-bottom: 8px solid var(--main-color);
-  text-align: center;
-  font-size: 28px;
-  font-weight: 700;
-  width: 210px;
-}
-p {
-  font-size: 28px;
-  font-weight: 400;
 }
 </style>

@@ -1,7 +1,6 @@
 <template>
-  <div>
-    <!--메인 페이지 이미지-->
-    <div id="title" class="card bg-white text-dark">
+  <div class="container">
+    <!-- <div id="title" class="card bg-white text-dark">
       <img id="main" src="@/assets/image/logo.jpg" class="card-img" alt="main">
       <div class="card-img-overlay">
         <p class="card-text">BBB와 함께하는 활기찬 저축 활동</p>
@@ -14,16 +13,9 @@
           <p>오늘의 예금 {{ DepProductsCount }}개</p> 
           <p>오늘의 적금 {{ SavProductsCount }}개</p> 
         </div>
-
-        <!-- <div id="app">
-          <button class="btn-like btn-confetti" @click="onClick">
-            <span>🎉</span>
-            <span>BBB</span>
-          </button>
-        </div>
-       -->
       </div>
-    </div>
+    </div> -->
+    <img src="@/assets/svg/main_2.svg" alt="">
 
     <!--캐러셀-->
     <section class="contents">
@@ -186,9 +178,14 @@ const carouselSavProducts = function() {
 </script>
 
 <style scoped>
-.contents {
+.container {
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
+  align-items: center;
+}
+img {
+  width: 50%;
 }
 #title {
   margin-top: 20px;
