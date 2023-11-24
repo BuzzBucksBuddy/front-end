@@ -10,9 +10,10 @@
     <!-- <h2>Profile Info</h2> -->
     <!-- 나의 개인 정보 -->
     <div class="profile ">
-      <div class="profile-img">
+      <div v-if="myProfile.profile_thumbnail"  class="profile-img">
         <img :src="`${LoginStore.API_URL}${myProfile.profile_thumbnail}`" alt="Profile_image">
       </div>
+      <div v-else><br><br><br></div>
 
       <div class="info-box">
       <div class="inner-box">
@@ -43,6 +44,9 @@
       <br>
 
       <p class="d-flex gap-3">나이 <span>{{ myProfile.age }}</span></p>
+      <br>
+
+      <p class="d-flex gap-3">포인트 <span>{{ myProfile.mileage }}</span></p>
       <br>
       </div>
 

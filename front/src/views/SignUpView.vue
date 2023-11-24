@@ -70,6 +70,7 @@
             <input type="file" id="profile-img" ref="profileImgInput" @change="handleProfileImageChange">
           </div>
           <div class="preview">
+            <img :src="profileImg">
           </div>
         </div>
       </section>
@@ -179,6 +180,7 @@ const goProfile = function () {
 const handleProfileImageChange = function () {
   const file = profileImgInput.value.files[0]
   if (file) {
+    
     // 필요한 경우 여기서 이미지 미리보기 또는 기타 작업을 처리 가능
     profileImg.value = file
   }
