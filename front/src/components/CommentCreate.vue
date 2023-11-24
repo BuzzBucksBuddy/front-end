@@ -14,8 +14,8 @@
             <p class="input-group mb-3 form-group lock-form" v-show="isLocked">
               <span class="input-group-text" id="basic-addon1">암호</span>
               <input type="password" v-model="password" id="title" class="form-control" aria-label="Username" aria-describedby="basic-addon1">
-              <input class="add btn btn-light" type="submit" value="등록">
             </p>
+            <input class="add btn btn-light" type="submit" value="등록">
           </p>
       </div>
     </form>
