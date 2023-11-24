@@ -14,7 +14,6 @@
               <p>{{ depProduct }}</p>
               <div class="btns">
                 <button class="btn-go-detail" @click="goDetailBtn(depProduct)">상품정보</button>
-                <button class="btn-cancel" @click="cancleBtn">가입취소</button>
               </div>
             </div>
             <!-- <hr> -->
@@ -28,7 +27,6 @@
               <p>{{ savProduct }}</p>
               <div class="btns">
                 <button class="btn-go-detail" @click="goDetailBtn(savProduct)">상품정보</button>
-                <button class="btn-cancel" @click="cancleBtn">가입취소</button>
               </div>
             </div>
           </div>
@@ -147,7 +145,6 @@ const myDepProductName = computed(()=>{
   background-color: rgb(154, 219, 137);
   border: none;
   border-radius: 40px;
-  margin-right: 5px;
   width: 90px;
   height: auto;
 }

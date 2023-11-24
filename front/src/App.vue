@@ -46,8 +46,10 @@
       </section>
       <section>
         <div class="user-info" v-if="!loginStore.isLogin">
-          <div class="log-link">
+          <div @click="routerTo('SignUp')" class="log-btn">
             <RouterLink :to="{ name: 'SignUp' }">SignUp</RouterLink>
+          </div>
+          <div @click="routerTo('LogIn')" class="log-btn">
             <RouterLink :to="{ name: 'LogIn' }">LogIn</RouterLink>
           </div>
         </div>
@@ -56,8 +58,8 @@
             <i class="fa-solid fa-user"></i>
             <p :class="{'name-narrow': !switcher, 'name-wide': switcher}">{{ loginStore.myName }}</p>
           </div>
-          <div class="log-link">
-            <a @click="loginStore.logOut">LogOut</a>
+          <div @click="loginStore.logOut" class="log-btn">
+            <a>LogOut</a>
           </div>
         </div>
       </section>
@@ -310,25 +312,13 @@ main {
   flex-direction: column;
   justify-content: center;
   align-items: start;
-  padding: 0px 10px;
+  margin-bottom: 20px;
 }
 h1 {
   margin: 0;
 }
 h4 {
   margin: 0;
-}
-.log-link {
-  display: flex;
-  flex-direction: column;
-  justify-content: start;
-  align-items: flex-start;
-}
-.log-link a {
-  text-decoration: none;
-  color: black;
-  margin-left: 10px;
-  cursor: pointer;
 }
 .log-link a:hover {
   color: var(--main-color);
@@ -343,6 +333,23 @@ hr {
 }
 .name-wide {
   margin-left: 12px;
+}
+.log-btn {
+  background-color: var(--sub-color);
+  width: 100%;
+  height: 90px;
+  margin: 4px 0;
+  padding: 4px 20px;
+  border-radius: 45px;
+  cursor: pointer;
+}
+.log-btn a {
+  text-decoration: none;
+  color: white;
+  font-size: 16px;
+}
+.log-btn:hover a {
+  color: var(--main-color);
 }
 
 /* 동전 */
@@ -387,7 +394,6 @@ body {
   margin: 0;
   padding: 0;
 }
-
 .btn-confetti {
   /* background-color: #404663; */
   color: #ffffff00;

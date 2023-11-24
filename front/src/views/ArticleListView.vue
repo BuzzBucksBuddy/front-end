@@ -35,15 +35,17 @@
       <p>게시글이 존재하지 않습니다</p>
     </section>
     <!--페이징-->
-    <ul class="pagination" v-show="isExist">
-      <li class="page-item" :class="{'disabled' : isBtnFirst}"><a class="page-link" href="#" @click.prevent="pageArrow('first')">First</a></li>
-      <li class="page-item" :class="{'disabled' : isBtnPrev}"><a class="page-link" href="#" @click.prevent="pageArrow('prev')">Previous</a></li>
-      <template v-for="(item, index) in pageList" :key="`list-${index}`">
-        <li class="page-num" :class="{'active' : item == currentPage}"><a class="page-link" href="#" @click.prevent="page(item)">{{item+1}}</a></li>
-      </template>
-      <li class="page-item" :class="{'disabled' : isBtnNext}"><a class="page-link" href="#" @click.prevent="pageArrow('next')">Next</a></li>
-      <li class="page-item" :class="{'disabled' : isBtnLast}"><a class="page-link" href="#" @click.prevent="pageArrow('last')">Last</a></li>
-    </ul>
+    <div class="pagi">
+      <ul class="pagination" v-show="isExist">
+        <li class="page-item" :class="{'disabled' : isBtnFirst}"><a class="page-link" href="#" @click.prevent="pageArrow('first')">First</a></li>
+        <li class="page-item" :class="{'disabled' : isBtnPrev}"><a class="page-link" href="#" @click.prevent="pageArrow('prev')">Previous</a></li>
+        <template v-for="(item, index) in pageList" :key="`list-${index}`">
+          <li class="page-num" :class="{'active' : item == currentPage}"><a class="page-link" href="#" @click.prevent="page(item)">{{item+1}}</a></li>
+        </template>
+        <li class="page-item" :class="{'disabled' : isBtnNext}"><a class="page-link" href="#" @click.prevent="pageArrow('next')">Next</a></li>
+        <li class="page-item" :class="{'disabled' : isBtnLast}"><a class="page-link" href="#" @click.prevent="pageArrow('last')">Last</a></li>
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -238,6 +240,10 @@ const pageArrow = (e) => {
 </script>
 
 <style scoped>
+.pagi {
+  display: flex;
+  justify-content: center;
+}
 h2 {
   margin-bottom: 20px;
 }
@@ -297,5 +303,16 @@ hr {
 
 .article-container {
   height: 720px;
+}
+select {
+  outline: 0;
+  height: 48px;
+  width: 200px;
+  border: 2px solid black;
+  border-radius: 24px;
+  background-color: var(--main-color);
+  margin-right: 12px;
+  cursor: pointer;
+  padding-left: 12px;
 }
 </style>
