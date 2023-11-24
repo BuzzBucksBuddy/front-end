@@ -185,19 +185,19 @@ const getProfile = function () {
 const usersFavorite = function (array) {
   let favoriteId = null
   const myfavoritesArr = array
+  console.log(array, 'hhhhhhhhhhhhhhhhhhhhhhhh')
   if ( myfavoritesArr ) {
     let myfavorites = []
     array.forEach(element => {
       myfavorites.push(element.id)
       const randomFavoriteId = Math.floor(Math.random() * myfavorites.length)
-      // console.log(myfavorites[favoriteId])
-      favoriteId = myfavorites[randomFavoriteId]
-      sendFav.value = favList[randomFavoriteId]
-      getUsersFavorite(randomFavoriteId)
-      // console.log(myProfile.value.favorite[1].favorite)
+      console.log(randomFavoriteId, 'randomFavoriteId')
+      favoriteId = myfavorites[randomFavoriteId] - 1
+      console.log(favoriteId, 'favoriteId')
+      sendFav.value = favList[favoriteId]
+      getUsersFavorite(favoriteId)
     })
   }
-  // console.log(favoriteId)
   loginStore.usersFavorite(favoriteId)
 }
 
@@ -276,7 +276,7 @@ const count = ref(0)
 
 const watcher = watch(() => (moneyInput.value), (newValue) => {
   interest.value = Math.floor((depOpt.value.intr_rate2 / 100) * moneyInput.value)
-  count.value = parseInt(interest.value / props.fav.price)
+  count.value = parseInt(interest.value / sendFav.value.price)
 })
 
 
@@ -337,7 +337,7 @@ img {
   border-radius: 32px;
 }
 h3 {
-  font-size: 24px;
+  font-size: 20px;
   font-weight: 700;
   margin: 20px 8px;
 }

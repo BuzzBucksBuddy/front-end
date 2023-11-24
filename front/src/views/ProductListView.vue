@@ -117,7 +117,7 @@ select {
   margin-right: 5px;
   padding: 5px;
   background-color: var(--main-color);
-  border: 2px solid var(--sub-color);
+  border: 4px solid var(--sub-color);
   width: 25%;
   height: 40px;
   border-radius: 20px;

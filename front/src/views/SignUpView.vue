@@ -69,9 +69,6 @@
             <label for="profile-img">프로필 이미지 </label>
             <input type="file" id="profile-img" ref="profileImgInput" @change="handleProfileImageChange">
           </div>
-          <div class="preview">
-            <img :src="profileImg">
-          </div>
         </div>
       </section>
 

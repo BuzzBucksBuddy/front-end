@@ -1,6 +1,8 @@
 <template>
-  <div class="top-box">
-    <h2>{{ store.myProfile.mbti }}들은 이걸 가입했어요</h2>
+  <div v-if="savMbti.length > 0 && depMbti.length > 0" class="top-box">
+    <h2>
+      <span>{{ store.myProfile.mbti }}</span>들이 가입한 상품
+    </h2>
     <div class="mbti-dep-box">
       <div class="items">
         <h3>예금</h3>
@@ -37,7 +39,6 @@ const store = useLoginStore()
 const myProfile = ref([])
 onMounted(()=>{
   store.getProfile()
-  store.myProfile
   usersMbti()
 })
 
@@ -55,9 +56,10 @@ const usersMbti = function () {
     }
   })
   .then ((res) => {
-    console.log(res.data)
+    console.log('???????????????????', res.data)
     depMbti.value = res.data.most_financial_options_dep
     savMbti.value = res.data.most_financial_options_sav
+    console.log(depMbti.value, savMbti.value)
   })
   .catch((err) => {
     console.log('favorit 추천 오류', err)
@@ -68,6 +70,9 @@ const usersMbti = function () {
 </script>
 
 <style scoped>
+span {
+  color: rgb(57, 161, 9);
+}
 .top-box {
   display: flex;
   flex-direction: column;

@@ -4,6 +4,9 @@
       @click="goDetail(savOpt.product.fin_prdt_cd)"
       class="box"
     >
+      <div v-if="idx === 0" class="tag">
+        <i class="fa-solid fa-crown"></i>
+      </div>
       <h5>{{ savOpt.product.fin_prdt_nm }}</h5>
     </div>
   </template>
@@ -74,7 +77,7 @@
     left: -10px;
   }
   h5 {
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 600;
     margin: 0;
     text-overflow: ellipsis;

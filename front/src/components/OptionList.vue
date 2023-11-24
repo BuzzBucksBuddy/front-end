@@ -74,7 +74,7 @@ const joinOption = function (optionId) {
           // getDepProduct(route.params.productId)
           // joiners(route.params.productId)
           // console.log(isJoined.value)
-          router.push({'name': 'ProductList'})
+          router.push({'name': 'Profile'})
         })
         .catch((err) => {
           console.log(err)

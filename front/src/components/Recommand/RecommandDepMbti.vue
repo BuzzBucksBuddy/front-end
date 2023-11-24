@@ -4,6 +4,9 @@
     @click="goDetail(depOpt.product.fin_prdt_cd)"
     class="box"
   >
+    <div v-if="idx === 0" class="tag">
+      <i class="fa-solid fa-crown"></i>
+    </div>
     <h5>{{ depOpt.product.fin_prdt_nm }}</h5>
   </div>
 </template>

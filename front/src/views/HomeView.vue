@@ -22,7 +22,7 @@
       <div id="carousel">
         <div id="carouselExampleDark" class="carousel carousel-dark slide w-100" data-bs-ride="carousel">
           <div class="carousel-indicators">
-            <!-- <button v-for="(product, index) in randomDepProducts" :key="product.index" type="button" data-bs-target="#carouselExampleDark" :data-bs-slide-to="index" :class="{ 'active': index === 0 }" aria-current="true" :aria-label="'Slide '+ index"></button> -->
+            <button v-for="(product, index) in randomDepProducts" :key="product.index" type="button" data-bs-target="#carouselExampleDark" :data-bs-slide-to="index" :class="{ 'active': index === 0 }" aria-current="true" :aria-label="'Slide '+ index"></button>
           </div>
           <div class="carousel-inner">
             <div v-for="(product, index) in randomDepProducts" :key="product.index" class="carousel-item" :class="{ 'active': index === 0 }" data-bs-interval="10000">
@@ -38,7 +38,7 @@
           </div>
           <div id="carouselExampleDark" class="carousel carousel-dark slide w-100" data-bs-ride="carousel"></div>
           <div class="carousel-indicators">
-            <!-- <button v-for="(product, index) in randomDepProducts" :key="product.index" type="button" data-bs-target="#carouselExampleDark" :data-bs-slide-to="index" :class="{ 'active': index === 0 }" aria-current="true" :aria-label="'Slide ' + index"></button> -->
+            <button v-for="(product, index) in randomDepProducts" :key="product.index" type="button" data-bs-target="#carouselExampleDark" :data-bs-slide-to="index" :class="{ 'active': index === 0 }" aria-current="true" :aria-label="'Slide ' + index"></button>
           </div>
           <div class="carousel-inner">
             <div v-for="product in randomSavProducts" :key="product.index" class="carousel-item" :class="{ 'active': index === 0 }" data-bs-interval="10000">
@@ -63,7 +63,7 @@
         </div>
       </div>
 
-      <div class="mbti-container">
+      <div v-if="loginStore.isLogin" class="mbti-container">
         <RecommandMbti />
       </div>
     </section>
@@ -74,11 +74,13 @@
 <script setup>
 import axios from 'axios'
 import { ref, onMounted } from 'vue';
-import { useProductStore } from '@/stores/product.js'
+import { useProductStore } from '@/stores/product'
+import { useLoginStore } from '@/stores/login'
 import RecommandMbti from '@/components/Recommand/RecommandMbti.vue'
 
 const API_URL = 'http://127.0.0.1:8000'
 const productStore = useProductStore()
+const loginStore = useLoginStore()
 
 onMounted(async () => {
   await getProductsData();
@@ -184,8 +186,13 @@ const carouselSavProducts = function() {
   justify-content: space-between;
   align-items: center;
 }
+.contents {
+  display: flex;
+}
 img {
   width: 50%;
+  margin-top: 48px;
+  margin-bottom: 24px;
 }
 #title {
   margin-top: 20px;
@@ -200,8 +207,7 @@ img {
 }
 
 #carousel {
-  margin: auto;
-  padding-top: 30px;
+  margin: 0;
   width: 450px;
   height: 300px;
 }
@@ -263,21 +269,25 @@ body {
 
 .product-card {
   padding-top: 30px;
-  height: 200px;
+  height: 280px;
   display: flex;
   /* flex-direction: column; */
   /* justify-content: center; */
   text-align: center;
   /* align-items: center; */
-  border: 5px solid var(--gray-color);
-  background-color: var(--gray-color);
+  border: 4px solid var(--gray-color);
+  border-radius: 30px;
 }
 
 .mbti-container {
   border: 4px solid var(--gray-color);
   border-radius: 30px;
-  padding: 0 16px;
-  width: 600px;
+  padding: 0 8px;
+  width: 500px;
+  height: 280px;
+  margin-left: 16px;
 }
-
+h5 {
+  margin-top: 18px;
+}
 </style>
