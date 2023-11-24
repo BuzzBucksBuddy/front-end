@@ -17,10 +17,8 @@ const props = defineProps({
 const markers = ref([])
 
 const loadScript = () => {
-  const key = '6e11f641595abffec43b82a5c9cbc391'
   const script = document.createElement('script')
-
-  script.src = `//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=${key}&libraries=services`
+  script.src = `//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=${apiKey}&libraries=services`
   // kakaomap script loading 후 initMap 실행
   script.addEventListener('load', () => window.kakao.maps.load(initMap))
   document.head.appendChild(script)
